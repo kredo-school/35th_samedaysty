@@ -7,12 +7,15 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        "./node_modules/flowbite/**/*.js",
     ],
 
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['"Josefin Sans"', 'sans-serif'],
+                ubuntu: ['Ubuntu', 'sans-serif'],
+                //sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
     },

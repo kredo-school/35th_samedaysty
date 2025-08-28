@@ -1,4 +1,9 @@
 <x-guest-layout>
+
+    <x-slot:title>
+        <h1><span class="text-orange-500">Register</span></h1>
+    </x-slot:title>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
