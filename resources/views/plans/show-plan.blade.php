@@ -1,9 +1,10 @@
 <x-app-layout>
     <!-- heading -->
-    <h2 class="text-3xl md:text-4xl underline decoration-orange-500 decoration-2 me-auto">Plan details</h1>
+    <x-title>
+        Plan details
+    </x-title>
 
-    <div class="px-10">
-        
+    <div class="px-20">
         <!-- edit/delete buttons -->
         <div class="flex justify-end space-x-2 py-2">
             <a href="" class="border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-bold px-4 rounded box-border">edit</a>
