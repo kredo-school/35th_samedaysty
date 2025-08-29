@@ -1,0 +1,20 @@
+# 🎨 基本ルール（Tailwind のクラス）
+
+## 見出し（Heading）系
+- **h1** → `text-4xl md:text-5xl` （ページタイトル）
+- **h2** → `text-3xl md:text-4xl` （大きなセクションタイトル）
+- **h3** → `text-2xl` （中セクションタイトル）
+- **h4** → `text-xl` （小見出し）
+
+## 本文（Body）系
+- **通常本文** → `text-base` （デフォルト）
+- **補足・キャプション** → `text-sm`
+- **注意書きやラベル** → `text-xs`
+
+## ボタン
+- **大ボタン** → `text-base`
+- **中ボタン** → `text-sm`
+
+## ナビゲーション
+- **メインメニュー** → `text-sm md:text-base`
+- **サブメニュー / フッターリンク** → `text-xs md:text-sm`
