@@ -3,7 +3,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <x-slot:title>
-        <h1>LOG<span class="text-orange-500">IN</span></h1>
+        <h1><span class="text-sky-700">LOG</span><span class="text-orange-500">IN</span></h1>
     </x-slot:title>
 
     <form method="POST" action="{{ route('login') }}">
@@ -43,7 +43,7 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ms-3 font-ubuntu bg-orange-500 hover:bg-orange-400 text-white">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>

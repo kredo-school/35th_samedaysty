@@ -1,4 +1,9 @@
 <x-guest-layout>
+
+    <x-slot:title>
+        <h1><span class="text-sky-700">Reset</span><span class="text-orange-500">&nbsp;Password</span></h1>
+    </x-slot:title>
+
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
     </div>
@@ -17,7 +22,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+            <x-primary-button class="bg-orange-500 hover:bg-orange-400 text-white">
                 {{ __('Email Password Reset Link') }}
             </x-primary-button>
         </div>
