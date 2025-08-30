@@ -23,7 +23,7 @@
                             @click="flying = true"
                             class="w-full h-full relative bg-white/5 text-white font-bold rounded-lg px-3 py-3 text-2xl hover:bg-white/50 transition overflow-hidden">
                             Create your<br>travel plan
-                            <!-- 飛行機アイコン -->
+                            <!-- airplane -->
                             <i class="fa-solid fa-plane absolute left-6 bottom-6 text-2xl transition-transform duration-1000" :class="flying ? 'translate-x-[120%] -translate-y-24 rotate-12' : ''"></i>
                         </button>
 
