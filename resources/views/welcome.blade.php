@@ -21,8 +21,10 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     </head>
     <body>
+        
         @include('layouts.navigation')
-        <div class="w-full h-[45vh] bg-[url('/images/krabi_beach_2.png')] bg-[length:100%_100%] bg-no-repeat text-white flex flex-col items-center justify-center text-center px-4">
+
+        <div class="w-full h-[45vh] bg-[url('/images/krabi_beach_2.png')] bg-[length:100%_100%] bg-no-repeat text-white flex flex-col items-center justify-center text-center px-4" style="background-image: url('/images/krabi_beach_2.png');">
     
              <h1 class="text-3xl md:text-5xl font-bold leading-tight">Same Day, Same Destination, and Same Style</h1>
              <p class="text-xl md:text-2xl mt-2">Join others' trip. This is where your shared journeys begin.</p>
