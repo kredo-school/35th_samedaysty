@@ -68,7 +68,7 @@
                         <a href="{{ route('login') }}" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium">
                             {{ __('Login') }}
                         </a>
-                        <a href="{{ route('register') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="{{ route('register') }}" class="bg-orange-500 hover:bg-orange-400 text-white px-3 py-2 rounded-md text-sm font-medium">
                             {{ __('Register') }}
                         </a>
                     </div>

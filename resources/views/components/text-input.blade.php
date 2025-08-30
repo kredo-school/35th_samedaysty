@@ -1,3 +1,14 @@
-@props(['disabled' => false])
+@props([
+    'disabled' => false,
+    'color' => 'blue', // デフォルトは青
+])
 
-<input @disabled($disabled) {{ $attributes->merge(['class' => 'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm']) }}>
+@php
+    $colorClasses = match ($color) {
+        'orange' => 'border-gray-300 text-gray-800 focus:border-orange-500 focus:ring-orange-500',
+        'blue' => 'border-gray-300 text-gray-800 focus:border-blue-700 focus:ring-blue-700',
+        default => 'border-gray-300 text-gray-800 focus:border-gray-500 focus:ring-gray-500',
+    };
+@endphp
+
+<input @disabled($disabled) {{ $attributes->merge(['class' => "$colorClasses rounded-md shadow-sm"]) }}>
