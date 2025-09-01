@@ -36,7 +36,6 @@
         <div class="flex justify-end w-full">
             <x-primary-button class="mr-10 px-6 py-3 text-lg">Join Now</x-primary-button>
         </div>
-</div>
     </div>
 
     <div class="w-full bg-white px-4 py-8">
@@ -78,10 +77,6 @@
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">1 week ago</div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
         <div class="w-full bg-white px-4 py-8">
             <!-- title -->
             <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">What you can do this website?</h2>
@@ -98,6 +93,7 @@
                         <p class="text-gray-600 leading-relaxed">You can make a new travel plan.And let's enjoy the trip with some joiner!</p>
                     </div>
                 </div>
+            </section>
         </div>
         <div class="w-full bg-white px-4 py-8">
             <!-- title -->
@@ -138,55 +134,55 @@
                     </div>
                 </div>
 
-                <div class="w-full bg-white px-4 py-8">
-                    <!-- tittle -->
-                    <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">Find travel mate on same date, destination, and style</h2>
-                </div>
-                <section class="max-w-5xl mx-auto px-4 py-8">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <!-- 1 -->
-                        <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+            </section>
+
+            <div class="w-full bg-white px-4 py-8">
+                <!-- tittle -->
+                <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">Find travel mate on same date, destination, and style</h2>
+            </div>
+            <section class="max-w-5xl mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- 1 -->
+                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
                         <h1>Calender page</h1>
-                            <img src="/images/search_image.png" alt="screenshot1" class="w-full h-auto">
-                            <div class="p-4">
-                                <p>descrption</p>
-                            </div>
+                        <img src="/images/search_image.png" alt="screenshot1" class="w-full h-auto">
+                        <div class="p-4">
+                            <p>descrption</p>
                         </div>
+                    </div>
 
-                        <!-- 2 -->
-                        <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
-                            <h1>Plan detail page</h1>
-                            <img src="/images/plan_image 1.png" alt="screenshot2" class="w-full h-auto">
-                            <div class="p-4">
-                                <p>descrption</p>
-                            </div>
+                    <!-- 2 -->
+                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+                        <h1>Plan detail page</h1>
+                        <img src="/images/plan_image 1.png" alt="screenshot2" class="w-full h-auto">
+                        <div class="p-4">
+                            <p>descrption</p>
                         </div>
+                    </div>
 
-                        <!-- 3 -->                      
-                        <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
-                            <h1>Profile page</h1>
-                            <img src="/images/profile_image.png" alt="screenshot3" class="w-full h-auto">
-                            <div class="p-4">
-                                <p>descrption</p>
-                            </div>
+                    <!-- 3 -->
+                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+                        <h1>Profile page</h1>
+                        <img src="/images/profile_image.png" alt="screenshot3" class="w-full h-auto">
+                        <div class="p-4">
+                            <p>descrption</p>
                         </div>
+                    </div>
 
-                        <!-- 4 -->
-                        <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
-                            <h1>chat page</h1>
-                            <img src="/images/chat_image.png" alt="screenshot4" class="w-full h-auto max-w-[300px] mx-auto">
-                            <div class="p-4">
-                                <p>descrption</p>
-                            </div>
+                    <!-- 4 -->
+                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+                        <h1>chat page</h1>
+                        <img src="/images/chat_image.png" alt="screenshot4" class="w-full h-auto max-w-[300px] mx-auto">
+                        <div class="p-4">
+                            <p>descrption</p>
                         </div>
-
-                </section>
-
+                    </div>
+                </div>
             </section>
         </div>
 
-    @if (Route::has('login'))
-    <div class="h-14.5 hidden lg:block"></div>
-    @endif
+        @if (Route::has('login'))
+        <div class="h-14.5 hidden lg:block"></div>
+        @endif
 </body>
 </html>
