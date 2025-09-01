@@ -1,13 +1,19 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+    <div class="flex items-center justify-between"></div>
+    <x-title name="header">
             {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+    </x-title>
+<!--notification-->
+    <div class="flex justify-end items-center space-x-4 mr-6">
+        <div class="w-10_h-10_rounded-full_bg-gray-300">avatar</div>
+        <div><i class="fa-solid fa-clipboard-check text-cyan-500"></i>created </div>
+        <div><i class="fa-solid fa-handshake text-yellow-500"></i>joined</div>
+        <div><i class="fa-solid fa-flag text-green-500"></i>interested 34</div>
+        <div><i class="fa-solid fa-heart text-red-500"></i>liked 14</div>
+    </div>
+    
 
-    <!--add user icon,created,joined,interested,liked!!!!!!!!!!!!!!!!!!!!! -->
-
-    <div class="py-12">
+    <div class="py-2">
         <div class="w-full">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm">
                 <div class="h-screen bg-cover bg-center shadow-lg"
