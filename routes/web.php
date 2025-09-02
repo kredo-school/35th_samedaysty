@@ -21,4 +21,9 @@ Route::middleware('auth')->group(function () {
 // to make sure if the design is working
 Route::get('/show-plan', [PlanController::class, 'view'])->name('plan.view');
 
-require __DIR__.'/auth.php';
+// AlpineJS カレンダーコンポーネントのテストページ
+Route::get('/calendar-test', function () {
+    return view('calendar-test');
+})->name('calendar.test');
+
+require __DIR__ . '/auth.php';
