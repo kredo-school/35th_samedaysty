@@ -39,12 +39,15 @@
     </div>
 
     <div class="w-full bg-white px-4 py-8">
-        <!-- tittle -->
-        <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">Actual feed from participants</h2>
+        <!-- feed back -- tittle -->
+        <x-title><h2 class="text-2xl font-bold text-gray-800 text-left mb-6">Actual feed from participants</h2>
+        </x-title>
 
-        <!-- 3cards -->
+        
+
+        <!-- make 3cards -->
         <div class="flex gap-4">
-            <!-- card1-1 -->
+            <!-- card1 feed back -->
             <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
                 <!-- head（avatar＋name） -->
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
@@ -57,7 +60,7 @@
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">2 days ago</div>
             </div>
 
-            <!-- card1-2 -->
+            <!-- card2 feed back -->
             <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
                     <i class="fa-solid fa-user"></i>
@@ -67,7 +70,7 @@
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">3 days ago</div>
             </div>
 
-            <!-- card1-3 -->
+            <!-- card3 feedback -->
             <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
                     <i class="fa-solid fa-user"></i>
@@ -77,67 +80,60 @@
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">1 week ago</div>
             </div>
         </div>
+    </div>
         <div class="w-full bg-white px-4 py-8">
-            <!-- title -->
+            <!-- what can do -- title -->
             <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">What you can do this website?</h2>
-            <section class="max-w-5xl mx-auto px-4 py-8">
-                <div class="grid grid-cols-2 gap-6 items-stretch">
-                    <!-- BOX 1 -->
-                    <div class="h-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold mb-2"><i class="fa-solid fa-magnifying-glass"></i> Find the trip you want to go on!</h3>
-                        <p class="text-gray-600 leading-relaxed">Search your travel destinations, dates, OR your fun- sharing account</p>
-                    </div>
-                    <!-- BOX 2 -->
-                    <div class="h-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold mb-2"><i class="fa-solid fa-hammer"></i> Share the jorney you want to enjoy with someone!</h3>
-                        <p class="text-gray-600 leading-relaxed">You can make a new travel plan.And let's enjoy the trip with some joiner!</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 2line in pC、1line use the phone -->
+                    <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                         <h3 class="text-3xl font-bold mb-2"><i class="fa-solid fa-magnifying-glass"></i></h3>
+                         <h3 class="text-3xl font-bold mb-2">Find the trip you want to go on!</h3>
+                         <p class="text-gray-600">Search your travel destinations, dates, OR your fun- sharing account</p>
+                     </div>
+                     <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <h3 class="text-3xl font-bold mb-2"><i class="fa-solid fa-hammer"></i></h3>
+                         <h3 class="text-3xl font-bold mb-2">Share the journey you want to enjoy with someone!</h3>
+                         <p class="text-gray-600">You can make a new travel plan. And let's enjoy the trip with some joiner!</p>
                     </div>
                 </div>
-            </section>
         </div>
         <div class="w-full bg-white px-4 py-8">
-            <!-- title -->
-            <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">How to find other's plan?</h2>
-            <section class="max-w-5xl mx-auto px-4 py-8 space-y-8">
-                <!-- card2-1 -->
-                <div class="flex flex-col md:flex-row border-8 border-sky-700 rounded-lg overflow-hidden">
-                    <!-- left:description-->
-                    <div class="md:w-1/2 p-6 flex flex-col justify-center">
-                        <h3 class="text-xl font-bold mb-2 flex items-center"><img src="/images/1st_find_icon.png" alt="anime" class="w-6 h-6 mr-2">1</h3>
-                        <p class="text-gray-700">Find the trip you want to go on BY Calendar OR Destination.</p>
-                    </div>
-                    <!-- right:photo -->
-                    <div class="md:w-1/2">
-                        <img src="/images/1st_find_other's_plan.png" alt="photo1" class="w-60 h-48 object-contain">
-                    </div>
-                </div>
+        <!-- how to find -- title -->
+        <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">How to find other's plan?</h2>
 
-                <!-- card2-2 -->
-                <div class="flex flex-col md:flex-row border-8 border-sky-700 rounded-lg overflow-hidden">
-                    <div class="md:w-1/2 p-6 flex flex-col justify-center">
-                        <h3 class="text-xl font-bold mb-2 flex items-center"><img src="/images/2nd_find_icon.png" alt="anime" class="w-6 h-6 mr-2">2</h3>
-                        <p class="text-gray-700">If you find a trip you love,let's do the something action!</p>
-                        <i class="fa-solid fa-heart"></i><i class="fa-solid fa-flag"></i>
-                    </div>
-                    <div class="md:w-1/2">
-                        <img src="/images/2nd_find_other's_plan 4.png" alt="photo2" class="w-60 h-48 object-contain">
-                    </div>
-                </div>
+        <section class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+             <!-- card1 -->
+            <div class="border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+                <h3 class="text-xl font-bold mb-2 flex items-center">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">1</span>
+                </h3>
+                <p class="text-2xl font-bold text-gray-700 mb-4">Find the trip you want to go on by CALENDER or DESTINATION.</p>
+                <img src="/images/1st_find_icon.png" alt="find icon" class="w-40 h-40 md:w-56 md:h-56 object-contain self-start"/>
+            </div>
 
-                <!-- card2-3 -->
-                <div class="flex flex-col md:flex-row border-8 border-sky-700 rounded-lg overflow-hidden">
-                    <div class="md:w-1/2 p-6 flex flex-col justify-center">
-                        <h3 class="text-xl font-bold mb-2 flex items-center"><img src="/images/3rd_find_icon.png" alt="anime" class="w-6 h-6 mr-2">3</h3>
-                        <p class="text-gray-700">Start chatting with your travel mate about your shared travel!</p>
-                    </div>
-                    <div class="md:w-1/2"><img src="/images/3rd_find_other's_plan 9.png" alt="photo3" class="w-60 h-48 object-cotain">
-                    </div>
-                </div>
+            <!-- card2 -->
+            <div class="border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+                <h3 class="text-xl font-bold mb-2 flex items-center">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">2</span>
+                </h3>
+                <p class="text-2xl font-bold text-gray-700 mb-4">If you find a trip you LOVE, let's do something action!</p>
+                <img src="/images/2nd_find_icon.png" alt="find icon" class="w-40 h-40 md:w-56 md:h-56 object-contain self-start"/>
+            </div>
 
-            </section>
-
-            <div class="w-full bg-white px-4 py-8">
-                <!-- tittle -->
+            <!-- card3 -->
+            <div class="border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+                <h3 class="text-xl font-bold mb-2 flex items-center">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">3</span>
+                </h3>
+                <p class="text-2xl font-bold text-gray-700 mb-4">Start chatting with your travel mate about your shared travel!</p>
+                <img src="/images/3rd_find_icon.png" alt="find icon" class="w-40 h-40 md:w-56 md:h-56 object-contain self-start"/>
+            </div>
+        </section>
+        </div>
+        <div class="w-full bg-white px-4 py-8">
+                <!-- how to screen shot -- tittle -->
                 <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">Find travel mate on same date, destination, and style</h2>
             </div>
             <section class="max-w-5xl mx-auto px-4 py-8">
@@ -147,7 +143,7 @@
                         <h1>Calender page</h1>
                         <img src="/images/search_image.png" alt="screenshot1" class="w-full h-auto">
                         <div class="p-4">
-                            <p>descrption</p>
+                            <p>description</p>
                         </div>
                     </div>
 
@@ -156,7 +152,7 @@
                         <h1>Plan detail page</h1>
                         <img src="/images/plan_image 1.png" alt="screenshot2" class="w-full h-auto">
                         <div class="p-4">
-                            <p>descrption</p>
+                            <p>description</p>
                         </div>
                     </div>
 
@@ -165,7 +161,7 @@
                         <h1>Profile page</h1>
                         <img src="/images/profile_image.png" alt="screenshot3" class="w-full h-auto">
                         <div class="p-4">
-                            <p>descrption</p>
+                            <p>description</p>
                         </div>
                     </div>
 
@@ -174,15 +170,107 @@
                         <h1>chat page</h1>
                         <img src="/images/chat_image.png" alt="screenshot4" class="w-full h-auto max-w-[300px] mx-auto">
                         <div class="p-4">
-                            <p>descrption</p>
+                            <p>description</p>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
+         <!-- dou you wanna register? -->
+         <h2 class="text-3xl font-bold text-left pl-6 mb-6">
+            <span class="text-orange-500">Do you wanna</span> 
+            <span class="text-sky-700">Register</span>
+            <span class="text-orange-500">Samedaysty？</span>
+        </h2>
+         <!-- Right button -->
+        <div class="flex justify-end w-full">
+            <x-primary-button class="mr-10 px-6 py-3 text-lg">Join Now</x-primary-button>
+        </div>
+        
+        <section class="max-w-4xl mx-auto my-12 p-4">
+            <h2 class="text-3xl font-bold text-center mb-8">About Us</h2>
+
+             <!-- big square -->
+            <div class="grid grid-cols-2 grid-rows-2 gap-4 w-full aspect-square">
+    
+              <!-- member 1 -->
+               <div class="flex flex-col p-4 border rounded-lg">
+                  <div class="flex items-center mb-2">
+                   <img src="/images/member1_icon.png" alt="Member 1" class="w-12 h-12 mr-3">
+                 <h3 class="text-xl font-semibold">A</h3>
+                 </div>
+                 <p class="text-gray-600 text-sm">Frontend developer passionate about UI/UX design.</p>
+             </div>
+
+              <!-- member 2 -->
+             <div class="flex flex-col p-4 border rounded-lg">
+                 <div class="flex items-center mb-2">
+                 <img src="/images/member2_icon.png" alt="Member 2" class="w-12 h-12 mr-3">
+                 <h3 class="text-xl font-semibold">B</h3>
+                 </div>
+                 <p class="text-gray-600 text-sm">Backend developer specializing in APIs and database.</p>
+              </div>
+
+               <!-- member 3 -->
+              <div class="flex flex-col p-4 border rounded-lg">
+                <div class="flex items-center mb-2">
+                  <img src="/images/member3_icon.png" alt="Member 3" class="w-12 h-12 mr-3">
+                  <h3 class="text-xl font-semibold">C</h3>
+                </div>
+                <p class="text-gray-600 text-sm">Fullstack developer with a love for problem-solving.</p>
+              </div>
+
+               <!-- member 4 -->
+              <div class="flex flex-col p-4 border rounded-lg">
+                 <div class="flex items-center mb-2">
+                 <img src="/images/member4_icon.png" alt="Member 4" class="w-12 h-12 mr-3">
+                 <h3 class="text-xl font-semibold">D</h3>
+               </div>
+               <p class="text-gray-600 text-sm">Project manager ensuring smooth workflow and deadlines.</p>
+             </div>
+
+             </div>
+        </section>
+
 
         @if (Route::has('login'))
         <div class="h-14.5 hidden lg:block"></div>
         @endif
 </body>
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex justify-between items-center">
+            <!-- Logo on the left -->
+            <div class="flex items-center">
+                <a href="{{ route('dashboard') }}" class="flex items-center">
+                    <x-application-logo class="h-16 w-auto" />
+                </a>
+            </div>
+
+            <!-- Links on the right -->
+            <div class="flex flex-col space-y-2">
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
+                    {{ __('Privacy Policy') }}
+                </a>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
+                    {{ __('Terms of Service') }}
+                </a>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
+                    {{ __('Contact') }}
+                </a>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-sm">
+                    {{ __('About') }}
+                </a>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div class="text-center text-gray-500 dark:text-gray-400 text-sm">
+                © {{ date('Y') }} {{ config('app.name', 'Laravel') }}. {{ __('All rights reserved.') }}
+            </div>
+        </div>
+    </div>
+</footer>
+
 </html>
