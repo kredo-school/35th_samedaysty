@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'bio',
+        'role_id',
     ];
 
     /**
@@ -44,5 +47,39 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if user is admin
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role_id === 1;
+    }
+
+    /**
+     * Check if user is normal user
+     *
+     * @return bool
+     */
+    public function isNormalUser(): bool
+    {
+        return $this->role_id === 2;
+    }
+
+    /**
+     * Get role name
+     *
+     * @return string
+     */
+    public function getRoleName(): string
+    {
+        return match ($this->role_id) {
+            1 => 'Admin',
+            2 => 'Normal User',
+            default => 'Unknown'
+        };
     }
 }

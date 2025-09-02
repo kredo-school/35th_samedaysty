@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\Admin\TravelStyleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,7 +20,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Admin routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+
+    Route::resource('travel-styles', TravelStyleController::class);
+    Route::resource('users', UserController::class);
+    Route::post('users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+});
+
 // to make sure if the design is working
 Route::get('/show-plan', [PlanController::class, 'view'])->name('plan.view');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
