@@ -27,9 +27,9 @@
     </div>
 
     <div class="w-full bg-white text-center py-8 px-4">
-        <p class="text-[2.0vw] mb-2 text-gray-500">From Full Trips to Just a Meal — Share Any Part of the Journey.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500">Big Adventures or Small Plans — Travel Together, Your Way.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500">Whether It's the Whole Trip or Just Dinner — Connect and Go.</p>
+        <p class="text-[2.0vw] mb-2 text-gray-500">Share Moments, Big or Small — Your Way, Together.</p>
+        <p class="text-[2.0vw] mb-2 text-gray-500">From Coffee to Adventures — Connect & Enjoy.</p>
+        <p class="text-[2.0vw] mb-2 text-gray-500">Meet, Share, Explore — Your Journey, Your Way.</p>
         <p class="text-[2.0vw] mb-2 text-gray-500">One App for Every Plan — From Full Journeys to Quick Meetups.</p>
 
         <!-- Right button -->
@@ -40,15 +40,15 @@
 
     <div class="w-full bg-white px-4 py-8">
         <!-- feed back -- tittle -->
-        <x-title><h2 class="text-2xl font-bold text-gray-800 text-left mb-6">Actual feed from participants</h2>
+        <x-title><h2 class="text-2xl font-bold text-gray-800 text-left">Actual feed from participants</h2>
         </x-title>
 
         
 
         <!-- make 3cards -->
-        <div class="flex gap-4">
+        <div class="flex gap-4 mt-6">
             <!-- card1 feed back -->
-            <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
+             <div class="border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <!-- head（avatar＋name） -->
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
                     <i class="fa-solid fa-user"></i>
@@ -56,17 +56,21 @@
                 </div>
                 <!-- body -->
                 <div class="px-4 py-4 flex-1 text-gray-700">"This trip was amazing! I met so many new people."</div>
+                <img src="/images/1st_find_other's_plan.png" alt="trip photo"class="w-full h-40 object-contain rounded-b-lg">
+
                 <!-- footer -->
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">2 days ago</div>
             </div>
 
             <!-- card2 feed back -->
-            <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
+             <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
                     <i class="fa-solid fa-user"></i>
                     <span class="font-bold text-gray-800">Participant B</span>
                 </div>
                 <div class="px-4 py-4 flex-1 text-gray-700">"I loved sharing my experience and seeing others' plans."</div>
+                <img src="/images/2nd_find_other's_plan 4.png" alt="trip photo"class="w-full h-40 object-contain rounded-b-lg">
+
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">3 days ago</div>
             </div>
 
@@ -77,17 +81,19 @@
                     <span class="font-bold text-gray-800">Participant C</span>
                 </div>
                 <div class="px-4 py-4 flex-1 text-gray-700">"Such a convenient app for coordinating group trips!"</div>
+                <img src="/images/3rd_find_other's_plan 9.png" alt="trip photo"class="w-full h-40 object-contain rounded-b-lg">
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">1 week ago</div>
             </div>
         </div>
     </div>
         <div class="w-full bg-white px-4 py-8">
             <!-- what can do -- title -->
-            <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">What you can do this website?</h2>
+            <x-title><h2 class="text-2xl font-bold text-gray-800 text-left">What you can do this website?</h2>
+            </x-title>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <!-- 2line in pC、1line use the phone -->
-                    <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                     <div class="border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                          <h3 class="text-3xl font-bold mb-2"><i class="fa-solid fa-magnifying-glass"></i></h3>
                          <h3 class="text-3xl font-bold mb-2">Find the trip you want to go on!</h3>
                          <p class="text-gray-600">Search your travel destinations, dates, OR your fun- sharing account</p>
@@ -101,9 +107,10 @@
         </div>
         <div class="w-full bg-white px-4 py-8">
         <!-- how to find -- title -->
-        <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">How to find other's plan?</h2>
+        <x-title><h2 class="text-2xl font-bold text-gray-800 text-left">How to find other's plan?</h2>
+        </x-title>
 
-        <section class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
              <!-- card1 -->
             <div class="border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
@@ -132,14 +139,117 @@
             </div>
         </section>
         </div>
+
+               </div>
+    
+        <section class="max-w-6xl mx-auto px-4 py-8">
+  <h2 class="text-2xl font-bold mb-6 text-center">Travel Categories</h2>
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+    
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-spa text-3xl mb-2"></i>
+      <h3 class="font-semibold">Relaxation</h3>
+      <p class="text-sm text-gray-600">Hot springs, spas, beach resorts</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-person-hiking text-3xl mb-2"></i>
+      <h3 class="font-semibold">Adventure</h3>
+      <p class="text-sm text-gray-600">Hiking, diving, surfing</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-mountain text-3xl mb-2"></i>
+      <h3 class="font-semibold">Nature</h3>
+      <p class="text-sm text-gray-600">World Heritage, parks, scenic drives</p>
+    </div>
+
+    <!-- 以下同様に15個作る -->
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-landmark text-3xl mb-2"></i>
+      <h3 class="font-semibold">Cultural</h3>
+      <p class="text-sm text-gray-600">Temples, castles, museums</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-utensils text-3xl mb-2"></i>
+      <h3 class="font-semibold">Foodie</h3>
+      <p class="text-sm text-gray-600">Local cuisine & Michelin restaurants</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-bag-shopping text-3xl mb-2"></i>
+      <h3 class="font-semibold">Shopping</h3>
+      <p class="text-sm text-gray-600">Cities, outlets, duty-free</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-microphone text-3xl mb-2"></i>
+      <h3 class="font-semibold">Fan Travel</h3>
+      <p class="text-sm text-gray-600">Anime & idol pilgrimage</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-tractor text-3xl mb-2"></i>
+      <h3 class="font-semibold">Rural</h3>
+      <p class="text-sm text-gray-600">Farming & countryside stays</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-crown text-3xl mb-2"></i>
+      <h3 class="font-semibold">Luxury</h3>
+      <p class="text-sm text-gray-600">High-end resorts & villas</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-wallet text-3xl mb-2"></i>
+      <h3 class="font-semibold">Budget</h3>
+      <p class="text-sm text-gray-600">Guesthouses, capsule hotels</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-leaf text-3xl mb-2"></i>
+      <h3 class="font-semibold">Sustainable</h3>
+      <p class="text-sm text-gray-600">Eco-friendly & local support</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-laptop-house text-3xl mb-2"></i>
+      <h3 class="font-semibold">Workation</h3>
+      <p class="text-sm text-gray-600">Work & travel combined</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-backpack text-3xl mb-2"></i>
+      <h3 class="font-semibold">Spontaneous</h3>
+      <p class="text-sm text-gray-600">Go with the flow</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-plane-departure text-3xl mb-2"></i>
+      <h3 class="font-semibold">Travel</h3>
+      <p class="text-sm text-gray-600">Any journey you like</p>
+    </div>
+
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+      <i class="fa-solid fa-camera-retro text-3xl mb-2"></i>
+      <h3 class="font-semibold">Scenic</h3>
+      <p class="text-sm text-gray-600">Beautiful drives & views</p>
+    </div>
+
+  </div>
+</section>
+
+
         <div class="w-full bg-white px-4 py-8">
                 <!-- how to screen shot -- tittle -->
-                <h2 class="text-2xl font-bold text-gray-800 text-left mb-6">Find travel mate on same date, destination, and style</h2>
+                <x-title><h2 class="text-2xl font-bold text-gray-800 text-left">Find travel mate on same date, destination, and style</h2>
+                </x-title>
             </div>
-            <section class="max-w-5xl mx-auto px-4 py-8">
+            <section class="w-full mx-auto px-4 py-8 mt-6 mb-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <!-- 1 -->
-                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+                     <div class="bg-white border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                         <h1>Calender page</h1>
                         <img src="/images/search_image.png" alt="screenshot1" class="w-full h-auto">
                         <div class="p-4">
@@ -148,7 +258,7 @@
                     </div>
 
                     <!-- 2 -->
-                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+                    <div class="bg-white border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                         <h1>Plan detail page</h1>
                         <img src="/images/plan_image 1.png" alt="screenshot2" class="w-full h-auto">
                         <div class="p-4">
@@ -157,7 +267,7 @@
                     </div>
 
                     <!-- 3 -->
-                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+                    <div class="bg-white border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                         <h1>Profile page</h1>
                         <img src="/images/profile_image.png" alt="screenshot3" class="w-full h-auto">
                         <div class="p-4">
@@ -166,7 +276,7 @@
                     </div>
 
                     <!-- 4 -->
-                    <div class="bg-white border-2 border-blue-500 rounded-lg overflow-hidden">
+                    <div class="bg-white border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                         <h1>chat page</h1>
                         <img src="/images/chat_image.png" alt="screenshot4" class="w-full h-auto max-w-[300px] mx-auto">
                         <div class="p-4">
@@ -177,24 +287,28 @@
             </section>
         </div>
          <!-- dou you wanna register? -->
-         <h2 class="text-3xl font-bold text-left pl-6 mb-6">
-            <span class="text-orange-500">Do you wanna</span> 
-            <span class="text-sky-700">Register</span>
-            <span class="text-orange-500">Samedaysty？</span>
-        </h2>
+         <div class="h-screen flex items-center justify-center">
+            <div class="bg-white p-8 rounded shadow">
+                <h2 class="text-3xl font-bold text-left pl-6 mt-6 mb-6">
+                    <span class="text-orange-500">Do you wanna</span> 
+                    <span class="text-sky-700">Register</span>
+                    <span class="text-orange-500">Samedaysty？</span>
+                </h2>
+            </div>
+        </div>
          <!-- Right button -->
         <div class="flex justify-end w-full">
             <x-primary-button class="mr-10 px-6 py-3 text-lg">Join Now</x-primary-button>
         </div>
         
         <section class="max-w-4xl mx-auto my-12 p-4">
-            <h2 class="text-3xl font-bold text-center mb-8">About Us</h2>
+            <x-title><h2 class="text-3xl font-bold text-center">About Us</h2></x-title>
 
              <!-- big square -->
-            <div class="grid grid-cols-2 grid-rows-2 gap-4 w-full aspect-square">
+            <div class="grid grid-cols-2 grid-rows-2 gap-4 w-full aspect-square mt-8">
     
               <!-- member 1 -->
-               <div class="flex flex-col p-4 border rounded-lg">
+                <div class="border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                   <div class="flex items-center mb-2">
                    <img src="/images/member1_icon.png" alt="Member 1" class="w-12 h-12 mr-3">
                  <h3 class="text-xl font-semibold">A</h3>
@@ -229,9 +343,7 @@
                <p class="text-gray-600 text-sm">Project manager ensuring smooth workflow and deadlines.</p>
              </div>
 
-             </div>
         </section>
-
 
         @if (Route::has('login'))
         <div class="h-14.5 hidden lg:block"></div>
