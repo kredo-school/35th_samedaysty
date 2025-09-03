@@ -34,4 +34,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // to make sure if the design is working
 Route::get('/show-plan', [PlanController::class, 'view'])->name('plan.view');
 
+// Flag test page
+Route::get('/flag-test', function () {
+    return view('flag-test');
+})->name('flag.test');
+
+// API routes for countries
+Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
+Route::get('/api/countries/{name}', [App\Http\Controllers\Api\CountryController::class, 'show'])->name('api.countries.show');
+
 require __DIR__ . '/auth.php';
