@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 relative h-28">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 relative h-24">
     <!-- Gradient border bottom -->
     <div
         class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-sky-500 via-purple-500 to-orange-500 shadow-sm">
@@ -10,7 +10,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
-                        <x-application-logo class="h-16 w-auto" />
+                        <x-application-logo class="h-12 w-auto" />
                     </a>
                 </div>
             </div>
@@ -155,11 +155,18 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+    <div :class="{ 'block': open, 'hidden': !open }"
+        class="hidden sm:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="pt-2 pb-3 space-y-1 px-4">
             @auth
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Home') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="#">
+                    {{ __('Search') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="#">
+                    {{ __('Create') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('chat.index')" :active="request()->routeIs('chat.*')">
                     {{ __('Chat') }}
