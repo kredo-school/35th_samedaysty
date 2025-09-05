@@ -244,45 +244,48 @@ Invite others and start your adventure together !</p>
                 <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                     <h1>Calender page</h1>
                     <img src="/images/search_image.png" alt="screenshot1" class="w-full h-auto">
-                    <div class="p-4"><p>description</p></div>
+                    <div class="p-4"><p>Choose your travel dates and see who else is going at the same time.</p></div>
                 </div>
 
                 <!-- 2 -->
                 <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                     <h1>Plan detail page</h1>
                     <img src="/images/plan_image 1.png" alt="screenshot2" class="w-full h-auto">
-                    <div class="p-4"><p>description</p></div>
+                    <div class="p-4"><p>Share your destination and travel style so others can find a good match.</p></div>
                 </div>
 
                 <!-- 3 -->
                 <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                     <h1>Profile page</h1>
                     <img src="/images/profile_image.png" alt="screenshot3" class="w-full h-auto">
-                    <div class="p-4"><p>description</p></div>
+                    <div class="p-4"><p>Introduce yourself and highlight your interests to connect with like-minded travelers.</p></div>
                 </div>
 
                 <!-- 4 -->
                 <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
-                    <h1>chat page</h1>
+                    <h1>Chat page</h1>
                     <img src="/images/chat_image.png" alt="screenshot4" class="w-full h-auto max-w-[300px] mx-auto">
-                    <div class="p-4"><p>description</p></div>
+                    <div class="p-4"><p>Start chatting to finalize plans and get to know your travel mates.</p></div>
                 </div>
             </div>
         </section>
 
          <!-- dou you wanna register? -->
-         <section class="w-full bg-white px-6 py-12 mt-12 mb-12">
-             <h2 class="text-4xl font-bold text-gray-800 mb-4">--
-                    <span class="text-orange-500"></span> 
-                    <span class="text-sky-700">Register to</span>
-                    <span class="text-orange-500">Samedaysty</span>
-                    <span>--</span>
-            </h2>
-             <p class="text-gray-600 leading-relaxed mb-2">Every journey begins with a single step—but it's the people you travel with who make it unforgettable.</p>
-             <p class="text-gray-600 leading-relaxed mb-2">This platform is here to bring together planners and explorers, so you can create, share, and join trips that turn into lasting memories.</p>
+          <div class="w-full h-[45vh] bg-[length:100%_100%] bg-no-repeat text-white flex flex-col items-center justify-center text-center px-4" style="background-image: url('/images/krabi_beach_2.png');">
 
+        <h1 class="text-3xl md:text-5xl font-bold leading-tight">Same Day, Same Destination, and Same Style</h1>
+        <p class="text-xl md:text-2xl mt-2">Join others' trip. This is where your shared journeys begin.</p>
+    </div>
+
+         <section class="w-full h-[45vh] bg-[length:100%_100%] bg-no-repeat text-white flex flex-col items-center justify-start text-center px-4 pt-8"
+                style="background-image: url('/images/thumbnail.png');">
+            <h2 class="text-4xl font-bold text-white mt-8 mb-4">Register to Samedaysty</h2>
+            <div>
+             <p class="text-white leading-relaxed mt-12 mb-2">Every journey begins with a single step—but it's the people you travel with who make it unforgettable.</p>
+             <p class="text-white leading-relaxed mb-2">This platform is here to bring together planners and explorers, so you can create, share, and join trips that turn into lasting memories.</p>
+            </div>
                <!-- Register button -->
-            <div class="flex justify-start w-full">
+            <div class="flex justify-center w-full mt-12">
                 <x-primary-button class="mr-10 px-6 py-3 text-lg">Join Now</x-primary-button>
             </div>
         </section>
