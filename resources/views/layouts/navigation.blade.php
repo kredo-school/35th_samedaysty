@@ -35,7 +35,7 @@
                             </x-nav-link>
                             <x-nav-link href="#" :active="request()->routeIs('notifications.*')">
                                 <div class="relative">
-                                    <i class="fas fa-bell text-4xl"></i>
+                                    <i class="fas fa-bell text-2xl"></i>
                                     <!-- Notification badge -->
                                     <span
                                         class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
@@ -47,7 +47,7 @@
                     @if (auth()->user()->isAdmin())
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" @click.away="open = false"
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-xs leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 {{ __('Admin Panel') }}
                                 <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -68,17 +68,17 @@
                                 tabindex="-1">
                                 <div class="py-1" role="none">
                                     <a href="{{ route('admin.dashboard') }}"
-                                        class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        class="block px-4 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                                         role="menuitem" tabindex="-1">
                                         {{ __('Admin Dashboard') }}
                                     </a>
                                     <a href="{{ route('admin.travel-styles.index') }}"
-                                        class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        class="block px-4 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                                         role="menuitem" tabindex="-1">
                                         {{ __('Travel Styles') }}
                                     </a>
                                     <a href="{{ route('admin.users.index') }}"
-                                        class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        class="block px-4 py-2 text-xs text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                                         role="menuitem" tabindex="-1">
                                         {{ __('Users Management') }}
                                     </a>
@@ -90,7 +90,7 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-lg leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
@@ -127,11 +127,11 @@
                 <div class="hidden sm:flex sm:items-center">
                     <div class="flex space-x-4">
                         <a href="{{ route('login') }}"
-                            class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium">
+                            class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 px-3 py-2 rounded-md text-xs font-medium">
                             {{ __('Login') }}
                         </a>
                         <a href="{{ route('register') }}"
-                            class="bg-orange-500 hover:bg-orange-400 text-white px-3 py-2 rounded-md text-sm font-medium">
+                            class="bg-orange-500 hover:bg-orange-400 text-white px-3 py-2 rounded-md text-xs font-medium">
                             {{ __('Register') }}
                         </a>
                     </div>
@@ -196,8 +196,8 @@
             <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                 <div class="px-4">
-                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-sm text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-xs text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
 
                 <div class="mt-3 space-y-1">
@@ -208,7 +208,6 @@
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
                         <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                             this.closest('form').submit();">
