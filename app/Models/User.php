@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -81,5 +82,37 @@ class User extends Authenticatable
             2 => 'Normal User',
             default => 'Unknown'
         };
+    }
+
+    /**
+     * Get conversations where user is user1
+     */
+    public function conversationsAsUser1(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'user1_id');
+    }
+
+    /**
+     * Get conversations where user is user2
+     */
+    public function conversationsAsUser2(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'user2_id');
+    }
+
+    /**
+     * Get all conversations for the user
+     */
+    public function conversations()
+    {
+        return $this->conversationsAsUser1->merge($this->conversationsAsUser2);
+    }
+
+    /**
+     * Get messages sent by the user
+     */
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_id');
     }
 }

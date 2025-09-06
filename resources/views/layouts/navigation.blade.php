@@ -1,35 +1,49 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 relative h-24">
+    <!-- Gradient border bottom -->
+    <div
+        class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-sky-500 via-purple-500 to-orange-500 shadow-sm">
+    </div>
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+        <div class="flex justify-between items-center h-full">
+            <div class="flex items-center">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
                         <x-application-logo class="h-12 w-auto" />
                     </a>
                 </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    @auth
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                    @else
-                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                            {{ __('Login') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                            {{ __('Register') }}
-                        </x-nav-link>
-                    @endauth
-                </div>
             </div>
 
             <!-- Settings Dropdown -->
             @auth
                 <div class="hidden sm:flex sm:items-center space-x-4">
+                    <!-- Navigation Links -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        @auth
+                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                                {{ __('Home') }}
+                            </x-nav-link>
+                            <x-nav-link>
+                                {{ __('Search') }}
+                            </x-nav-link>
+                            <x-nav-link>
+                                {{ __('Create') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('chat.index')" :active="request()->routeIs('chat.*')">
+                                {{ __('Chat') }}
+                            </x-nav-link>
+                            <x-nav-link href="#" :active="request()->routeIs('notifications.*')">
+                                <div class="relative">
+                                    <i class="fas fa-bell text-4xl"></i>
+                                    <!-- Notification badge -->
+                                    <span
+                                        class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                                </div>
+                            </x-nav-link>
+                        @endauth
+                    </div>
+
                     @if (auth()->user()->isAdmin())
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" @click.away="open = false"
@@ -76,7 +90,7 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-lg leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
@@ -91,7 +105,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
+                            <x-dropdown-link :href="route('profile.show')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
@@ -141,11 +155,32 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+    <div :class="{ 'block': open, 'hidden': !open }"
+        class="hidden sm:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="pt-2 pb-3 space-y-1 px-4">
             @auth
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
+                    {{ __('Home') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="#">
+                    {{ __('Search') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="#">
+                    {{ __('Create') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('chat.index')" :active="request()->routeIs('chat.*')">
+                    {{ __('Chat') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="#" :active="request()->routeIs('notifications.*')">
+                    <div class="flex items-center">
+                        <div class="relative">
+                            <i class="fas fa-bell mr-2"></i>
+                            <!-- Notification badge -->
+                            <span
+                                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                        </div>
+                        {{ __('Notifications') }}
+                    </div>
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">

@@ -35,4 +35,26 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // to make sure if the design is working
 Route::get('/show-plan', [PlanController::class, 'view'])->name('plan.view');
 
+// Flag test page
+Route::get('/flag-test', function () {
+    return view('flag-test');
+})->name('flag.test');
+
+// Chat routes
+Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
+    Route::get('/', [App\Http\Controllers\ChatController::class, 'index'])->name('index');
+    Route::get('/conversations/{conversation}', [App\Http\Controllers\ChatController::class, 'show'])->name('conversation');
+    Route::post('/start-conversation', [App\Http\Controllers\ChatController::class, 'startConversation'])->name('start-conversation');
+    Route::post('/send-message', [App\Http\Controllers\ChatController::class, 'sendMessage'])->name('send-message');
+    Route::get('/conversations/{conversation}/messages', [App\Http\Controllers\ChatController::class, 'getMessages'])->name('messages');
+
+    Route::get('/conversations', [App\Http\Controllers\ChatController::class, 'getConversations'])->name('conversations');
+});
+
+
+
+// API routes for countries
+Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
+Route::get('/api/countries/{name}', [App\Http\Controllers\Api\CountryController::class, 'show'])->name('api.countries.show');
+
 require __DIR__ . '/auth.php';
