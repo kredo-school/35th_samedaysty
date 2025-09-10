@@ -1,6 +1,4 @@
 <x-app-layout>
-    <!-- Flag Icons CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css">
     <!-- heading -->
     <x-title>
         Plan details

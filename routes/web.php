@@ -32,8 +32,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
 });
 
-// to make sure if the design is working
+// plans test page
 Route::get('/show-plan', [PlanController::class, 'view'])->name('plan.view');
+Route::get('/search-plan', [PlanController::class, 'search'])->name('plan.search');
 
 // Flag test page
 Route::get('/flag-test', function () {
