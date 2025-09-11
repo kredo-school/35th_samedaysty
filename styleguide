@@ -1,7 +1,7 @@
 # 🎨 基本ルール（Tailwind のクラス）
 
 ## 見出し（Heading）系
-- **h1** → `text-3xl md:text-4xl border-b-2 border-orange-500` （ページタイトル）
+- **h1** → `text-3xl md:text-4xl border-b-2 border-orange-500` （ページタイトル）#please use component 'title.blade.php' <x-title>content</x-title>
 - **h2** → `text-3xl md:text-4xl` （大きなセクションタイトル）
 - **h3** → `text-2xl` （中セクションタイトル）
 - **h4** → `text-xl` （小見出し）
