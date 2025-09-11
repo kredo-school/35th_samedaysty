@@ -58,4 +58,8 @@ Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
 Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
 Route::get('/api/countries/{name}', [App\Http\Controllers\Api\CountryController::class, 'show'])->name('api.countries.show');
 
+Route::get('/calendar-test', function () {
+    return view('calendar-test');
+})->name('calendar.test');
+
 require __DIR__ . '/auth.php';
