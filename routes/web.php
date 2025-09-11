@@ -33,8 +33,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 // plans test page
-Route::get('/show-plan', [PlanController::class, 'view'])->name('plan.view');
-Route::get('/search-plan', [PlanController::class, 'search'])->name('plan.search');
+Route::get('/plan/detail', [PlanController::class, 'detail'])->name('plan.detail');
+Route::get('/plan/search', [PlanController::class, 'search'])->name('plan.search');
 
 // Flag test page
 Route::get('/flag-test', function () {

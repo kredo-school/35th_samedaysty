@@ -8,12 +8,21 @@ use App\Models\Country;
 
 class PlanController extends Controller
 {
-    public function view(){
+    public function detail(){ //show plan details
         return view('plans.show-plan');
     }
 
-    public function search(){
+    public function search(Request $request){
         $all_countries = Country::all();
-        return view('plans.search-plan')->with('all_countries', $all_countries);
+        if($request->country){
+            $country = Country::find($request->country);
+        } else {
+            $country = null;
+        }
+
+        return view('plans.search-plan')->with('all_countries', $all_countries)
+                                            ->with('country', $country);
+
     }
+
 }
