@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TravelPlan extends Model
 {
-    //
     protected $fillable = [
         'user_id',
         'title',
@@ -16,4 +16,12 @@ class TravelPlan extends Model
         'description',
         'max_participants',
     ];
+
+    /**
+     * Get the country that owns the travel plan.
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
 }
