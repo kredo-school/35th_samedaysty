@@ -29,4 +29,11 @@ class Country extends Model
     {
         return $this->name;
     }
+
+    // country has many plans
+    public function travelPlans() 
+    {
+        return $this->hasMany(TravelPlan::class);
+    }
+
 }

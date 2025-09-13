@@ -115,4 +115,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
+
+    // users has mmany plans
+    public function travelPlans() 
+    {
+        return $this->hasMany(TravelPlan::class);
+    }
+
 }
