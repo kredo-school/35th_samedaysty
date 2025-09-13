@@ -1,31 +1,31 @@
-<div x-data="advancedCalendar()" class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+<div x-data="advancedCalendar()" class="w-full min-h-screen bg-white p-8">
     <!-- Calendar Header -->
-    <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center space-x-4">
-            <button @click="previousMonth()" class="p-2 hover:bg-gray-100 rounded-lg">
+    <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center space-x-6">
+            <button @click="previousMonth()" class="p-4 hover:bg-gray-100 rounded-lg text-2xl">
                 <i class="fas fa-chevron-left text-gray-600"></i>
             </button>
-            <h2 class="text-xl font-semibold text-gray-800" x-text="currentMonthName + ' ' + currentYear"></h2>
-            <button @click="nextMonth()" class="p-2 hover:bg-gray-100 rounded-lg">
+            <h2 class="text-5xl font-semibold text-gray-800" x-text="currentMonthName + ' ' + currentYear"></h2>
+            <button @click="nextMonth()" class="p-4 hover:bg-gray-100 rounded-lg text-2xl">
                 <i class="fas fa-chevron-right text-gray-600"></i>
             </button>
         </div>
 
         <!-- Mode Toggle -->
-        <div class="flex space-x-2">
+        <div class="flex space-x-3">
             <button @click="mode = 'single'"
                 :class="mode === 'single' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
-                class="px-3 py-1 rounded-lg text-sm font-medium transition-colors">
+                class="px-4 py-2 rounded-lg text-base font-medium transition-colors">
                 Single
             </button>
             <button @click="mode = 'range'"
                 :class="mode === 'range' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
-                class="px-3 py-1 rounded-lg text-sm font-medium transition-colors">
+                class="px-4 py-2 rounded-lg text-base font-medium transition-colors">
                 Range
             </button>
             <button @click="mode = 'multiple'"
                 :class="mode === 'multiple' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'"
-                class="px-3 py-1 rounded-lg text-sm font-medium transition-colors">
+                class="px-4 py-2 rounded-lg text-base font-medium transition-colors">
                 Multiple
             </button>
         </div>
@@ -35,14 +35,14 @@
         <!-- Calendar Body -->
         <div class="lg:col-span-2">
             <!-- Weekday Header -->
-            <div class="grid grid-cols-7 gap-1 mb-2">
+            <div class="grid grid-cols-7 gap-4 mb-6">
                 <template x-for="day in weekDays" :key="day">
-                    <div class="text-center text-sm font-medium text-gray-500 py-2" x-text="day"></div>
+                    <div class="text-center text-xl font-medium text-gray-500 py-4" x-text="day"></div>
                 </template>
             </div>
 
             <!-- Calendar Grid -->
-            <div class="grid grid-cols-7 gap-1">
+            <div class="grid grid-cols-7 gap-4">
                 <template x-for="date in calendarDays" :key="date.key">
                     <button @click="selectDate(date)" @mouseenter="if (mode === 'range' && rangeStart) hoverDate = date"
                         @mouseleave="hoverDate = null"
@@ -55,11 +55,11 @@
                             'bg-red-100 text-red-600': date.isToday,
                             'bg-green-100 text-green-700': date.hasEvent
                         }"
-                        class="h-12 w-12 rounded-lg text-sm font-medium transition-colors duration-200 relative"
+                        class="h-24 w-full rounded-lg text-xl font-medium transition-colors duration-200 relative"
                         :disabled="date.isOtherMonth" x-text="date.day">
                         <!-- Event Indicator -->
-                        <div x-show="date.hasEvent" class="absolute bottom-1 left-1/2 transform -translate-x-1/2">
-                            <div class="w-1 h-1 bg-red-500 rounded-full"></div>
+                        <div x-show="date.hasEvent" class="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
                         </div>
                     </button>
                 </template>
