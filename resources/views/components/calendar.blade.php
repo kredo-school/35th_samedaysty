@@ -1,68 +1,100 @@
-<div x-data="calendar()" x-init="init()" class="w-full min-h-screen bg-white p-8">
+<div x-data="calendar()" x-init="init()"
+    class="w-full min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-8">
-        <button @click="previousMonth()" class="p-4 hover:bg-gray-100 rounded-lg text-2xl">
-            &lt;
-        </button>
-        <h2 class="text-4xl font-semibold text-gray-800" x-text="currentMonthName + ' ' + currentYear"></h2>
-        <button @click="nextMonth()" class="p-4 hover:bg-gray-100 rounded-lg text-2xl">
-            &gt;
-        </button>
+    <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8 border border-white/20">
+        <div class="flex items-center justify-between">
+            <button @click="previousMonth()"
+                class="p-3 hover:bg-blue-100 rounded-xl text-2xl text-blue-600 hover:text-blue-700 transition-all duration-200 hover:scale-105 font-bold">
+                ‹
+            </button>
+            <div class="text-center">
+                <h2 class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                    x-text="currentMonthName + ' ' + currentYear"></h2>
+                <p class="text-gray-500 mt-2 text-sm">Select dates to view travel plans</p>
+            </div>
+            <button @click="nextMonth()"
+                class="p-3 hover:bg-blue-100 rounded-xl text-2xl text-blue-600 hover:text-blue-700 transition-all duration-200 hover:scale-105 font-bold">
+                ›
+            </button>
+        </div>
     </div>
 
     <!-- Weekdays -->
-    <div class="grid grid-cols-7 gap-4 mb-6">
-        <template x-for="day in weekDays" :key="day">
-            <div class="text-center text-xl font-medium text-gray-500 py-4" x-text="day"></div>
-        </template>
+    <div class="bg-white/60 backdrop-blur-sm rounded-xl shadow-lg p-4 mb-6 border border-white/20">
+        <div class="grid grid-cols-7 gap-2">
+            <template x-for="day in weekDays" :key="day">
+                <div class="text-center text-lg font-semibold text-gray-600 py-3 bg-gray-50 rounded-lg" x-text="day">
+                </div>
+            </template>
+        </div>
     </div>
 
     <!-- Calendar Grid -->
-    <div class="grid grid-cols-7 gap-4">
-        <template x-for="date in calendarDays" :key="date.key">
-            <div class="relative">
-                <button @click="selectDate(date)"
-                    :class="{
-                        'bg-blue-500 text-white hover:bg-blue-600': date.isSelected,
-                        'bg-gray-100 text-gray-400': date.isOtherMonth,
-                        'bg-white text-gray-700 hover:bg-gray-50': !date.isOtherMonth && !date.isSelected,
-                        'bg-red-100 text-red-600': date.isToday
-                    }"
-                    class="h-24 w-full rounded-lg text-xl font-medium transition-colors duration-200"
-                    :disabled="date.isOtherMonth" x-text="date.day"></button>
+    <div class="bg-white/60 backdrop-blur-sm rounded-xl shadow-lg p-4 mb-6 border border-white/20">
+        <div class="grid grid-cols-7 gap-3">
+            <template x-for="date in calendarDays" :key="date.key">
+                <div class="relative">
+                    <button @click="selectDate(date)"
+                        :class="{
+                            'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:from-blue-600 hover:to-blue-700': date
+                                .isSelected,
+                            'bg-gray-100 text-gray-400 opacity-50': date.isOtherMonth,
+                            'bg-white/80 text-gray-700 hover:bg-blue-50 hover:text-blue-700 hover:shadow-md': !date
+                                .isOtherMonth && !date.isSelected,
+                            'bg-gradient-to-br from-red-100 to-pink-100 text-red-600 border-2 border-red-300 shadow-md': date
+                                .isToday
+                        }"
+                        class="h-20 w-full rounded-xl text-lg font-semibold transition-all duration-300 hover:scale-105 relative overflow-hidden"
+                        :disabled="date.isOtherMonth" x-text="date.day">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-transparent to-white/10 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                    </button>
 
-                <!-- Event flags -->
-                <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                    <template x-for="event in getEventsForDate(date.date)" :key="event.id">
-                        <i x-show="event.extendedProps.country_code"
-                            :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`" class="text-lg"
-                            :title="event.title"></i>
-                    </template>
+                    <!-- Event flags -->
+                    <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                        <template x-for="event in getEventsForDate(date.date)" :key="event.id">
+                            <i x-show="event.extendedProps.country_code"
+                                :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`" class="text-lg"
+                                :title="event.title"></i>
+                        </template>
+                    </div>
                 </div>
-            </div>
-        </template>
+            </template>
+        </div>
     </div>
 
     <!-- Selected Date Events -->
-    <div class="mt-8 p-6 bg-gray-50 rounded-lg" x-show="selectedDate">
-        <p class="text-lg text-gray-600">
-            Selected Date: <span class="font-medium" x-text="selectedDateFormatted"></span>
+    <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-6 border border-white/20"
+        x-show="selectedDate">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-2 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
+            <h3 class="text-xl font-bold text-gray-800">Selected Date</h3>
+        </div>
+        <p class="text-lg text-gray-600 mb-4">
+            <span class="font-semibold text-blue-600" x-text="selectedDateFormatted"></span>
         </p>
 
-        <div class="mt-3" x-show="getEventsForDate(selectedDate).length > 0">
-            <h4 class="text-lg font-medium text-gray-700 mb-4">Events:</h4>
-            <div class="space-y-2">
+        <div class="mt-6" x-show="getEventsForDate(selectedDate).length > 0">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <span class="text-blue-500 text-xl">📅</span>
+                Travel Plans
+            </h4>
+            <div class="space-y-3">
                 <template x-for="event in getEventsForDate(selectedDate)" :key="event.id">
-                    <div class="p-4 rounded-md text-base bg-gray-50 border-l-4 border-blue-500">
-                        <div class="flex items-center gap-2">
+                    <div
+                        class="p-5 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 shadow-sm hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center gap-3 mb-3">
                             <i x-show="event.extendedProps.country_code"
-                                :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`" class="text-lg"></i>
-                            <div class="font-medium" x-text="event.title"></div>
+                                :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`"
+                                class="text-xl shadow-sm"></i>
+                            <div class="font-bold text-gray-800 text-lg" x-text="event.title"></div>
                         </div>
-                        <div class="text-gray-500 mt-1"
+                        <div class="text-blue-600 text-sm font-medium mb-2"
                             x-text="event.extendedProps.country ? `${event.extendedProps.country} • ${event.extendedProps.participants}/${event.extendedProps.max_participants} participants` : ''">
                         </div>
-                        <div class="text-gray-600" x-text="event.extendedProps.description"></div>
+                        <div class="text-gray-600 text-sm leading-relaxed" x-text="event.extendedProps.description">
+                        </div>
                     </div>
                 </template>
             </div>
@@ -70,9 +102,9 @@
     </div>
 
     <!-- Go to Today -->
-    <div class="mt-8">
+    <div class="flex justify-center">
         <button @click="goToToday()"
-            class="w-full bg-green-500 text-white py-4 px-6 rounded-lg hover:bg-green-600 text-lg font-medium">
+            class="bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 text-sm font-medium transition-colors duration-200">
             Go to Today
         </button>
     </div>
