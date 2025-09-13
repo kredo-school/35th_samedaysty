@@ -32,9 +32,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
 });
 
-// plans test page
+// plans
 Route::get('/plan/detail', [PlanController::class, 'detail'])->name('plan.detail');
 Route::get('/plan/search', [PlanController::class, 'search'])->name('plan.search');
+
+// API route for plans
+Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
 
 // Flag test page
 Route::get('/flag-test', function () {

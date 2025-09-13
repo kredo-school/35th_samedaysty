@@ -18,7 +18,7 @@
             </form>
         </div>
         <div class="">
-            
+            <x-calendar></x-calendar>
         </div>
     </div>
 
