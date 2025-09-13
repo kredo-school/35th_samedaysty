@@ -32,17 +32,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
 });
 
+
 // plans
 Route::get('/plan/detail', [PlanController::class, 'detail'])->name('plan.detail');
 Route::get('/plan/search', [PlanController::class, 'search'])->name('plan.search');
+Route::get('/create-plan', [PlanController::class, 'create'])->name('plan.create');
+Route::post('/create-plan', [PlanController::class, 'store'])->name('plan.store');
 
 // API route for plans
 Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
 
-// Flag test page
-Route::get('/flag-test', function () {
-    return view('flag-test');
-})->name('flag.test');
 
 // Chat routes
 Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
@@ -55,7 +54,8 @@ Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
     Route::get('/conversations', [App\Http\Controllers\ChatController::class, 'getConversations'])->name('conversations');
 });
 
-
+// support page
+Route::get('/support', function () {return view('support');});
 
 // API routes for countries
 Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
@@ -64,5 +64,10 @@ Route::get('/api/countries/{name}', [App\Http\Controllers\Api\CountryController:
 Route::get('/calendar-test', function () {
     return view('calendar-test');
 })->name('calendar.test');
+
+// Flag test page
+Route::get('/flag-test', function () {
+    return view('flag-test');
+})->name('flag.test');
 
 require __DIR__ . '/auth.php';

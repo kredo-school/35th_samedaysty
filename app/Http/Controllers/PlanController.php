@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Country;
+// use App\Models\Plan;
 use App\Models\TravelPlan;
 
 class PlanController extends Controller
 {
     public function detail()
-    { //show plan details
+    {
         return view('plans.show-plan');
     }
 
@@ -50,4 +51,26 @@ class PlanController extends Controller
         return response()->json($all_plans);
     }
 
+
+    //add create method
+    public function create()
+    {
+        return view('plans.create'); // ここは実際のビュー名に置き換え
+    }
+
+    // Form submission
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        TravelPlan::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('plan.create')->with('success', 'Plan created!');
+    }
 }
