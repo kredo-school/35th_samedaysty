@@ -24,4 +24,10 @@ class TravelPlan extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
