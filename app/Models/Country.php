@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Country extends Model
 {
     protected $fillable = [
@@ -15,12 +14,12 @@ class Country extends Model
      * Get travel plans for this country
      * Note: TravelPlan model not yet implemented
      */
-    /*
-    public function travelPlans(): HasMany
+    // country has many plans
+    public function travelPlans()
     {
-        return $this->hasMany(TravelPlan::class, 'country_id');
+        return $this->hasMany(TravelPlan::class);
     }
-    */
+
 
     /**
      * Get display name for the country
@@ -30,10 +29,5 @@ class Country extends Model
         return $this->name;
     }
 
-    // country has many plans
-    public function travelPlans() 
-    {
-        return $this->hasMany(TravelPlan::class);
-    }
 
 }

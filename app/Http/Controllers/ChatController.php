@@ -109,12 +109,12 @@ class ChatController extends Controller
 
         $message = $conversation->messages()->create([
             'sender_id' => auth()->id(),
-            'content' => $request->content
+            'content' => $request->input('content')
         ]);
 
         // Update conversation's last message
         $conversation->update([
-            'last_message' => $request->content,
+            'last_message' => $request->input('content'),
             'last_message_at' => now()
         ]);
 
