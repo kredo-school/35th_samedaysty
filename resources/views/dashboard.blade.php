@@ -11,8 +11,8 @@
                 <div class="h-screen bg-cover bg-center shadow-lg"
                     style="background-image: url('/images/airplane.png')">
                     <div class="grid grid-cols-2 grid-rows-2 h-full w-full gap-10 p-10">
-                        <!--find others travel plans-->
-                        <a class="w-full h-full relative bg-white/5 text-white font-bold rounded-lg flex items-center justify-center text-4xl hover:bg-white/40 border border-transparent hover:border-orange-500 transition px-2 py-3">
+                        <!--search others travel plans-->
+                        <a href= "{{ route('plan.search') }}" class="w-full h-full relative bg-white/5 text-white font-bold rounded-lg flex items-center justify-center text-4xl hover:bg-white/40 border border-transparent hover:border-orange-500 transition px-2 py-3">
                             <i class="fa-solid fa-hippo flex-none text-3xl m-2"></i>
                             <span class="leading-none">Search others<br>travel plans</span>
                         </a>
