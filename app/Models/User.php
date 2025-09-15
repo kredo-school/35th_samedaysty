@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Gadget;
 
 class User extends Authenticatable
 {
@@ -91,7 +92,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Conversation::class, 'user1_id');
     }
-
+   
     /**
      * Get conversations where user is user2
      */
@@ -115,11 +116,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
-
-    // users has many plans
-    public function travelPlans()
+     /**
+     * Get recommended items
+     */
+    public function gadgets()
     {
-        return $this->hasMany(TravelPlan::class);
+        return $this->hasMany(Gadget::class);
     }
-
+    
 }

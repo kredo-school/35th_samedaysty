@@ -6,60 +6,68 @@
         </x-title>
     </div>
     <!--avatar -->
-    <div class=" items-start space-x-8 p-4">
-        <div class="flex-none w-1/5">
-            <div class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500">
-                <i class="fa-solid fa-dragon text-gray-600 text-8xl"></i>
-            </div>
-        </div>
-        <!--user info-->
-        <div class="flex-1 w-4/5 flex flex-col justify-center">
-            <h3 class="text-lg  sm:text-2xl md:text-3xl font-bold">{{ $user->name }}</h3>
-            <!--count-->
-            <div class="mt-4 flex space-x-6">
-                <div class="flex items-center space-x-3">
-                    <span class="text-gray-500">Posts</span>
-                    <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <span class=" text-gray-500">Following</span>
-                    <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
-                </div>
-                <div class="flex items-center space-x-3>
-                    <span class=" text-gray-500">Followers</span>
-                    <span class="font-bold">20{{--{{ $followersCount }}--}}</span>
+    <div class="items-start space-x-8 p-4">
+        <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8 p-4">
+            <div class="flex-none w-1/5">
+                <div class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500 overflow-hidden">
+                    @if($user->avatar)
+                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Avatar" class="w-full h-full rounded-full object-cover">
+                    @else
+                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <i class="fa-solid fa-hippo text-gray-400 text-6xl"></i>
+                    </div>
+                    @endif
                 </div>
             </div>
-            <!--introduction-->
-            <div class="mt-6">
-                <h2 class="text-xl text-gray-500">introduction</h2>
-                <p class="text-sm text-gray-500 mt-3 leading-relaxed break-words whitespace-pre-line">
-                    {{ $user->bio ?? 'No introduction yet.' }}
-                </p>
-            </div>
+            <!--user info-->
+            <div class="flex-1 w-4/5 flex flex-col justify-center">
+                <h3 class="text-lg  sm:text-2xl md:text-3xl font-bold">{{ $user->name }}</h3>
+                <!--count-->
+                <div class="mt-4 flex space-x-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-gray-500">Posts</span>
+                        <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class=" text-gray-500">Following</span>
+                        <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class=" text-gray-500">Followers</span>
+                        <span class="font-bold">20{{--{{ $followersCount }}--}}</span>
+                    </div>
+                </div>
+                <!--introduction-->
+                <div class="mt-6">
+                    <h2 class="text-xl text-gray-500">introduction</h2>
+                    <p class="text-sm text-gray-500 mt-3 leading-relaxed break-words whitespace-pre-line">
+                        {{ $user->bio ?? 'No introduction yet.' }}
+                    </p>
+                </div>
 
-            <div class="flex space-x-4 mt-4">
-                @if(Auth::id() === $user->id)
-                <!--only see own user-->
-                <a href="{{ route('profile.edit',$user) }}"
-                    class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
-                    Edit profile
-                </a>
-                <a href="#"
-                    class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
-                    Share profile
-                </a>
-                <x-primary-button>
-                    Change your status
-                </x-primary-button>
-                @else
-                <!--other user-->
-                <form method="POST" action="{{ route('follow',$user) }}">
-                    @csrf
-                    <x-primary-button>Follow</x-primary-button>
-                </form>
-                <a href="{{route('messages.create',$user) }}" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">Message</a>
-                @endif
+                <div class="flex space-x-4 mt-4">
+                    @if(Auth::id() === $user->id)
+                    <!--only see own user-->
+                    <a href="{{ route('profile.edit',$user) }}"
+                        class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
+                        Edit profile
+                    </a>
+                    <a href="#"
+                        class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
+                        Share profile
+                    </a>
+                    <x-primary-button>
+                        Change your status
+                    </x-primary-button>
+                    @else
+                    <!--other user-->
+                    <form method="POST" action="{{ route('follow',$user) }}">
+                        @csrf
+                        <x-primary-button>Follow</x-primary-button>
+                    </form>
+                    <a href="{{route('messages.create',$user) }}" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">Message</a>
+                    @endif
+                </div>
             </div>
         </div>
 
@@ -178,30 +186,57 @@
     </div>
 
     <!--add calender -->
+
+    <!-- gadgets -->
     <h1 class="text-2xl p-5">3 essentials for may travel <span class="text-orange-500">style</span></h1>
+
+    @foreach($gadgets as $gadget)
     <div class="w-full flex items-center m-2">
+        <!-- image -->
         <div class="flex-none w-4/10">
             <div class="w-36 h-36 bg-white flex items-center justify-center border border-orange-500 overflow-hidden rounded-md">
+                @if($gadget->photo_url)
+                <img src="{{ asset('storage/' . $gadget->photo_url) }}"
+                    alt="{{ $gadget->item_name }}"
+                    class="w-full h-full object-cover">
+                @else
                 <img src="{{ asset('images/airplane.png') }}"
-                    alt="Sample" class="w-full h-full object-cover">
+                    alt="Sample"
+                    class="w-full h-full object-cover">
+                @endif
             </div>
         </div>
-        <!--user info-->
+
+        <!-- item info -->
         <div class="flex-1 w-6/10 p-2">
-            <h3 class="text-lg sm:text-2xl md:text-3xl font-bold">Item name</h3>
-            <!--introduction about goods-->
+            <h3 class="text-lg sm:text-2xl md:text-3xl font-bold">{{ $gadget->item_name }}</h3>
+
+            <!-- description -->
             <div class="mt-4 space-y-4">
                 <div class="flex items-center space-x-3">
-                    <p>I recommend this eye mask for sleeping on planes. It soothes tired eyes...</p>
+                    <p>{{ Str::limit($gadget->memo, 100) }}</p>
+                    @if(strlen($gadget->memo) > 100)
                     <x-secondary-button>read more...</x-secondary-button>
+                    @endif
                 </div>
+
+                @if($gadget->shop_url)
                 <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-link text-blue-800"></i>
-                    <p class="text-blue-600 underline">https://amazon.</p>
+                    <a href="{{ $gadget->shop_url }}"
+                        target="_blank"
+                        class="text-blue-600 underline">
+                        {{ $gadget->shop_url }}
+                    </a>
                 </div>
-
-
+                @endif
             </div>
         </div>
     </div>
+    @empty
+        <p class="p-5 text-gray-600">I'm trying to figure out which one is better.
+
+        </p>
+    @endforeach
+
 </x-app-layout>
