@@ -30,7 +30,6 @@ class PlanController extends Controller
         return view('plans.search-plan')->with('all_countries', $all_countries)
             ->with('country', $country)
             ->with('all_plans', $all_plans);
-
     }
 
     public function apiIndex()
@@ -58,41 +57,28 @@ class PlanController extends Controller
     {
         $travel_styles = TravelStyle::all();
         return view('plans.create')->with('travel_styles', $travel_styles);
-        
     }
 
     // Form submission
     public function store(Request $request)
-{
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'travel_styles' => 'nullable|array',
-        'travel_styles.*' => 'exists:travel_styles,id',
-    ]);
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'travel_styles' => 'nullable|array',
+            'travel_styles.*' => 'exists:travel_styles,id',
+        ]);
 
-    TravelPlan::create([
-        'title' => $request->title,
-        'description' => $request->description,
-    ]);
-    
-    if ($request->has('travel_styles')) {
-        $plan->travelStyles()->sync($request->travel_styles);
-    
+        // create a plan  and assign it to $plan 
+        $plan = TravelPlan::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
 
-    // create a plan  and assign it to $plan  プラン作成して $plan に代入
-    $plan = TravelPlan::create([
-        'title' => $request->title,
-        'description' => $request->description,
-    ]);
-
-    // Link the checked travel style  チェックした旅行スタイルを紐付け
-    if ($request->has('travel_styles')) {
-        $plan->travelStyles()->sync($request->travel_styles);
+        // Link the checked travel style 
+        if ($request->has('travel_styles')) {
+            $plan->travelStyles()->sync($request->travel_styles);
+        }
+        return redirect()->route('plans.create')->with('success', 'Plan created!');
     }
-
-    return redirect()->route('plans.create')->with('success', 'Plan created!');
-}
-
-
 }
