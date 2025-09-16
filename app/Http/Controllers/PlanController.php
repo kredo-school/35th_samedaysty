@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Country;
 // use App\Models\Plan;
 use App\Models\TravelPlan;
+use App\Models\TravelStyle;
 
 class PlanController extends Controller
 {
@@ -55,22 +56,43 @@ class PlanController extends Controller
     //add create method
     public function create()
     {
-        return view('plans.create'); // ここは実際のビュー名に置き換え
+        $travel_styles = TravelStyle::all();
+        return view('plans.create')->with('travel_styles', $travel_styles);
+        
     }
 
     // Form submission
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'travel_styles' => 'nullable|array',
+        'travel_styles.*' => 'exists:travel_styles,id',
+    ]);
 
-        TravelPlan::create([
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+    TravelPlan::create([
+        'title' => $request->title,
+        'description' => $request->description,
+    ]);
+    
+    if ($request->has('travel_styles')) {
+        $plan->travelStyles()->sync($request->travel_styles);
+    
 
-        return redirect()->route('plan.create')->with('success', 'Plan created!');
+    // create a plan  and assign it to $plan  プラン作成して $plan に代入
+    $plan = TravelPlan::create([
+        'title' => $request->title,
+        'description' => $request->description,
+    ]);
+
+    // Link the checked travel style  チェックした旅行スタイルを紐付け
+    if ($request->has('travel_styles')) {
+        $plan->travelStyles()->sync($request->travel_styles);
     }
+
+    return redirect()->route('plans.create')->with('success', 'Plan created!');
+}
+
+
 }

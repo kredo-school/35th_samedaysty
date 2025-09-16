@@ -24,4 +24,10 @@ class TravelPlan extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+        // TravelStyle との多対多リレーション
+    public function travelStyles()
+    {
+        return $this->belongsToMany(TravelStyle::class);
+    }
 }

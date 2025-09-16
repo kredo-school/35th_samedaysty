@@ -291,7 +291,7 @@
         </div>
     </section>
 
-    <div class="w-full h-[60vh] bg-cover text-white flex flex-col justify-end mt-24 px-4 pb-8" style="background-image: url('/images/D127F81C-04A2-4C61-94C1-4AEFEA40B1DB_1_105_c.jpeg'); background-position: 40% 20%;">
+    <div class="w-full h-[60vh] bg-cover text-white flex flex-col justify-end mt-24 px-4 pb-8" style="background-image: url('/images/zousan.jpeg'); background-position: 40% 20%;">
         <!-- title（left side） -->
         <h2 class="text-left text-3xl md:text-4xl font-bold mt-4">
             Register to Samedaysty
