@@ -24,7 +24,7 @@
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Home') }}
                             </x-nav-link>
-                            <x-nav-link>
+                            <x-nav-link :href="route('plan.search')" :active="request()->routeIs('plan.*')">
                                 {{ __('Search') }}
                             </x-nav-link>
                             <x-nav-link>

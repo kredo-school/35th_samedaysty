@@ -18,9 +18,9 @@
         <!-- plan details -->
         <div class="pt-3 flex items-center">
             <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-5xl"></i></a>
-            <h4 class="text-xl ps-2">Username</h4>
-            <h4 class="text-xl ms-auto px-2">Denmark</h4>
-            <i class="fi fi-dk text-3xl"></i>
+            <h4 class="text-xl ps-2">{{ $travel_plan->user->name }}</h4>
+            <h4 class="text-xl ms-auto px-2">{{ $travel_plan->country->name }}</h4>
+            <i class="fi fi-{{ $travel_plan->country->code }} text-3xl"></i>
         </div>
 
         <div class="px-8 pt-4">
@@ -35,27 +35,27 @@
             <!-- plan name -->
             <div class="flex pt-5 items-center font-bold">
                 <h4 class="text-xl">Plan&nbsp;:</h4>
-                <p class="text-xl ms-2">eat hamburg in Copenhagen</p>
+                <p class="text-xl ms-2">{{$travel_plan->title}}</p>
             </div>
 
             <!-- description -->
             <div class="flex pt-5 items-start">
                 <h4 class="text-xl font-bold">description&nbsp;:</h4>
-                <p class="text-base ms-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam mollitia eius, commodi recusandae maxime eum error delectus repellat aspernatur cum quo, nemo fugiat enim hic soluta necessitatibus? Debitis, voluptates exercitationem?</p>
+                <p class="text-base ms-2">{{ $travel_plan->description }}</p>
             </div>
 
             <!-- date -->
             <div class="flex pt-5 items-center">
                 <h4 class="text-xl font-bold">date&nbsp;:</h4>
-                <p class="text-base ms-2">10/10/2026</p>
+                <p class="text-base ms-2">{{ $travel_plan->start_date }}</p>
                 <p class="text-base mx-2">-</p>
-                <p class="text-base">13/10/2026</p>
+                <p class="text-base">{{ $travel_plan->end_date }}</p>
             </div>
 
             <!-- max participants -->
             <div class="flex pt-1 items-center">
                 <h4 class="text-xl font-bold">Max&nbsp;:</h4>
-                <p class="text-base ms-2">60</p>
+                <p class="text-base ms-2">{{ $travel_plan->max_participants }}</p>
                 <p class="text-base ms-1">people</p>
             </div>
 
