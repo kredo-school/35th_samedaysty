@@ -10,9 +10,11 @@ use App\Models\TravelPlan;
 
 class PlanController extends Controller
 {
-    public function detail()
+
+    public function detail($id)
     {
-        return view('plans.show-plan');
+        $travel_plan = TravelPlan::findOrFail( $id );
+        return view('plans.show-plan')->with('travel_plan', $travel_plan);
     }
 
     public function search(Request $request)
@@ -27,29 +29,36 @@ class PlanController extends Controller
         }
 
         return view('plans.search-plan')->with('all_countries', $all_countries)
-            ->with('country', $country)
-            ->with('all_plans', $all_plans);
+                                            ->with('country', $country)
+                                            ->with('all_plans', $all_plans);
 
     }
 
-    public function apiIndex()
-    {
+public function apiIndex(Request $request)
+{
+    $query = TravelPlan::with('country');
 
-        $all_plans = TravelPlan::with('country')->get()->map(function ($plan) {
-            return [
-                'title' => $plan->title,
-                'start' => $plan->start_date,
-                'end' => $plan->end_date,
-                'id' => $plan->id,
-                'country' => $plan->country ? $plan->country->name : '',
-                'country_code' => $plan->country ? $plan->country->code : '',
-                'participants' => $plan->participants ?? 0,
-                'max_participants' => $plan->max_participants ?? 0,
-                'description' => $plan->description ?? '',
-            ];
-        });
-        return response()->json($all_plans);
+    // if there is a selected country, plans would be narrowed down 
+    if ($request->has('country') && $request->country) {
+        $query->where('country_id', $request->country);
     }
+
+    $all_plans = $query->get()->map(function ($plan) {
+        return [
+            'title' => $plan->title,
+            'start' => $plan->start_date,
+            'end' => $plan->end_date,
+            'id' => $plan->id,
+            'country' => $plan->country ? $plan->country->name : '',
+            'country_code' => $plan->country ? $plan->country->code : '',
+            'participants' => $plan->participants ?? 0,
+            'max_participants' => $plan->max_participants ?? 0,
+            'description' => $plan->description ?? '',
+        ];
+    });
+
+    return response()->json($all_plans);
+}
 
 
     //add create method

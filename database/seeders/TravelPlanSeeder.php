@@ -120,7 +120,7 @@ class TravelPlanSeeder extends Seeder
         // ベトナムビーチホリデー - 複数日程
         TravelPlan::create([
             'title' => 'Vietnam Beach Holiday - Da Nang',
-            'user_id' => 3,
+            'user_id' => 4,
             'country_id' => 104,
             'start_date' => '2025-10-20',
             'end_date' => '2025-10-25',
@@ -130,7 +130,7 @@ class TravelPlanSeeder extends Seeder
 
         TravelPlan::create([
             'title' => 'Vietnam Beach Holiday - Phu Quoc',
-            'user_id' => 3,
+            'user_id' => 4,
             'country_id' => 104,
             'start_date' => '2025-11-01',
             'end_date' => '2025-11-06',
@@ -140,7 +140,7 @@ class TravelPlanSeeder extends Seeder
 
         TravelPlan::create([
             'title' => 'Vietnam Beach Holiday - Nha Trang',
-            'user_id' => 3,
+            'user_id' => 4,
             'country_id' => 104,
             'start_date' => '2025-11-15',
             'end_date' => '2025-11-20',
