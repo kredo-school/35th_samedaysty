@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Country;
 // use App\Models\Plan;
 use App\Models\TravelPlan;
+use App\Models\TravelStyle;
 
 class PlanController extends Controller
 {
@@ -29,7 +30,6 @@ class PlanController extends Controller
         return view('plans.search-plan')->with('all_countries', $all_countries)
             ->with('country', $country)
             ->with('all_plans', $all_plans);
-
     }
 
     public function apiIndex()
@@ -55,7 +55,8 @@ class PlanController extends Controller
     //add create method
     public function create()
     {
-        return view('plans.create'); // ここは実際のビュー名に置き換え
+        $travel_styles = TravelStyle::all();
+        return view('plans.create')->with('travel_styles', $travel_styles);
     }
 
     // Form submission
@@ -64,13 +65,20 @@ class PlanController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'travel_styles' => 'nullable|array',
+            'travel_styles.*' => 'exists:travel_styles,id',
         ]);
 
-        TravelPlan::create([
+        // create a plan  and assign it to $plan 
+        $plan = TravelPlan::create([
             'title' => $request->title,
             'description' => $request->description,
         ]);
 
-        return redirect()->route('plan.create')->with('success', 'Plan created!');
+        // Link the checked travel style 
+        if ($request->has('travel_styles')) {
+            $plan->travelStyles()->sync($request->travel_styles);
+        }
+        return redirect()->route('plans.create')->with('success', 'Plan created!');
     }
 }
