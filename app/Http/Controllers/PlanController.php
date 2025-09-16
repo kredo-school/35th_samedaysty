@@ -65,7 +65,7 @@ public function apiIndex(Request $request)
     public function create()
     {
         $travel_styles = TravelStyle::all();
-        return view('plans.create')->with('travel_styles', $travel_styles);
+        return view('plans.create', compact('travel_styles'));
     }
 
     // Form submission
