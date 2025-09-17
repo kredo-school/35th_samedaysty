@@ -7,11 +7,12 @@
             </h1>
         </x-slot>
 
-        <form action="{{ route('plan.store') }}" method="POST" class="p-6 px-12 max-w-4xl mx-auto bg-white rounded-lg shadow">
+        <form action="{{ route('plan.store') }}" method="POST"
+            class="p-6 px-12 max-w-4xl mx-auto bg-white rounded-lg shadow">
             @csrf
 
             <!-- Avatar + Name -->
-            <div class="flex items-center justify-start space-x-2 mb-10">
+            <div class="flex items-center justify-start space-x-2 mb-16">
                 <img src="/images/bellman.png" alt="Avatar" class="w-10 h-10 rounded-full">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
                     <span class="ml-2 font-bold text-gray-800">カビルンルン</span>
@@ -20,31 +21,33 @@
 
             <!-- Travel Style -->
             <div class="mb-6">
-                <h2 class="font-semibold mb-2">Travel Style</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <h2 class="font-semibold mb-4">Travel Style</h2>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 p-6">
+                <!-- 5rows -->
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                    @foreach($travel_styles as $style)
+                    <!-- card 1 -->
+                    <label
+                        class="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 flex flex-col justify-between h-18">
 
-                        @foreach($travel_styles as $style)
-                            <label class="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-gray-50 h-full">
-                                <!-- チェックボックス -->
-                                <input type="checkbox" name="travel_styles[]" value="{{ $style->id }}" class="h-5 w-5 text-blue-600 flex-shrink-0">
-                    
-                                <!-- アイコン -->
-                                <i class="{{ $style->fontawesome_icon }} text-2xl flex-shrink-0"></i>
-                    
-                                <!-- テキスト -->
-                                <div class="flex flex-col justify-center overflow-hidden">
-                                    <h3 class="font-semibold text-sm truncate">{{ ucfirst($style->style_name) }}</h3>
-                                    <p class="text-xs text-gray-600 truncate">{{ $style->description ?? 'No description yet' }}</p>
-                                </div>
-                            </label>
-                        @endforeach
-                    </div>
-                    
+                        <!-- UpperRow ：checkbox ＋Logo ＋Name -->
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" name="travel_styles[]" value="{{ $style->id }}"
+                                class="h-4 w-4 text-blue-600 flex-shrink-0">
+
+                            <i class="{{ $style->fontawesome_icon }} text-xl flex-shrink-0"></i>
+
+                            <h3 class="font-semibold text-sm truncate">{{ ucfirst($style->style_name) }}</h3>
+                        </div>
+
+                        <!-- LowerRow ：Description -->
+                        <p class="text-xs text-gray-600 mt-2 truncate">
+                            {{ $style->description ?? 'No description yet' }}
+                        </p>
+                    </label>
+                    @endforeach
                 </div>
             </div>
-
             <!-- Title と Country -->
             <div class="flex mb-6 space-x-4">
                 <div class="flex-1">
@@ -53,12 +56,13 @@
                 </div>
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">Country</label>
-                    <select name="country" class="w-full border rounded-lg p-2">
-                        <option>Japan</option>
-                        <option>Australia</option>
-                        <option>Thailand</option>
+                    <select name="country_id" class="w-full border rounded-lg p-2">
+                        @foreach($all_countries as $country)
+                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                        @endforeach
                     </select>
                 </div>
+
             </div>
 
             <!-- Description -->
@@ -87,13 +91,15 @@
 
             <!-- Submit Button -->
             <div class="text-center">
-                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full">
+                <button type="submit"
+                    class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full">
                     Create Plan
                 </button>
             </div>
 
             @if(session('success'))
-            <div class="mt-4 max-w-2xl mx-auto p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
+            <div
+                class="mt-4 max-w-2xl mx-auto p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
                 <p class="font-semibold">✅ Success</p>
                 <p>{{ session('success') }}</p>
             </div>
