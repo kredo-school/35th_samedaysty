@@ -33,5 +33,8 @@ class TravelPlan extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function planStyles(){
+        return $this->hasMany(PlanStyle::class);
+    }
 
 }
