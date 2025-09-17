@@ -12,17 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('travel_plans', function (Blueprint $table) {
-            $table->id(); // id (主キー)
+            $table->id();
 
-            $table->unsignedBigInteger('user_id');      // ユーザーID（外部キー）
-            $table->string('title');                    // タイトル
-            $table->unsignedBigInteger('country_id');   // カントリーID（外部キー予定）
-            $table->date('start_date');                 // 開始日
-            $table->date('end_date');                   // 終了日
-            $table->text('description')->nullable();    // 詳細説明
-            $table->integer('max_participants')->nullable(); // 最大参加人数
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->foreignId('country_id')->constrained()->onDelete('cascade');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->text('description')->nullable();
+            $table->integer('max_participants')->nullable();
 
             $table->timestamps(); // created_at, updated_at
+
         });
     }
 

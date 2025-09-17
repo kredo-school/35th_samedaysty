@@ -17,6 +17,7 @@ class TravelPlan extends Model
         'max_participants',
     ];
 
+
     /**
      * Get the country that owns the travel plan.
      */
