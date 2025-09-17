@@ -38,6 +38,9 @@ Route::get('/plan/detail', [PlanController::class, 'detail'])->name('plan.detail
 Route::get('/plan/search', [PlanController::class, 'search'])->name('plan.search');
 Route::get('/create-plan', [PlanController::class, 'create'])->name('plan.create');
 Route::post('/create-plan', [PlanController::class, 'store'])->name('plan.store');
+Route::get('/plan/{plan}/edit', [PlanController::class, 'edit'])->name('plan.edit');
+Route::put('/plan/{plan}', [PlanController::class, 'update'])->name('plan.update');
+
 
 // API route for plans
 Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
