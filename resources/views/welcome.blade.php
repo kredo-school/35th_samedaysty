@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,17 +12,23 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {{-- fontawesome --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
 
     @include('layouts.navigation')
 
 
-    <div class="w-full h-[45vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center px-4" style="background-image: url('/images/krabi_beach_2.png');">
+    <div class="w-full h-[45vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center px-4"
+        style="background-image: url('/images/krabi_beach_2.png');">
         <h1 class="text-3xl md:text-5xl font-bold leading-tight text-center">
             Same Day, Same Destination, and Same Style
         </h1>
@@ -35,11 +42,15 @@
         <p class="text-[2.0vw] mb-2 text-gray-500">From Coffee to Adventures — Connect & Enjoy.</p>
         <p class="text-[2.0vw] mb-2 text-gray-500">Meet, Share, Explore — Your Journey, Your Way.</p>
         <p class="text-[2.0vw] mb-2 text-gray-500">One App for Every Plan — From Full Journeys to Quick Meetups.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500">For just lunch, a quick activity, or part of the journey — it's all possible.</p>
+        <p class="text-[2.0vw] mb-2 text-gray-500">For just lunch, a quick activity, or part of the journey — it's all
+            possible.</p>
 
         <!-- Right button -->
-        <div class="flex justify-end w-full">
-            <x-primary-button onclick="window.location='{{ route('register') }}'" class="mr-10 px-6 py-3 text-lg">Join Now</x-primary-button>
+        <div class="flex justify-end w-full mt-4">
+            <a href="{{ route('register') }}" class="px-6 py-3 text-base md:text-lg inline-block text-center">
+                Join Now
+            </a>
+
         </div>
     </div>
 
@@ -59,7 +70,8 @@
                 </div>
                 <!-- body -->
                 <div class="px-4 py-4 flex-1 text-gray-700">"This trip was amazing! I met so many new people."</div>
-                <img src="/images/1st_find_other's_plan.png" alt="trip photo" class="w-full h-40 object-contain rounded-b-lg">
+                <img src="/images/1st_find_other's_plan.png" alt="trip photo"
+                    class="w-full h-40 object-contain rounded-b-lg">
                 <!-- footer -->
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">2 days ago</div>
             </div>
@@ -70,8 +82,10 @@
                     <i class="fa-solid fa-user"></i>
                     <span class="font-bold text-gray-800">Participant B</span>
                 </div>
-                <div class="px-4 py-4 flex-1 text-gray-700">"I loved sharing my experience and seeing others' plans."</div>
-                <img src="/images/2nd_find_other's_plan 4.png" alt="trip photo" class="w-full h-40 object-contain rounded-b-lg">
+                <div class="px-4 py-4 flex-1 text-gray-700">"I loved sharing my experience and seeing others' plans."
+                </div>
+                <img src="/images/2nd_find_other's_plan 4.png" alt="trip photo"
+                    class="w-full h-40 object-contain rounded-b-lg">
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">3 days ago</div>
             </div>
 
@@ -82,7 +96,8 @@
                     <span class="font-bold text-gray-800">Participant C</span>
                 </div>
                 <div class="px-4 py-4 flex-1 text-gray-700">"Such a convenient app for coordinating group trips!"</div>
-                <img src="/images/3rd_find_other's_plan 9.png" alt="trip photo" class="w-full h-40 object-contain rounded-b-lg">
+                <img src="/images/3rd_find_other's_plan 9.png" alt="trip photo"
+                    class="w-full h-40 object-contain rounded-b-lg">
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">1 week ago</div>
             </div>
         </div>
@@ -98,12 +113,15 @@
             <div class="border-4 border-sky-700 rounded overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-3xl font-bold mb-2"><i class="fa-solid fa-magnifying-glass"></i></h3>
                 <h3 class="text-3xl font-bold mb-2">Find the trip you want to go on !</h3>
-                <p class="text-gray-600">Don't want to plan? Just hop on a trip that's already ready to go. Search your travel destinations, dates, or your fun- sharing account !Discover available trips and request to join the ones you like !</p>
+                <p class="text-gray-600">Don't want to plan? Just hop on a trip that's already ready to go. Search your
+                    travel destinations, dates, or your fun- sharing account !Discover available trips and request to
+                    join the ones you like !</p>
             </div>
             <div class="border-4 border-sky-700 rounded overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-3xl font-bold mb-2"><i class="fa-solid fa-hammer"></i></h3>
                 <h3 class="text-3xl font-bold mb-2">Create and Share Your Trip Plan !</h3>
-                <p class="text-gray-600">Got a trip in mind? See who's excited to join you on the road. Turn your travel idea into a real journey by posting your plan.
+                <p class="text-gray-600">Got a trip in mind? See who's excited to join you on the road. Turn your travel
+                    idea into a real journey by posting your plan.
                     Invite others and start your adventure together !</p>
             </div>
         </div>
@@ -117,28 +135,37 @@
             <!-- card1 -->
             <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
-                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">1</span>
+                    <span
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">1</span>
                 </h3>
-                <p class="text-2xl font-bold text-gray-700 mb-4">Find the trip you want to go on by CALENDER or DESTINATION.</p>
-                <img src="/images/1st_find_icon.png" alt="find icon" class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
+                <p class="text-2xl font-bold text-gray-700 mb-4">Find the trip you want to go on by CALENDER or
+                    DESTINATION.</p>
+                <img src="/images/1st_find_icon.png" alt="find icon"
+                    class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
             </div>
 
             <!-- card2 -->
             <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
-                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">2</span>
+                    <span
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">2</span>
                 </h3>
-                <p class="text-2xl font-bold text-gray-700 mb-4">If you find a trip you LOVE, let's do something action!</p>
-                <img src="/images/2nd_find_icon.png" alt="find icon" class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
+                <p class="text-2xl font-bold text-gray-700 mb-4">If you find a trip you LOVE, let's do something action!
+                </p>
+                <img src="/images/2nd_find_icon.png" alt="find icon"
+                    class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
             </div>
 
             <!-- card3 -->
             <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
-                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">3</span>
+                    <span
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">3</span>
                 </h3>
-                <p class="text-2xl font-bold text-gray-700 mb-4">Start chatting with your travel mate about your shared travel!</p>
-                <img src="/images/3rd_find_icon.png" alt="find icon" class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
+                <p class="text-2xl font-bold text-gray-700 mb-4">Start chatting with your travel mate about your shared
+                    travel!</p>
+                <img src="/images/3rd_find_icon.png" alt="find icon"
+                    class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
             </div>
         </section>
     </div>
@@ -291,7 +318,8 @@
         </div>
     </section>
 
-    <div class="w-full h-[60vh] bg-cover text-white flex flex-col justify-end mt-24 px-4 pb-8" style="background-image: url('/images/zousan.jpeg'); background-position: 40% 20%;">
+    <div class="w-full h-[60vh] bg-cover text-white flex flex-col justify-end mt-24 px-4 pb-8"
+        style="background-image: url('/images/zousan.jpeg'); background-position: 40% 20%;">
         <!-- title（left side） -->
         <h2 class="text-left text-3xl md:text-4xl font-bold mt-4">
             Register to Samedaysty
@@ -304,16 +332,17 @@
             Every journey begins with a single step—but it's the people you travel with who make it unforgettable.
         </p>
         <p class="leading-relaxed mb-2 text-sm md:text-base">
-            This platform is here to bring together planners and explorers, so you can create, share, and join trips that turn into lasting memories.
+            This platform is here to bring together planners and explorers, so you can create, share, and join trips
+            that turn into lasting memories.
         </p>
         <p class="leading-relaxed mb-2 text-sm md:text-base">
             And the best part? It's free.
         </p>
         <!-- button（right side） -->
         <div class="flex justify-end w-full mt-4">
-<a href="{{ route('register') }}" class="px-6 py-3 text-base md:text-lg inline-block text-center">
-    Join Now
-</a>
+            <a href="{{ route('register') }}" class="px-6 py-3 text-base md:text-lg inline-block text-center">
+                Join Now
+            </a>
 
         </div>
     </div>
@@ -324,7 +353,8 @@
         <p class="text-gray-600 leading-relaxed mb-2">We're travelers, just like you.</p>
         <p class="text-gray-600 leading-relaxed mb-2">Sometimes we love planning every detail,<br>
             and sometimes we just want to hop on someone else's trip.</p>
-        <p class="text-gray-600 leading-relaxed">That's why we built this space—to make it easier to find buddies, share ideas, and enjoy the journey together.</p>
+        <p class="text-gray-600 leading-relaxed">That's why we built this space—to make it easier to find buddies, share
+            ideas, and enjoy the journey together.</p>
     </section>
 
     <section class="max-w-4xl mx-auto my-4 p-4">
@@ -351,12 +381,18 @@
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why this site matters:</p>
-                    <p class="ms-4">I hope this site will help people who usually travel alone and are looking for someone to share experiences with. I also hope it will be useful for us in finding new job opportunities.</p>
+                    <p class="ms-4">I hope this site will help people who usually travel alone and are looking for
+                        someone to share experiences with. I also hope it will be useful for us in finding new job
+                        opportunities.</p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why I made it:</p>
-                    <p class="ms-4"> First of all, we share a common passion — traveling abroad. That’s why we decided to make travel the main focus of our app. With this app, people can search for travel buddies who have similar travel styles and preferences. One of us once had a difficult experience while traveling with a friend, which inspired us to include a feature that allows users to filter potential buddies by their travel preferences. We hope this function will be helpful.</p>
-               </div>
+                    <p class="ms-4"> First of all, we share a common passion — traveling abroad. That’s why we decided
+                        to make travel the main focus of our app. With this app, people can search for travel buddies
+                        who have similar travel styles and preferences. One of us once had a difficult experience while
+                        traveling with a friend, which inspired us to include a feature that allows users to filter
+                        potential buddies by their travel preferences. We hope this function will be helpful.</p>
+                </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Contact:</p>
                     <p>instagram @imnotmvrk_</p>
@@ -364,7 +400,8 @@
             </div>
 
             <!-- member 2 -->
-            <div class="w-full border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start whitespace-normal break-words">
+            <div
+                class="w-full border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start whitespace-normal break-words">
                 <div class="flex items-center mb-2">
                     <img src="/images/aboutus_nanamin.jpeg" alt="Member 2" class="w-30 h-28 mr-3">
                     <h3 class="text-xl font-semibold">Hayato</h3>
@@ -383,11 +420,17 @@
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why this site matters:</p>
-                    <p class="ms-4">We sincerely hope that this app will not only make your travel experiences wonderful but also help you discover new places, connect with people, and create memorable moments along the way. Our wish is that it becomes a companion that makes every journey, big or small, more enjoyable and meaningful.</p>
+                    <p class="ms-4">We sincerely hope that this app will not only make your travel experiences wonderful
+                        but also help you discover new places, connect with people, and create memorable moments along
+                        the way. Our wish is that it becomes a companion that makes every journey, big or small, more
+                        enjoyable and meaningful.</p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why I made it:</p>
-                    <p class="ms-4"> The main reason we created this app is simple: every member of our team has a deep love for “travel.” We believe that traveling opens doors to new cultures, fresh perspectives, and unforgettable stories. With that passion in mind, we wanted to build a tool that makes it easier for fellow travelers to plan, share, and enjoy their journeys to the fullest.</p>
+                    <p class="ms-4"> The main reason we created this app is simple: every member of our team has a deep
+                        love for “travel.” We believe that traveling opens doors to new cultures, fresh perspectives,
+                        and unforgettable stories. With that passion in mind, we wanted to build a tool that makes it
+                        easier for fellow travelers to plan, share, and enjoy their journeys to the fullest.</p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Contact:</p>
@@ -396,7 +439,8 @@
             </div>
 
             <!-- member 3 -->
-            <div class="w-full h-300 border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start whitespace-normal break-words">
+            <div
+                class="w-full h-300 border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start whitespace-normal break-words">
                 <div class="flex items-center mb-2">
                     <img src="/images/aboutus_kimikosan.png" alt="Member 3" class="w-28 h-28 mr-3">
                     <h3 class="text-xl font-semibold">Kimiko</h3>
@@ -411,15 +455,18 @@
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Favorite Country:</p>
-                    <p class="flex items-center"><img src="/images/dragon.png" alt="kiwi" class="w-6 h-6 mr-3">Vietnam</p>
+                    <p class="flex items-center"><img src="/images/dragon.png" alt="kiwi" class="w-6 h-6 mr-3">Vietnam
+                    </p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why this site matters:</p>
-                    <p class="ms-4">If you feel like traveling, that's the perfect time to go. Follow your heart and enjoy the journey!</p>
+                    <p class="ms-4">If you feel like traveling, that's the perfect time to go. Follow your heart and
+                        enjoy the journey!</p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why I made it:</p>
-                    <p class="ms-4">Traveling is way more fun with people who get your vive-that's why I made this site!</p>
+                    <p class="ms-4">Traveling is way more fun with people who get your vive-that's why I made this site!
+                    </p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Contact:</p>
@@ -443,11 +490,13 @@
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Favorite Country:</p>
-                    <p class="flex items-center"><img src="/images/sharingan_kiwi.png" alt="kiwi" class="w-6 h-6 mr-3">Australia</p>
+                    <p class="flex items-center"><img src="/images/sharingan_kiwi.png" alt="kiwi"
+                            class="w-6 h-6 mr-3">Australia</p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why this site matters:</p>
-                    <p class="ms-4">I wanted to create a space where people can easily connect, share ideas, and travel together.</p>
+                    <p class="ms-4">I wanted to create a space where people can easily connect, share ideas, and travel
+                        together.</p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Why I made it:</p>
@@ -466,4 +515,5 @@
 
     <x-footer></x-footer>
 </body>
+
 </html>

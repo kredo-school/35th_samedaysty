@@ -67,7 +67,8 @@ public function apiIndex(Request $request)
     public function create()
     {
         $travel_styles = TravelStyle::all();
-        return view('plans.create')->with('travel_styles', $travel_styles);
+        $all_countries = Country::all();
+        return view('plans.create', compact('travel_styles', 'all_countries'));
     }
 
     // Form submission
@@ -84,12 +85,22 @@ public function apiIndex(Request $request)
         $plan = TravelPlan::create([
             'title' => $request->title,
             'description' => $request->description,
+            'user_id' => Auth::id(),
+            'country_id' => $request->country_id, 
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'max_participants' => $request->max_participants,
         ]);
 
         // Link the checked travel style 
         if ($request->has('travel_styles')) {
             $plan->travelStyles()->sync($request->travel_styles);
         }
-        return redirect()->route('plans.create')->with('success', 'Plan created!');
+        return redirect()->route('plan.create')->with('success', 'Plan created!');
+    }
+
+    public function edit(TravelPlan $plan)
+    {
+        return view('plans.edit', compact('plan'));
     }
 }
