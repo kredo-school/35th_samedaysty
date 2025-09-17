@@ -29,6 +29,10 @@ class TravelStyle extends Model
     {
         return ucfirst($this->style_name);
     }
+
+    public function planStyles(){
+        return $this->hasMany(PlanStyle::class);
+    }
     public function getFontawesomeIconAttribute()
     {
         $map = [

@@ -15,7 +15,9 @@ class PlanController extends Controller
     public function detail($id)
     {
         $travel_plan = TravelPlan::findOrFail( $id );
-        return view('plans.show-plan')->with('travel_plan', $travel_plan);
+        $all_styles = TravelStyle::all();
+        return view('plans.show-plan')->with('travel_plan', $travel_plan)
+                                            ->with('all_styles', $all_styles);
     }
 
     public function search(Request $request)

@@ -34,12 +34,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
 // plans
-Route::get('/plan/detail', [PlanController::class, 'detail'])->name('plan.detail');
-Route::get('/plan/search', [PlanController::class, 'search'])->name('plan.search');
-Route::get('/create-plan', [PlanController::class, 'create'])->name('plan.create');
-Route::post('/create-plan', [PlanController::class, 'store'])->name('plan.store');
-Route::get('/plan/{plan}/edit', [PlanController::class, 'edit'])->name('plan.edit');
-Route::put('/plan/{plan}', [PlanController::class, 'update'])->name('plan.update');
+Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
+    Route::get('/detail', [PlanController::class, 'detail'])->name('detail');
+    Route::get('/search', [PlanController::class, 'search'])->name('search');
+    Route::get('/create', [PlanController::class, 'create'])->name('create');
+    Route::post('/store', [PlanController::class, 'store'])->name('store');
+    Route::get('/{plan}/edit', [PlanController::class, 'edit'])->name('edit');
+    Route::put('/{plan}/update', [PlanController::class, 'update'])->name('update');
+});
 
 
 // API route for plans
