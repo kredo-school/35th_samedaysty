@@ -7,12 +7,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Country;
 // use App\Models\Plan;
 use App\Models\TravelPlan;
+use App\Models\TravelStyle;
 
 class PlanController extends Controller
 {
-    public function detail()
+
+    public function detail($id)
     {
-        return view('plans.show-plan');
+        $travel_plan = TravelPlan::findOrFail( $id );
+        return view('plans.show-plan')->with('travel_plan', $travel_plan);
     }
 
     public function search(Request $request)
@@ -29,33 +32,40 @@ class PlanController extends Controller
         return view('plans.search-plan')->with('all_countries', $all_countries)
             ->with('country', $country)
             ->with('all_plans', $all_plans);
-
     }
 
-    public function apiIndex()
-    {
+public function apiIndex(Request $request)
+{
+    $query = TravelPlan::with('country');
 
-        $all_plans = TravelPlan::with('country')->get()->map(function ($plan) {
-            return [
-                'title' => $plan->title,
-                'start' => $plan->start_date,
-                'end' => $plan->end_date,
-                'id' => $plan->id,
-                'country' => $plan->country ? $plan->country->name : '',
-                'country_code' => $plan->country ? $plan->country->code : '',
-                'participants' => $plan->participants ?? 0,
-                'max_participants' => $plan->max_participants ?? 0,
-                'description' => $plan->description ?? '',
-            ];
-        });
-        return response()->json($all_plans);
+    // if there is a selected country, plans would be narrowed down 
+    if ($request->has('country') && $request->country) {
+        $query->where('country_id', $request->country);
     }
+
+    $all_plans = $query->get()->map(function ($plan) {
+        return [
+            'title' => $plan->title,
+            'start' => $plan->start_date,
+            'end' => $plan->end_date,
+            'id' => $plan->id,
+            'country' => $plan->country ? $plan->country->name : '',
+            'country_code' => $plan->country ? $plan->country->code : '',
+            'participants' => $plan->participants ?? 0,
+            'max_participants' => $plan->max_participants ?? 0,
+            'description' => $plan->description ?? '',
+        ];
+    });
+
+    return response()->json($all_plans);
+}
 
 
     //add create method
     public function create()
     {
-        return view('plans.create'); // ここは実際のビュー名に置き換え
+        $travel_styles = TravelStyle::all();
+        return view('plans.create', compact('travel_styles'));
     }
 
     // Form submission
@@ -64,13 +74,20 @@ class PlanController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'travel_styles' => 'nullable|array',
+            'travel_styles.*' => 'exists:travel_styles,id',
         ]);
 
-        TravelPlan::create([
+        // create a plan  and assign it to $plan 
+        $plan = TravelPlan::create([
             'title' => $request->title,
             'description' => $request->description,
         ]);
 
-        return redirect()->route('plan.create')->with('success', 'Plan created!');
+        // Link the checked travel style 
+        if ($request->has('travel_styles')) {
+            $plan->travelStyles()->sync($request->travel_styles);
+        }
+        return redirect()->route('plans.create')->with('success', 'Plan created!');
     }
 }

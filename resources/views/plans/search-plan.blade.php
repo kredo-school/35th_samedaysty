@@ -18,7 +18,7 @@
             </form>
         </div>
         <div class="">
-            <x-calendar></x-calendar>
+            <x-calendar :country-id="request('country')"></x-calendar>
         </div>
     </div>
 

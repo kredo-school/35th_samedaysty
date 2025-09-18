@@ -37,6 +37,7 @@
                         <span class="font-bold">20{{--{{ $followersCount }}--}}</span>
                     </div>
                 </div>
+
                 <!--introduction-->
                 <div class="mt-6">
                     <h2 class="text-xl text-gray-500">introduction</h2>
@@ -48,7 +49,7 @@
                 <div class="flex space-x-4 mt-4">
                     @if(Auth::id() === $user->id)
                     <!--only see own user-->
-                    <a href="{{ route('profile.edit',$user) }}"
+                    <a href="{{ route('profile.edit') }}"
                         class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
                         Edit profile
                     </a>
@@ -61,11 +62,22 @@
                     </x-primary-button>
                     @else
                     <!--other user-->
-                    <form method="POST" action="{{ route('follow',$user) }}">
-                        @csrf
-                        <x-primary-button>Follow</x-primary-button>
-                    </form>
-                    <a href="{{route('messages.create',$user) }}" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">Message</a>
+                    @if(Auth::id() !== $user->id)
+                    <div id="follow-btn-{{ $user->id }}">
+                        <button
+                            class="px-4 py-2 rounded text-white"
+                            style="background-color: {{ $isFollowing ? '#ef4444' : '#3b82f6' }}"
+                            onclick="toggleFollow({{ $user->id }}, '{{ $isFollowing ? 'unfollow' : 'follow' }}')">
+                            {{ $isFollowing ? 'Unfollow' : 'Follow' }}
+                        </button>
+                        <span id="followers-count-{{ $user->id }}">{{ $followersCount }}</span> Followers
+                    </div>
+                    @endif
+
+                    <a href="{{ route('messages.create', $user) }}"
+                        class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+                        Message
+                    </a>
                     @endif
                 </div>
             </div>
@@ -185,26 +197,20 @@
         <p class="m-3">add calender!!! not yet</p>
     </div>
 
-    <!--add calender -->
-
-    <!-- gadgets -->
-    <h1 class="text-2xl p-5">3 essentials for may travel <span class="text-orange-500">style</span></h1>
-
-    @foreach($gadgets as $gadget)
+    <!--show gadgets -->
+    @forelse($gadgets as $gadget)
     <div class="w-full flex items-center m-2">
         <!-- image -->
-        <div class="flex-none w-4/10">
-            <div class="w-36 h-36 bg-white flex items-center justify-center border border-orange-500 overflow-hidden rounded-md">
-                @if($gadget->photo_url)
-                <img src="{{ asset('storage/' . $gadget->photo_url) }}"
-                    alt="{{ $gadget->item_name }}"
-                    class="w-full h-full object-cover">
-                @else
-                <img src="{{ asset('images/airplane.png') }}"
-                    alt="Sample"
-                    class="w-full h-full object-cover">
-                @endif
-            </div>
+        <div class="flex-none w-32 h-32 mb-2">
+            @if($gadget->photo_url && file_exists(storage_path('app/public/' . $gadget->photo_url)))
+            <img src="{{ asset('storage/' . $gadget->photo_url) }}"
+                alt="{{ $gadget->item_name }}"
+                class="w-32 h-32 rounded-full object-cover border">
+            @else
+            <img src="{{ asset('images/airplane.png') }}"
+                alt="Sample"
+                class="w-32 h-32 rounded-full object-cover border">
+            @endif
         </div>
 
         <!-- item info -->
@@ -234,9 +240,46 @@
         </div>
     </div>
     @empty
-        <p class="p-5 text-gray-600">I'm trying to figure out which one is better.
+    <p class="p-5 text-gray-600">I'm trying to figure out which one is better.
+    </p>
+    @endforelse
 
-        </p>
-    @endforeach
+    <!-- ajax part -->
+    <script>
+        function toggleFollow(userId, action) {
+            let url = action === 'follow' ? `/follow/${userId}` : `/unfollow/${userId}`;
 
+            fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const btnDiv = document.getElementById(`follow-btn-${userId}`);
+                        if (data.action === 'followed') {
+                            btnDiv.innerHTML = `
+                    <button 
+                        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                        onclick="toggleFollow(${userId}, 'unfollow')">
+                        Unfollow
+                    </button>`;
+                        } else {
+                            btnDiv.innerHTML = `
+                    <button 
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        onclick="toggleFollow(${userId}, 'follow')">
+                        Follow
+                    </button>`;
+                        }
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
 </x-app-layout>

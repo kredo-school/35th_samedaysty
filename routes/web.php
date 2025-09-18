@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\Admin\TravelStyleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\FollowController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,11 +16,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/{id?}', [ProfileController::class, 'show'])->name('profile.show');
+   
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('/profile/items', [ProfileController::class, 'updateItems'])->name('profile.updateItems');
-    Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
+    Route::patch('/profile/update-recommended-form', [ProfileController::class, 'updateGadget'])
+    ->name('profile.updateGadget');
+    Route::post('/profile/update-avatar', [Profi
+    leController::class, 'updateAvatar'])->name('profile.updateAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -36,10 +40,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
 // plans
-Route::get('/plan/detail', [PlanController::class, 'detail'])->name('plan.detail');
-Route::get('/plan/search', [PlanController::class, 'search'])->name('plan.search');
-Route::get('/create-plan', [PlanController::class, 'create'])->name('plan.create');
-Route::post('/create-plan', [PlanController::class, 'store'])->name('plan.store');
+Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
+    Route::get('/{id}/detail', [PlanController::class, 'detail'])->name('detail');
+    Route::get('/search', [PlanController::class, 'search'])->name('search');
+    Route::get('/create-plan', [PlanController::class, 'create'])->name('create');
+    Route::post('/create-plan', [PlanController::class, 'store'])->name('store');
+});
 
 // API route for plans
 Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
@@ -71,5 +77,12 @@ Route::get('/calendar-test', function () {
 Route::get('/flag-test', function () {
     return view('flag-test');
 })->name('flag.test');
+
+//follows
+Route::middleware(['auth'])->group(function () {
+    Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
+    Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+});
+
 
 require __DIR__ . '/auth.php';

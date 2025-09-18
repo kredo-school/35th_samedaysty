@@ -88,7 +88,8 @@
                             <i x-show="event.extendedProps.country_code"
                                 :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`"
                                 class="text-xl shadow-sm"></i>
-                            <div class="font-bold text-gray-800 text-lg" x-text="event.title"></div>
+                            <a :href="`{{ route('plan.detail', ':id') }}`.replace(':id', event.id)" class="font-bold text-gray-800 text-lg" x-text="event.title"></a>
+                            <!-- <div class="font-bold text-gray-800 text-lg" x-text="event.title"></div> -->
                         </div>
                         <div class="text-blue-600 text-sm font-medium mb-2"
                             x-text="event.extendedProps.country ? `${event.extendedProps.country} • ${event.extendedProps.participants}/${event.extendedProps.max_participants} participants` : ''">
@@ -113,15 +114,22 @@
 
 <!-- Alpine.js Calendar Script -->
 <script>
-    function calendar() {
+    function calendar({ countryId = null } = {}) {
         return {
             currentDate: new Date(),
             selectedDate: null,
             weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             events: [],
+            countryId: countryId,
 
             init() {
-                fetch('/travel-plans')
+                const params = new URLSearchParams();
+                const countryId = new URLSearchParams(window.location.search).get('country');
+                if (countryId) {
+                    params.append('country', this.countryId);
+                }
+
+                fetch('/travel-plans?' + params.toString())
                     .then(res => res.json())
                     .then(data => {
                         this.events = data.map(plan => ({
@@ -204,7 +212,9 @@
                     start.setHours(0, 0, 0, 0);
                     const end = new Date(e.end);
                     end.setHours(0, 0, 0, 0);
-                    return checkDate >= start && checkDate <= end;
+                    // return checkDate >= start && checkDate <= end;
+                    const countryMatch = this.countryId ? e.extendedProps.country_code === this.countryId : true;
+                    return checkDate >= start && checkDate <= end && countryMatch;
                 });
             },
             selectDate(date) {

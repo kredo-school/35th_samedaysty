@@ -17,6 +17,7 @@ class TravelPlan extends Model
         'max_participants',
     ];
 
+
     /**
      * Get the country that owns the travel plan.
      */
@@ -24,7 +25,10 @@ class TravelPlan extends Model
     {
         return $this->belongsTo(Country::class);
     }
-
+    public function travelStyles()
+    {
+        return $this->belongsToMany(TravelStyle::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -22,7 +22,7 @@
                             <span class="leading-none">Create your<br>travel plan</span>
                         </a>
                         <!--profile-->
-                        <a href="{{ route('profile.show') }}" class="w-full h-full relative bg-white/5  text-white font-bold rounded-lg flex items-center justify-center text-4xl hover:bg-white/40 border border-transparent hover:border-orange-500 transition">
+                        <a href="{{ route('profile.show',Auth::id()) }}" class="w-full h-full relative bg-white/5  text-white font-bold rounded-lg flex items-center justify-center text-4xl hover:bg-white/40 border border-transparent hover:border-orange-500 transition">
                             <i class="fa-solid fa-user text-3xl m-2"></i>
                             <span>Profile</span>
                         </a>
