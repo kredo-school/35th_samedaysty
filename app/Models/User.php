@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Gadget;
 
 class User extends Authenticatable
 {
@@ -108,20 +109,29 @@ class User extends Authenticatable
         return $this->conversationsAsUser1->merge($this->conversationsAsUser2);
     }
 
-    /**
-     * Get messages sent by the user
-     */
+    /** Get messages sent by the user */
     public function sentMessages(): HasMany
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
-
-
-
-    // users has many plans
-    public function travelPlans()
+    /** Get recommended items */
+    public function gadgets()
     {
-        return $this->hasMany(TravelPlan::class);
+        return $this->hasMany(Gadget::class);
+    }
+    /**  relation */
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
     }
 
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+    }
+
+    public function isFollowing(User $user)
+    {
+        return $this->following()->where('following_id', $user->id)->exists();
+    }
 }
