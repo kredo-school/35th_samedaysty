@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Country;
-// use App\Models\Plan;
 use App\Models\TravelPlan;
 use App\Models\TravelStyle;
 
