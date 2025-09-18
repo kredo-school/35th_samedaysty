@@ -62,7 +62,10 @@
             <!-- buttons -->
                 <!-- before interacted -->
                 <div class="flex justify-end space-x-5 py-2 items-center">
-                    <form action="" method="post">
+                    <form action="{{ route('reaction.store', $travel_plan->id) }}" method="post">
+                        @csrf
+                        <input type="hidden" name="plan_id" value="{{ $travel_plan->id }}">
+                        <input type="hidden" name="type" value="like">
                         <button type="submit"><i class="fa-regular fa-heart text-red-500 text-3xl"></i><span class="text-2xl ms-1">like</span><span class="text-md ms-1">23</span></button>
                     </form>
                     <form action="" method="post">

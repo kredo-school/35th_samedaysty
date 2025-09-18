@@ -5,6 +5,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\Admin\TravelStyleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\ReactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,6 +46,11 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::post('/store', [PlanController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
     Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
+});
+
+// reactions
+Route::middleware(['auth'])->group(function () {
+    Route::get('/{id}/store', [ReactionController::class, 'store'])->name('reaction.store');
 });
 
 
