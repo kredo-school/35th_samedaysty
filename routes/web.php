@@ -16,14 +16,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/{id?}', [ProfileController::class, 'show'])->name('profile.show');
-   
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/update-recommended-form', [ProfileController::class, 'updateGadget'])
-    ->name('profile.updateGadget');
-    Route::post('/profile/update-avatar', [Profi
-    leController::class, 'updateAvatar'])->name('profile.updateAvatar');
+        ->name('profile.updateGadget');
+    Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -66,7 +64,8 @@ Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
 });
 
 // support page
-Route::get('/support', function () {return view('support');});
+Route::get('/support', function () {
+    return view('support'); });
 
 // API routes for countries
 Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
