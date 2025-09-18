@@ -6,60 +6,80 @@
         </x-title>
     </div>
     <!--avatar -->
-    <div class=" items-start space-x-8 p-4">
-        <div class="flex-none w-1/5">
-            <div class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500">
-                <i class="fa-solid fa-dragon text-gray-600 text-8xl"></i>
-            </div>
-        </div>
-        <!--user info-->
-        <div class="flex-1 w-4/5 flex flex-col justify-center">
-            <h3 class="text-lg  sm:text-2xl md:text-3xl font-bold">{{ $user->name }}</h3>
-            <!--count-->
-            <div class="mt-4 flex space-x-6">
-                <div class="flex items-center space-x-3">
-                    <span class="text-gray-500">Posts</span>
-                    <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <span class=" text-gray-500">Following</span>
-                    <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
-                </div>
-                <div class="flex items-center space-x-3>
-                    <span class=" text-gray-500">Followers</span>
-                    <span class="font-bold">20{{--{{ $followersCount }}--}}</span>
+    <div class="items-start space-x-8 p-4">
+        <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8 p-4">
+            <div class="flex-none w-1/5">
+                <div class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500 overflow-hidden">
+                    @if($user->avatar)
+                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Avatar" class="w-full h-full rounded-full object-cover">
+                    @else
+                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <i class="fa-solid fa-hippo text-gray-400 text-6xl"></i>
+                    </div>
+                    @endif
                 </div>
             </div>
-            <!--introduction-->
-            <div class="mt-6">
-                <h2 class="text-xl text-gray-500">introduction</h2>
-                <p class="text-sm text-gray-500 mt-3 leading-relaxed break-words whitespace-pre-line">
-                    {{ $user->bio ?? 'No introduction yet.' }}
-                </p>
-            </div>
+            <!--user info-->
+            <div class="flex-1 w-4/5 flex flex-col justify-center">
+                <h3 class="text-lg  sm:text-2xl md:text-3xl font-bold">{{ $user->name }}</h3>
+                <!--count-->
+                <div class="mt-4 flex space-x-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-gray-500">Posts</span>
+                        <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class=" text-gray-500">Following</span>
+                        <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class=" text-gray-500">Followers</span>
+                        <span class="font-bold">20{{--{{ $followersCount }}--}}</span>
+                    </div>
+                </div>
 
-            <div class="flex space-x-4 mt-4">
-                @if(Auth::id() === $user->id)
-                <!--only see own user-->
-                <a href="{{ route('profile.edit',$user) }}"
-                    class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
-                    Edit profile
-                </a>
-                <a href="#"
-                    class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
-                    Share profile
-                </a>
-                <x-primary-button>
-                    Change your status
-                </x-primary-button>
-                @else
-                <!--other user-->
-                <form method="POST" action="{{ route('follow',$user) }}">
-                    @csrf
-                    <x-primary-button>Follow</x-primary-button>
-                </form>
-                <a href="{{route('messages.create',$user) }}" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">Message</a>
-                @endif
+                <!--introduction-->
+                <div class="mt-6">
+                    <h2 class="text-xl text-gray-500">introduction</h2>
+                    <p class="text-sm text-gray-500 mt-3 leading-relaxed break-words whitespace-pre-line">
+                        {{ $user->bio ?? 'No introduction yet.' }}
+                    </p>
+                </div>
+
+                <div class="flex space-x-4 mt-4">
+                    @if(Auth::id() === $user->id)
+                    <!--only see own user-->
+                    <a href="{{ route('profile.edit') }}"
+                        class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
+                        Edit profile
+                    </a>
+                    <a href="#"
+                        class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
+                        Share profile
+                    </a>
+                    <x-primary-button>
+                        Change your status
+                    </x-primary-button>
+                    @else
+                    <!--other user-->
+                    @if(Auth::id() !== $user->id)
+                    <div id="follow-btn-{{ $user->id }}">
+                        <button
+                            class="px-4 py-2 rounded text-white"
+                            style="background-color: {{ $isFollowing ? '#ef4444' : '#3b82f6' }}"
+                            onclick="toggleFollow({{ $user->id }}, '{{ $isFollowing ? 'unfollow' : 'follow' }}')">
+                            {{ $isFollowing ? 'Unfollow' : 'Follow' }}
+                        </button>
+                        <span id="followers-count-{{ $user->id }}">{{ $followersCount }}</span> Followers
+                    </div>
+                    @endif
+
+                    <a href="{{ route('messages.create', $user) }}"
+                        class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+                        Message
+                    </a>
+                    @endif
+                </div>
             </div>
         </div>
 
@@ -177,31 +197,89 @@
         <p class="m-3">add calender!!! not yet</p>
     </div>
 
-    <!--add calender -->
-    <h1 class="text-2xl p-5">3 essentials for may travel <span class="text-orange-500">style</span></h1>
+    <!--show gadgets -->
+    @forelse($gadgets as $gadget)
     <div class="w-full flex items-center m-2">
-        <div class="flex-none w-4/10">
-            <div class="w-36 h-36 bg-white flex items-center justify-center border border-orange-500 overflow-hidden rounded-md">
-                <img src="{{ asset('images/airplane.png') }}"
-                    alt="Sample" class="w-full h-full object-cover">
-            </div>
+        <!-- image -->
+        <div class="flex-none w-32 h-32 mb-2">
+            @if($gadget->photo_url && file_exists(storage_path('app/public/' . $gadget->photo_url)))
+            <img src="{{ asset('storage/' . $gadget->photo_url) }}"
+                alt="{{ $gadget->item_name }}"
+                class="w-32 h-32 rounded-full object-cover border">
+            @else
+            <img src="{{ asset('images/airplane.png') }}"
+                alt="Sample"
+                class="w-32 h-32 rounded-full object-cover border">
+            @endif
         </div>
-        <!--user info-->
+
+        <!-- item info -->
         <div class="flex-1 w-6/10 p-2">
-            <h3 class="text-lg sm:text-2xl md:text-3xl font-bold">Item name</h3>
-            <!--introduction about goods-->
+            <h3 class="text-lg sm:text-2xl md:text-3xl font-bold">{{ $gadget->item_name }}</h3>
+
+            <!-- description -->
             <div class="mt-4 space-y-4">
                 <div class="flex items-center space-x-3">
-                    <p>I recommend this eye mask for sleeping on planes. It soothes tired eyes...</p>
+                    <p>{{ Str::limit($gadget->memo, 100) }}</p>
+                    @if(strlen($gadget->memo) > 100)
                     <x-secondary-button>read more...</x-secondary-button>
+                    @endif
                 </div>
+
+                @if($gadget->shop_url)
                 <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-link text-blue-800"></i>
-                    <p class="text-blue-600 underline">https://amazon.</p>
+                    <a href="{{ $gadget->shop_url }}"
+                        target="_blank"
+                        class="text-blue-600 underline">
+                        {{ $gadget->shop_url }}
+                    </a>
                 </div>
-
-
+                @endif
             </div>
         </div>
     </div>
+    @empty
+    <p class="p-5 text-gray-600">I'm trying to figure out which one is better.
+    </p>
+    @endforelse
+
+    <!-- ajax part -->
+    <script>
+        function toggleFollow(userId, action) {
+            let url = action === 'follow' ? `/follow/${userId}` : `/unfollow/${userId}`;
+
+            fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const btnDiv = document.getElementById(`follow-btn-${userId}`);
+                        if (data.action === 'followed') {
+                            btnDiv.innerHTML = `
+                    <button 
+                        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                        onclick="toggleFollow(${userId}, 'unfollow')">
+                        Unfollow
+                    </button>`;
+                        } else {
+                            btnDiv.innerHTML = `
+                    <button 
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        onclick="toggleFollow(${userId}, 'follow')">
+                        Follow
+                    </button>`;
+                        }
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
 </x-app-layout>
