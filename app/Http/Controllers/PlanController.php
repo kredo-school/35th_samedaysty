@@ -15,7 +15,9 @@ class PlanController extends Controller
     public function detail($id)
     {
         $travel_plan = TravelPlan::findOrFail( $id );
-        return view('plans.show-plan')->with('travel_plan', $travel_plan);
+        $all_styles = TravelStyle::all();
+        return view('plans.show')->with('travel_plan', $travel_plan)
+                                            ->with('all_styles', $all_styles);
     }
 
     public function search(Request $request)
@@ -29,7 +31,7 @@ class PlanController extends Controller
             $all_plans = TravelPlan::all();
         }
 
-        return view('plans.search-plan')->with('all_countries', $all_countries)
+        return view('plans.search')->with('all_countries', $all_countries)
             ->with('country', $country)
             ->with('all_plans', $all_plans);
     }
@@ -43,17 +45,17 @@ public function apiIndex(Request $request)
         $query->where('country_id', $request->country);
     }
 
-    $all_plans = $query->get()->map(function ($plan) {
+    $all_plans = $query->get()->map(function ($travel_plan) {
         return [
-            'title' => $plan->title,
-            'start' => $plan->start_date,
-            'end' => $plan->end_date,
-            'id' => $plan->id,
-            'country' => $plan->country ? $plan->country->name : '',
-            'country_code' => $plan->country ? $plan->country->code : '',
-            'participants' => $plan->participants ?? 0,
-            'max_participants' => $plan->max_participants ?? 0,
-            'description' => $plan->description ?? '',
+            'title' => $travel_plan->title,
+            'start' => $travel_plan->start_date,
+            'end' => $travel_plan->end_date,
+            'id' => $travel_plan->id,
+            'country' => $travel_plan->country ? $travel_plan->country->name : '',
+            'country_code' => $travel_plan->country ? $travel_plan->country->code : '',
+            'participants' => $travel_plan->participants ?? 0,
+            'max_participants' => $travel_plan->max_participants ?? 0,
+            'description' => $travel_plan->description ?? '',
         ];
     });
 
@@ -65,7 +67,8 @@ public function apiIndex(Request $request)
     public function create()
     {
         $travel_styles = TravelStyle::all();
-        return view('plans.create', compact('travel_styles'));
+        $all_countries = Country::all();
+        return view('plans.create', compact('travel_styles', 'all_countries'));
     }
 
     // Form submission
@@ -79,15 +82,61 @@ public function apiIndex(Request $request)
         ]);
 
         // create a plan  and assign it to $plan 
-        $plan = TravelPlan::create([
+        $travel_plan = TravelPlan::create([
             'title' => $request->title,
             'description' => $request->description,
+            'user_id' => Auth::id(),
+            'country_id' => $request->country_id, 
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'max_participants' => $request->max_participants,
         ]);
 
         // Link the checked travel style 
         if ($request->has('travel_styles')) {
-            $plan->travelStyles()->sync($request->travel_styles);
+            $travel_plan->travelStyles()->sync($request->travel_styles);
         }
-        return redirect()->route('plans.create')->with('success', 'Plan created!');
+        return redirect()->route('plan.create')->with('success', 'Plan created!');
     }
-}
+
+      public function edit(TravelPlan $travel_plan , $id)
+      {
+          $travel_styles = TravelStyle::all();
+          $countries = Country::all();
+          $travel_plan = TravelPlan::findOrFail( $id );
+  
+          return view('plans.edit', compact('travel_plan', 'travel_styles', 'countries'));
+      }
+  
+      public function update(Request $request, TravelPlan $travel_plan)
+      {
+          $request->validate([
+              'title' => 'required|string|max:255',
+              'description' => 'nullable|string',
+              'country_id' => 'required|exists:countries,id',
+              'start_date' => 'nullable|date',
+              'end_date' => 'nullable|date|after_or_equal:start_date',
+              'max_participants' => 'nullable|integer|min:1',
+              'travel_styles' => 'nullable|array',
+              'travel_styles.*' => 'exists:travel_styles,id',
+          ]);
+  
+          $travel_plan->update([
+              'title' => $request->title,
+              'description' => $request->description,
+              'country_id' => $request->country_id,
+              'start_date' => $request->start_date,
+              'end_date' => $request->end_date,
+              'max_participants' => $request->max_participants,
+          ]);
+  
+          if ($request->has('travel_styles')) {
+              $travel_plan->travelStyles()->sync($request->travel_styles);
+          } else {
+              $travel_plan->travelStyles()->detach(); 
+          }
+  
+          return redirect()->route('plans.edit', $travel_plan->id)
+              ->with('success', 'Plan updated successfully!');
+      }
+  }

@@ -7,7 +7,7 @@
     <div class="px-20">
         <!-- edit/delete buttons -->
         <div class="flex justify-end space-x-2 py-2">
-            <a href="">
+            <a href="{{ route('plan.edit', $travel_plan->id) }}">
                 <x-primary-button>edit</x-primary-button>
             </a>
             <form action="" method="post">
@@ -27,9 +27,9 @@
             <!-- plan style -->
             <div class="flex pt-5 items-center font-bold">
                 <h4 class="text-xl py-1">Style&nbsp;:</h4>
-                <p class="text-xl ms-2 px-2 bg-gray-300 rounded">food</p>
-                <p class="text-xl ms-2 px-2 bg-gray-300 rounded">solo</p>
-                <p class="text-xl ms-2 px-2 bg-gray-300 rounded">nature</p>
+                @foreach ( $all_styles as $style)
+                    <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>                
+                @endforeach
             </div>
 
             <!-- plan name -->

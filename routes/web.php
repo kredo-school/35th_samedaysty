@@ -43,9 +43,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::get('/{id}/detail', [PlanController::class, 'detail'])->name('detail');
     Route::get('/search', [PlanController::class, 'search'])->name('search');
-    Route::get('/create-plan', [PlanController::class, 'create'])->name('create');
-    Route::post('/create-plan', [PlanController::class, 'store'])->name('store');
+    Route::get('/create', [PlanController::class, 'create'])->name('create');
+    Route::post('/store', [PlanController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
+    Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
 });
+
 
 // API route for plans
 Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
