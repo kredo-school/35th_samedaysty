@@ -8,7 +8,7 @@
         </x-slot>
 
         <form action="{{ route('plan.store') }}" method="POST"
-            class="p-6 px-12 max-w-4xl mx-auto bg-white rounded-lg shadow">
+            class="p-6 px-12 max-w-7xl mx-auto bg-white rounded-lg mt-6">
             @csrf
 
             <!-- Avatar + Name -->

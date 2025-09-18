@@ -35,12 +35,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 // plans
 Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
-    Route::get('/detail', [PlanController::class, 'detail'])->name('detail');
+    Route::get('/{id}/detail', [PlanController::class, 'detail'])->name('detail');
     Route::get('/search', [PlanController::class, 'search'])->name('search');
     Route::get('/create', [PlanController::class, 'create'])->name('create');
     Route::post('/store', [PlanController::class, 'store'])->name('store');
-    Route::get('/{plan}/edit', [PlanController::class, 'edit'])->name('edit');
-    Route::put('/{plan}/update', [PlanController::class, 'update'])->name('update');
+    Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
+    Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
 });
 
 

@@ -7,7 +7,7 @@
     <div class="px-20">
         <!-- edit/delete buttons -->
         <div class="flex justify-end space-x-2 py-2">
-            <a href="">
+            <a href="{{ route('plan.edit', $travel_plan->id) }}">
                 <x-primary-button>edit</x-primary-button>
             </a>
             <form action="" method="post">

@@ -6,8 +6,8 @@
                 <span class="font-bold text-sky-700">&nbsp;PLAN</span>
             </h1>
         </x-slot>
-
-        <form action="{{ route('plans.update', $plan->id) }}" method="POST">
+        <form action="{{ route('plan.update') }}" method="POST"
+            class="p-6 px-12 max-w-7xl mx-auto bg-white rounded-lg mt-6">
             @csrf
             @method('PUT') <!-- PUT METHOD -->
 
@@ -15,32 +15,24 @@
             <div class="flex items-center justify-start space-x-2 mb-16">
                 <img src="/images/bellman.png" alt="Avatar" class="w-10 h-10 rounded-full">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
-                    <span class="ml-2 font-bold text-gray-800">カビルンルン</span>
+                    <span class="ml-2 font-bold text-gray-800">{{ $plan->user->name ?? 'User' }}</span>
                 </h1>
             </div>
 
             <!-- Travel Style -->
             <div class="mb-6">
                 <h2 class="font-semibold mb-4">Travel Style</h2>
-
-                <!-- 5rows -->
                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach($travel_styles as $style)
-                    <!-- card 1 -->
                     <label
                         class="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 flex flex-col justify-between h-18">
-
-                        <!-- UpperRow ：checkbox ＋Logo ＋Name -->
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" name="travel_styles[]" value="{{ $style->id }}"
-                                class="h-4 w-4 text-blue-600 flex-shrink-0">
-
+                                class="h-4 w-4 text-blue-600 flex-shrink-0" {{ in_array($style->id, old('travel_styles',
+                            $plan->travelStyles->pluck('id')->toArray())) ? 'checked' : '' }}>
                             <i class="{{ $style->fontawesome_icon }} text-xl flex-shrink-0"></i>
-
                             <h3 class="font-semibold text-sm truncate">{{ ucfirst($style->style_name) }}</h3>
                         </div>
-
-                        <!-- LowerRow ：Description -->
                         <p class="text-xs text-gray-600 mt-2 truncate">
                             {{ $style->description ?? 'No description yet' }}
                         </p>
@@ -48,63 +40,62 @@
                     @endforeach
                 </div>
             </div>
-            <!-- Title と Country -->
-            <div class="flex mb-6 space-x-4">
-                <div class="flex-1">
-                    <label class="block mb-1 font-semibold text-sm">Title</label>
-                    <input type="text" name="title" class="w-full border rounded-lg p-2">
-                </div>
 
-<!-- タイトル -->
-<div class="mb-4">
-    <x-input-label for="title" :value="'Title'" />
-    <x-text-input id="title" name="title" type="text" value="{{ old('title', $plan->title) }}" class="mt-1 block w-full" />
-    @error('title')
-        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-    @enderror
-</div>
+            <!-- Title -->
+            <div class="mb-4">
+                <x-input-label for="title" :value="'Title'" />
+                <x-text-input id="title" name="title" type="text" value="{{ old('title', $plan->title) }}"
+                    class="mt-1 block w-full" />
+                @error('title')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
-
-
-                <div class="flex-1">
-                    <label class="block mb-1 font-semibold text-sm">Country</label>
-                    <select name="country" class="w-full border rounded-lg p-2">
-                        <option>Japan</option>
-                        <option>Australia</option>
-                        <option>Thailand</option>
-                    </select>
-                </div>
+            <!-- Country -->
+            <div class="mb-6">
+                <label class="block mb-1 font-semibold text-sm">Country</label>
+                <select name="country_id" class="w-full border rounded-lg p-2">
+                    @foreach($countries as $country)
+                    <option value="{{ $country->id }}" {{ old('country_id', $plan->country_id) == $country->id ?
+                        'selected' : '' }}>
+                        {{ $country->name }}
+                    </option>
+                    @endforeach
+                </select>
             </div>
 
             <!-- Description -->
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Description</label>
-                <textarea name="description" rows="4" class="w-full border rounded-lg p-2"></textarea>
+                <textarea name="description" rows="4"
+                    class="w-full border rounded-lg p-2">{{ old('description', $plan->description) }}</textarea>
             </div>
 
             <!-- Plan Date -->
             <div class="flex mb-6 space-x-4">
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">From</label>
-                    <input type="date" name="start_date" class="w-full border rounded-lg p-2">
+                    <input type="date" name="start_date" value="{{ old('start_date', $plan->start_date) }}"
+                        class="w-full border rounded-lg p-2">
                 </div>
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">To</label>
-                    <input type="date" name="end_date" class="w-full border rounded-lg p-2">
+                    <input type="date" name="end_date" value="{{ old('end_date', $plan->end_date) }}"
+                        class="w-full border rounded-lg p-2">
                 </div>
             </div>
 
             <!-- Max Participants -->
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Max Participants</label>
-                <input type="number" name="max_participants" class="w-full border rounded-lg p-2">
+                <input type="number" name="max_participants"
+                    value="{{ old('max_participants', $plan->max_participants) }}" class="w-full border rounded-lg p-2">
             </div>
 
             <!-- Submit Button -->
             <div class="text-center">
-                <button type="submit"
-                    class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full">
-                    Edit Plan
+                <button type="submit" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full">
+                    Update Plan
                 </button>
             </div>
 
