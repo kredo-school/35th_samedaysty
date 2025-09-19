@@ -65,20 +65,12 @@ Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
 
 // support page
 Route::get('/support', function () {
-    return view('support'); });
+    return view('support');
+});
 
 // API routes for countries
 Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
 Route::get('/api/countries/{name}', [App\Http\Controllers\Api\CountryController::class, 'show'])->name('api.countries.show');
-
-Route::get('/calendar-test', function () {
-    return view('calendar-test');
-})->name('calendar.test');
-
-// Flag test page
-Route::get('/flag-test', function () {
-    return view('flag-test');
-})->name('flag.test');
 
 //follows
 Route::middleware(['auth'])->group(function () {
