@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Admin\TravelStyleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FollowController;
@@ -59,32 +60,31 @@ Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
 
 
 // Chat routes
+// Chat System
 Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
-    Route::get('/', [App\Http\Controllers\ChatController::class, 'index'])->name('index');
-    Route::get('/conversations/{conversation}', [App\Http\Controllers\ChatController::class, 'show'])->name('conversation');
-    Route::post('/start-conversation', [App\Http\Controllers\ChatController::class, 'startConversation'])->name('start-conversation');
-    Route::post('/send-message', [App\Http\Controllers\ChatController::class, 'sendMessage'])->name('send-message');
-    Route::get('/conversations/{conversation}/messages', [App\Http\Controllers\ChatController::class, 'getMessages'])->name('messages');
+    // Chat Dashboard
+    Route::get('/', [ChatController::class, 'index'])->name('index');
 
-    Route::get('/conversations', [App\Http\Controllers\ChatController::class, 'getConversations'])->name('conversations');
+    // Conversation Management
+    Route::get('/conversations', [ChatController::class, 'getConversations'])->name('conversations');
+    Route::get('/conversations/{id}', [ChatController::class, 'show'])->name('conversation');
+    Route::get('/conversations/{id}/messages', [ChatController::class, 'getMessages'])->name('messages');
+
+    // Message Actions
+    Route::post('/start-conversation', [ChatController::class, 'startConversation'])->name('start-conversation');
+    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
 });
 
 // support page
 Route::get('/support', function () {
-    return view('support'); });
+    return view('support');
+});
 
 // API routes for countries
 Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
 Route::get('/api/countries/{name}', [App\Http\Controllers\Api\CountryController::class, 'show'])->name('api.countries.show');
-
-Route::get('/calendar-test', function () {
-    return view('calendar-test');
-})->name('calendar.test');
-
-// Flag test page
-Route::get('/flag-test', function () {
-    return view('flag-test');
-})->name('flag.test');
+// API route for plans
+Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
 
 //follows
 Route::middleware(['auth'])->group(function () {
