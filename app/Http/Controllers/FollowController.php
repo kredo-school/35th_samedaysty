@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-
 class FollowController extends Controller
 {
     // follow
     public function follow(User $user)
     {
+        //Explicitly specify types using PHPDoc to remove the red underline
+        /** @var \App\Models\User $me */
         $me = Auth::user();
         if (!$me->isFollowing($user)) {
             $me->following()->attach($user->id);
@@ -27,6 +28,7 @@ class FollowController extends Controller
     //unfollow = delete
     public function unfollow(User $user)
     {
+        /** @var \App\Models\User $me */
         $me = Auth::user();
         if ($me->isFollowing($user)) {
             $me->following()->detach($user->id);

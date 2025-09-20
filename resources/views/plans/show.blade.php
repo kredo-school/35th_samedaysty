@@ -24,7 +24,7 @@
 
         <!-- plan details -->
         <div class="pt-3 flex items-center">
-            <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-5xl"></i></a>
+            <a href="{{ route ('profile.show',$travel_plan->user->id)}}"><i class="fa-solid fa-circle-user text-gray-500 text-5xl"></i></a>
             <h4 class="text-xl ps-2">{{ $travel_plan->user->name }}</h4>
             <h4 class="text-xl ms-auto px-2">{{ $travel_plan->country->name }}</h4>
             <i class="fi fi-{{ $travel_plan->country->code }} text-3xl"></i>

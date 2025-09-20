@@ -85,7 +85,7 @@
                                                         {{ $user->email }}</p>
                                                 </div>
                                             </div>
-                                            <button onclick="startConversation({{ $user->id }})"
+                                            <button onclick="startConversation('{{ $user->id }}')"
                                                 class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition-colors">
                                                 Chat
                                             </button>

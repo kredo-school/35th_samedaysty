@@ -134,4 +134,9 @@ class User extends Authenticatable
     {
         return $this->following()->where('following_id', $user->id)->exists();
     }
+    public function travelPlans(): HasMany
+    {
+        return $this->hasMany(TravelPlan::class);
+    }
+
 }
