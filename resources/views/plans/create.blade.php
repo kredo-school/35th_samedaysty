@@ -56,11 +56,7 @@
                 </div>
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">Country</label>
-                    <select name="country_id" class="w-full border rounded-lg p-2">
-                        @foreach($all_countries as $country)
-                        <option value="{{ $country->id }}">{{ $country->name }}</option>
-                        @endforeach
-                    </select>
+                    <x-country-select name="country_id" />
                 </div>
 
             </div>
