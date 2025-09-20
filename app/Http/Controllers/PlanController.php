@@ -22,6 +22,8 @@ class PlanController extends Controller
     public function search(Request $request)
     {
         $all_countries = Country::all();
+        $grouped_countries = Country::getGroupedByRegion();
+
         if ($request->country) {
             $country = Country::find($request->country);
             $all_plans = TravelPlan::where('country_id', $request->country)->get();
@@ -30,7 +32,9 @@ class PlanController extends Controller
             $all_plans = TravelPlan::all();
         }
 
-        return view('plans.search')->with('all_countries', $all_countries)
+        return view('plans.search')
+            ->with('all_countries', $all_countries)
+            ->with('grouped_countries', $grouped_countries)
             ->with('country', $country)
             ->with('all_plans', $all_plans);
     }

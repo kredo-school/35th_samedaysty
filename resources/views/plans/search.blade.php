@@ -4,21 +4,38 @@
     </x-title>
     <div class="px-20">
         <div class="flex items-center mt-3 justify-end mb-2">
-            @if ($country)
-                <i class="fi fi-{{ $country->code }} text-3xl me-2"></i>
-            @endif
+            <div class="flex items-center mr-4">
+                @if ($country)
+                <i class="fi fi-{{ strtolower($country->code) }} text-3xl mr-2"></i>
+                <span class="text-lg font-semibold">{{ $country->name }}</span>
+                @else
+                <span class="text-gray-500">All Countries</span>
+                @endif
+            </div>
+
             <form action="{{ route('plan.search') }}" method="get">
-                <select name="country" id="country">
-                    <option value="">select a country</option>
-                    @foreach($all_countries as $country)
-                        <option value="{{ $country->id }}" {{ request('country') == $country->id ? 'selected' : '' }}>{{ $country->name }}</option>
-                    @endforeach
-                </select>
-                <x-primary-button>search</x-primary-button>
+                <div class="flex items-center space-x-2">
+                    <select name="country" onchange="this.form.submit()"
+                        class="bg-white border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">🌍 All Countries</option>
+
+                        @foreach($grouped_countries as $region => $countries)
+                        <optgroup label="🌏 {{ $region }}">
+                            @foreach($countries as $country)
+                            <option value="{{ $country->id }}" {{ request('country')==$country->id ? 'selected' : '' }}>
+                                {{ $country->name }}
+                            </option>
+                            @endforeach
+                        </optgroup>
+                        @endforeach
+                    </select>
+
+                    <x-primary-button>search</x-primary-button>
+                </div>
             </form>
         </div>
         <div class="">
-            <x-calendar :country-id="request('country')"></x-calendar>
+            <x-calendar :countryId="request('country')"></x-calendar>
         </div>
     </div>
 
