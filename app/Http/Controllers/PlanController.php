@@ -66,10 +66,7 @@ class PlanController extends Controller
     public function create()
     {
         $travel_styles = TravelStyle::all();
-        $all_countries = Country::all();
-        $grouped_countries = Country::getGroupedByRegion();
-
-        return view('plans.create', compact('travel_styles', 'all_countries', 'grouped_countries'));
+        return view('plans.create', compact('travel_styles'));
     }
 
     // Form submission
@@ -103,10 +100,9 @@ class PlanController extends Controller
     public function edit(TravelPlan $travel_plan, $id)
     {
         $travel_styles = TravelStyle::all();
-        $countries = Country::all();
-        $travel_plan = TravelPlan::findOrFail($id);
+        $plan = TravelPlan::findOrFail($id);
 
-        return view('plans.edit', compact('travel_plan', 'travel_styles', 'countries'));
+        return view('plans.edit', compact('plan', 'travel_styles'));
     }
 
     public function update(Request $request, TravelPlan $travel_plan)
