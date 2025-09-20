@@ -55,14 +55,7 @@
             <!-- Country -->
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Country</label>
-                <select name="country_id" class="w-full border rounded-lg p-2">
-                    @foreach($countries as $country)
-                    <option value="{{ $country->id }}" {{ old('country_id', $travel_plan->country_id) == $country->id ?
-                        'selected' : '' }}>
-                        {{ $country->name }}
-                    </option>
-                    @endforeach
-                </select>
+                <x-country-select name="country_id" :selected="old('country_id', $plan->country_id)" class="w-full" />
             </div>
 
             <!-- Description -->

@@ -21,9 +21,6 @@ class PlanController extends Controller
 
     public function search(Request $request)
     {
-        $all_countries = Country::all();
-        $grouped_countries = Country::getGroupedByRegion();
-
         if ($request->country) {
             $country = Country::find($request->country);
             $all_plans = TravelPlan::where('country_id', $request->country)->get();
@@ -32,11 +29,7 @@ class PlanController extends Controller
             $all_plans = TravelPlan::all();
         }
 
-        return view('plans.search')
-            ->with('all_countries', $all_countries)
-            ->with('grouped_countries', $grouped_countries)
-            ->with('country', $country)
-            ->with('all_plans', $all_plans);
+        return view('plans.search', compact('country', 'all_plans'));
     }
 
     public function apiIndex(Request $request)
@@ -69,8 +62,7 @@ class PlanController extends Controller
     public function create()
     {
         $travel_styles = TravelStyle::all();
-        $all_countries = Country::all();
-        return view('plans.create', compact('travel_styles', 'all_countries'));
+        return view('plans.create', compact('travel_styles'));
     }
 
     // Form submission
@@ -108,10 +100,9 @@ class PlanController extends Controller
     public function edit(TravelPlan $travel_plan, $id)
     {
         $travel_styles = TravelStyle::all();
-        $countries = Country::all();
-        $travel_plan = TravelPlan::findOrFail($id);
+        $plan = TravelPlan::findOrFail($id);
 
-        return view('plans.edit', compact('travel_plan', 'travel_styles', 'countries'));
+        return view('plans.edit', compact('plan', 'travel_styles'));
     }
 
     public function update(Request $request, $id)
