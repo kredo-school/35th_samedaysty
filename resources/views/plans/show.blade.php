@@ -131,46 +131,31 @@
         <!-- comment -->
         <div class="border border-black box-border rounded-md my-5 overflow-y-auto">
             <h4 class="text-xl font-bold ms-3">comments</h4>
-            <div class="flex items-center space-x-3 p-4">
-                <!-- icon -->
-                <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i></a>
+            @foreach($travel_plan->comments as $comment)
+                <div class="flex items-center space-x-3 p-4">
+                    <!-- icon -->
+                    <a href="{{ route('profile.show', $comment->user->id) }}">{!! $comment->user->avatar ? '<img src="'.$comment->user->avatar.'" alt="avatar" class="w-10 h-10 rounded-full">' : '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
 
-                <div class="flex flex-col justify-center">
-                    <!-- name/time -->
-                    <div class="flex items-center space-x-2">
-                        <span class="font-semibold">John Doe</span>
-                        <span class="text-sm text-gray-500">1h ago</span>
+                    <div class="flex flex-col justify-center">
+                        <!-- name/time -->
+                        <div class="flex items-center space-x-2">
+                            <span class="font-semibold">{{ $comment->user->name }}</span>
+                            <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                        </div>
+
+                        <!-- comment content -->
+                        <p class="text-gray-700">
+                            {{ $comment->body }}
+                        </p>
                     </div>
-
-                    <!-- comment content -->
-                    <p class="text-gray-700">
-                        my first comment
-                    </p>
+                    
                 </div>
-
-            </div>
-
-            <div class="flex items-center space-x-3 p-4 border-b">
-                <!-- icon -->
-                <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i></a>
-
-                <div class="flex flex-col justify-center">
-                    <!-- name/time -->
-                    <div class="flex items-center space-x-2">
-                        <span class="font-semibold">Sensei</span>
-                        <span class="text-sm text-gray-500">5 mins ago</span>
-                    </div>
-
-                    <!-- comment content -->
-                    <p class="text-gray-700">
-                        I'm Kenjiro Tsuda.
-                    </p>
-                </div>
-            </div>
+            @endforeach
 
             <div class="border-t border-gray-300 p-3 flex gap-2">
-                <form action="" method="post" class="w-full flex gap-2">
-                    <input type="text" name="" id="" placeholder="message..."
+                <form action="{{ route('comment.store', $travel_plan->id) }}" method="post" class="w-full flex gap-2">
+                    @csrf
+                    <input type="text" name="comment_body{{ $travel_plan->id }}" id="" placeholder="message..."
                         class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
                     <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
                     <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>

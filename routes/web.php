@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ChatController;
@@ -36,6 +37,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('travel-styles', TravelStyleController::class);
     Route::resource('users', UserController::class);
     Route::post('users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/comment/{id}/store', [CommentController::class,'store'])->name('comment.store');
 });
 
 
