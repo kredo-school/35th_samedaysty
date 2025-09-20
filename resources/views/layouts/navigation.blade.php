@@ -22,23 +22,38 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @auth
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Home') }}
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>{{ __('Home') }}</span>
+                        </div>
                     </x-nav-link>
                     <x-nav-link :href="route('plan.search')" :active="request()->routeIs('plan.search')">
-                        {{ __('Search') }}
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-search text-lg"></i>
+                            <span>{{ __('Search') }}</span>
+                        </div>
                     </x-nav-link>
                     <x-nav-link :href="route('plan.create')" :active="request()->routeIs('plan.create')">
-                        {{ __('Create') }}
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>{{ __('Create') }}</span>
+                        </div>
                     </x-nav-link>
                     <x-nav-link :href="route('chat.index')" :active="request()->routeIs('chat.*')">
-                        {{ __('Chat') }}
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-comments text-lg"></i>
+                            <span>{{ __('Chat') }}</span>
+                        </div>
                     </x-nav-link>
                     <x-nav-link href="#" :active="request()->routeIs('notifications.*')">
-                        <div class="relative">
-                            <i class="fas fa-bell text-4xl"></i>
-                            <!-- Notification badge -->
-                            <span
-                                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative">
+                                <i class="fas fa-bell text-lg"></i>
+                                <!-- Notification badge -->
+                                <span
+                                    class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                            </div>
+                            <span>{{ __('Notifications') }}</span>
                         </div>
                     </x-nav-link>
                     @endauth
@@ -158,16 +173,28 @@
         <div class="pt-2 pb-3 space-y-1 px-4">
             @auth
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Home') }}
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-home text-lg"></i>
+                    <span>{{ __('Home') }}</span>
+                </div>
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('plan.search')" :active="request()->routeIs('plan.search')">
-                {{ __('Search') }}
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-search text-lg"></i>
+                    <span>{{ __('Search') }}</span>
+                </div>
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('plan.create')" :active="request()->routeIs('plan.create')">
-                {{ __('Create') }}
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-plus-circle text-lg"></i>
+                    <span>{{ __('Create') }}</span>
+                </div>
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('chat.index')" :active="request()->routeIs('chat.*')">
-                {{ __('Chat') }}
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-comments text-lg"></i>
+                    <span>{{ __('Chat') }}</span>
+                </div>
             </x-responsive-nav-link>
             <x-responsive-nav-link href="#" :active="request()->routeIs('notifications.*')">
                 <div class="flex items-center">
