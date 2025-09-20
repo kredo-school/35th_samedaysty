@@ -55,4 +55,8 @@ class TravelPlan extends Model
         return $this->hasMany(Comment::class, 'plan_id');
     }
 
+    public function participant_chats(){
+        return $this->hasMany(ParticipantChat::class, 'plan_id');
+    }
+
 }
