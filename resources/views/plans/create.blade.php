@@ -62,7 +62,6 @@
                         @endforeach
                     </select>
                 </div>
-
             </div>
 
             <!-- Description -->

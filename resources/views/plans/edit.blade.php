@@ -6,16 +6,17 @@
                 <span class="font-bold text-sky-700">&nbsp;PLAN</span>
             </h1>
         </x-slot>
-        <form action="{{ route('plan.update') }}" method="POST"
+        <form action="{{ route('plan.update', $travel_plan->id) }}" method="POST"
             class="p-6 px-12 max-w-7xl mx-auto bg-white rounded-lg mt-6">
             @csrf
             @method('PUT') <!-- PUT METHOD -->
+
 
             <!-- Avatar + Name -->
             <div class="flex items-center justify-start space-x-2 mb-16">
                 <img src="/images/bellman.png" alt="Avatar" class="w-10 h-10 rounded-full">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
-                    <span class="ml-2 font-bold text-gray-800">{{ $plan->user->name ?? 'User' }}</span>
+                    <span class="ml-2 font-bold text-gray-800">{{ $travel_plan->user->name ?? 'User' }}</span>
                 </h1>
             </div>
 
@@ -29,7 +30,7 @@
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" name="travel_styles[]" value="{{ $style->id }}"
                                 class="h-4 w-4 text-blue-600 flex-shrink-0" {{ in_array($style->id, old('travel_styles',
-                            $plan->travelStyles->pluck('id')->toArray())) ? 'checked' : '' }}>
+                            $travel_plan->travelStyles->pluck('id')->toArray())) ? 'checked' : '' }}>
                             <i class="{{ $style->fontawesome_icon }} text-xl flex-shrink-0"></i>
                             <h3 class="font-semibold text-sm truncate">{{ ucfirst($style->style_name) }}</h3>
                         </div>
@@ -44,7 +45,7 @@
             <!-- Title -->
             <div class="mb-4">
                 <x-input-label for="title" :value="'Title'" />
-                <x-text-input id="title" name="title" type="text" value="{{ old('title', $plan->title) }}"
+                <x-text-input id="title" name="title" type="text" value="{{ old('title', $travel_plan->title) }}"
                     class="mt-1 block w-full" />
                 @error('title')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -56,7 +57,7 @@
                 <label class="block mb-1 font-semibold text-sm">Country</label>
                 <select name="country_id" class="w-full border rounded-lg p-2">
                     @foreach($countries as $country)
-                    <option value="{{ $country->id }}" {{ old('country_id', $plan->country_id) == $country->id ?
+                    <option value="{{ $country->id }}" {{ old('country_id', $travel_plan->country_id) == $country->id ?
                         'selected' : '' }}>
                         {{ $country->name }}
                     </option>
@@ -68,19 +69,19 @@
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Description</label>
                 <textarea name="description" rows="4"
-                    class="w-full border rounded-lg p-2">{{ old('description', $plan->description) }}</textarea>
+                    class="w-full border rounded-lg p-2">{{ old('description', $travel_plan->description) }}</textarea>
             </div>
 
             <!-- Plan Date -->
             <div class="flex mb-6 space-x-4">
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">From</label>
-                    <input type="date" name="start_date" value="{{ old('start_date', $plan->start_date) }}"
+                    <input type="date" name="start_date" value="{{ old('start_date', $travel_plan->start_date) }}"
                         class="w-full border rounded-lg p-2">
                 </div>
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">To</label>
-                    <input type="date" name="end_date" value="{{ old('end_date', $plan->end_date) }}"
+                    <input type="date" name="end_date" value="{{ old('end_date', $travel_plan->end_date) }}"
                         class="w-full border rounded-lg p-2">
                 </div>
             </div>
@@ -89,14 +90,15 @@
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Max Participants</label>
                 <input type="number" name="max_participants"
-                    value="{{ old('max_participants', $plan->max_participants) }}" class="w-full border rounded-lg p-2">
+                    value="{{ old('max_participants', $travel_plan->max_participants) }}"
+                    class="w-full border rounded-lg p-2">
             </div>
 
-            <!-- Submit Button -->
+            <!-- Submit Button (Edit) -->
             <div class="text-center">
-                <button type="submit" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full">
-                    Update Plan
-                </button>
+                <x-primary-button class="ml-3">
+                    {{ __('Edit') }}
+                </x-primary-button>
             </div>
 
             @if(session('success'))

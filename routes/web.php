@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{id?}', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/update-recommended-form', [ProfileController::class, 'updateGadget'])
-        ->name('profile.updateGadget');
+    ->name('profile.updateGadget');
     Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
@@ -38,7 +38,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
 });
 
-
 // plans
 Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::get('/{id}/detail', [PlanController::class, 'detail'])->name('detail');
@@ -47,6 +46,8 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::post('/store', [PlanController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
     Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
+    Route::delete('/{id}/delete', [PlanController::class, 'destroy'])->name('delete');
+
 });
 
 // reactions
