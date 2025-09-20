@@ -51,4 +51,8 @@ class TravelPlan extends Model
         return $query->exists();
     }
 
+    public function comments(){
+        return $this->hasMany(Comment::class, 'plan_id');
+    }
+
 }

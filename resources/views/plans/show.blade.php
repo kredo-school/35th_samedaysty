@@ -4,6 +4,13 @@
         Plan details
     </x-title>
 
+    @if(session('success'))
+    <div class="max-w-4xl mx-auto mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
+        <p class="font-semibold">✅ Success</p>
+        <p>{{ session('success') }}</p>
+    </div>
+    @endif
+
     <div class="px-20">
         <!-- edit/delete buttons -->
         <div class="flex justify-end space-x-2 py-2">
@@ -28,7 +35,7 @@
             <div class="flex pt-5 items-center font-bold">
                 <h4 class="text-xl py-1">Style&nbsp;:</h4>
                 @foreach ($all_styles as $style)
-                    <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>
+                <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>
                 @endforeach
             </div>
 
@@ -61,26 +68,29 @@
 
             <!-- like/interested/join buttons -->
             <div class="flex justify-end space-x-5 py-2 items-center">
-                    <form action="{{ route('reaction.store', $travel_plan->id) }}" method="POST" class="flex gap-4">
-                        @csrf
-                        <input type="hidden" name="plan_id" value="{{ $travel_plan->id }}">
+                <form action="{{ route('reaction.store', $travel_plan->id) }}" method="POST" class="flex gap-4">
+                    @csrf
+                    <input type="hidden" name="plan_id" value="{{ $travel_plan->id }}">
 
-                        <button type="submit" name="type" value="like">
-                            <i class="fa-{{ $travel_plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl"></i>
-                            <span class="text-2xl ms-1">like</span>
-                            <!-- to do -->
-                            <span class="text-md ms-1">{{ $travel_plan->isReacted('like') }}</span>
-                        </button>
+                    <button type="submit" name="type" value="like">
+                        <i
+                            class="fa-{{ $travel_plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl"></i>
+                        <span class="text-2xl ms-1">like</span>
+                        <!-- to do -->
+                        <span class="text-md ms-1">{{ $travel_plan->isReacted('like') }}</span>
+                    </button>
 
-                        <button type="submit" name="type" value="interested">
-                            <i class="fa-{{ $travel_plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
-                            <span class="text-2xl ms-1">interested</span>
-                            <!-- to do -->
-                            <span class="text-md ms-1">{{ $travel_plan->isReacted('interested') }}</span>
-                        </button>
+                    <button type="submit" name="type" value="interested">
+                        <i
+                            class="fa-{{ $travel_plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
+                        <span class="text-2xl ms-1">interested</span>
+                        <!-- to do -->
+                        <span class="text-md ms-1">{{ $travel_plan->isReacted('interested') }}</span>
+                    </button>
 
-                        <x-secondary-button type="submit" name="type" value="join_request" class="ms-4">JOIN</x-secondary-button>
-                    </form>
+                    <x-secondary-button type="submit" name="type" value="join_request"
+                        class="ms-4">JOIN</x-secondary-button>
+                </form>
 
             </div>
 
@@ -131,46 +141,33 @@
         <!-- comment -->
         <div class="border border-black box-border rounded-md my-5 overflow-y-auto">
             <h4 class="text-xl font-bold ms-3">comments</h4>
+            @foreach($travel_plan->comments as $comment)
             <div class="flex items-center space-x-3 p-4">
                 <!-- icon -->
-                <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i></a>
+                <a href="{{ route('profile.show', $comment->user->id) }}">{!! $comment->user->avatar ? '<img
+                        src="'.$comment->user->avatar.'" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
+                        class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
 
                 <div class="flex flex-col justify-center">
                     <!-- name/time -->
                     <div class="flex items-center space-x-2">
-                        <span class="font-semibold">John Doe</span>
-                        <span class="text-sm text-gray-500">1h ago</span>
+                        <span class="font-semibold">{{ $comment->user->name }}</span>
+                        <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                     </div>
 
                     <!-- comment content -->
                     <p class="text-gray-700">
-                        my first comment
+                        {{ $comment->body }}
                     </p>
                 </div>
 
             </div>
-
-            <div class="flex items-center space-x-3 p-4 border-b">
-                <!-- icon -->
-                <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i></a>
-
-                <div class="flex flex-col justify-center">
-                    <!-- name/time -->
-                    <div class="flex items-center space-x-2">
-                        <span class="font-semibold">Sensei</span>
-                        <span class="text-sm text-gray-500">5 mins ago</span>
-                    </div>
-
-                    <!-- comment content -->
-                    <p class="text-gray-700">
-                        I'm Kenjiro Tsuda.
-                    </p>
-                </div>
-            </div>
+            @endforeach
 
             <div class="border-t border-gray-300 p-3 flex gap-2">
-                <form action="" method="post" class="w-full flex gap-2">
-                    <input type="text" name="" id="" placeholder="message..."
+                <form action="{{ route('comment.store', $travel_plan->id) }}" method="post" class="w-full flex gap-2">
+                    @csrf
+                    <input type="text" name="comment_body{{ $travel_plan->id }}" id="" placeholder="message..."
                         class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
                     <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
                     <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>

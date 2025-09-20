@@ -1,4 +1,6 @@
-<div x-data="calendar()" x-init="init()"
+@props(['countryId' => null])
+
+<div x-data="calendar({ countryId: {{ $countryId ? $countryId : 'null' }} })" x-init="init()"
     class="w-full min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
     <!-- Header -->
     <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8 border border-white/20">
@@ -34,8 +36,7 @@
         <div class="grid grid-cols-7 gap-3">
             <template x-for="date in calendarDays" :key="date.key">
                 <div class="relative">
-                    <button @click="selectDate(date)"
-                        :class="{
+                    <button @click="selectDate(date)" :class="{
                             'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:from-blue-600 hover:to-blue-700': date
                                 .isSelected,
                             'bg-gray-100 text-gray-400 opacity-50': date.isOtherMonth,
@@ -52,12 +53,23 @@
                     </button>
 
                     <!-- Event flags -->
-                    <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                        <template x-for="event in getEventsForDate(date.date)" :key="event.id">
-                            <i x-show="event.extendedProps.country_code"
-                                :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`" class="text-lg"
-                                :title="event.title"></i>
-                        </template>
+                    <div class="absolute bottom-0 left-0 right-0 px-1 pb-1">
+                        <div class="flex flex-wrap justify-center items-center gap-1 max-h-8 overflow-hidden">
+                            <template x-for="(event, index) in getEventsForDate(date.date).slice(0, 3)" :key="event.id">
+                                <div class="relative group">
+                                    <i x-show="event.extendedProps.country_code"
+                                        :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`"
+                                        class="text-base shadow-md border border-white/50 rounded-sm hover:scale-110 transition-transform duration-200"
+                                        :title="`${event.title} - ${event.extendedProps.country}`"></i>
+                                </div>
+                            </template>
+                            <!-- Show count if more than 3 events -->
+                            <div x-show="getEventsForDate(date.date).length > 3"
+                                class="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full px-2 py-1 font-semibold shadow-md border border-white/30 hover:scale-105 transition-transform duration-200"
+                                :title="`${getEventsForDate(date.date).length} travel plans total`"
+                                x-text="`+${getEventsForDate(date.date).length - 3}`">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -82,21 +94,21 @@
             </h4>
             <div class="space-y-3">
                 <template x-for="event in getEventsForDate(selectedDate)" :key="event.id">
-                    <div
-                        class="p-5 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 shadow-sm hover:shadow-md transition-all duration-300">
+                    <a :href="`/plan/${event.id}/detail`"
+                        class="block p-5 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300 cursor-pointer">
                         <div class="flex items-center gap-3 mb-3">
                             <i x-show="event.extendedProps.country_code"
                                 :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`"
                                 class="text-xl shadow-sm"></i>
-                            <a :href="`{{ route('plan.detail', ':id') }}`.replace(':id', event.id)" class="font-bold text-gray-800 text-lg" x-text="event.title"></a>
-                            <!-- <div class="font-bold text-gray-800 text-lg" x-text="event.title"></div> -->
+                            <div class="font-bold text-gray-800 text-lg hover:text-blue-600 transition-colors"
+                                x-text="event.title"></div>
                         </div>
                         <div class="text-blue-600 text-sm font-medium mb-2"
                             x-text="event.extendedProps.country ? `${event.extendedProps.country} • ${event.extendedProps.participants}/${event.extendedProps.max_participants} participants` : ''">
                         </div>
                         <div class="text-gray-600 text-sm leading-relaxed" x-text="event.extendedProps.description">
                         </div>
-                    </div>
+                    </a>
                 </template>
             </div>
         </div>
@@ -123,13 +135,19 @@
             countryId: countryId,
 
             init() {
+                this.loadEvents();
+            },
+
+            loadEvents() {
                 const params = new URLSearchParams();
-                const countryId = new URLSearchParams(window.location.search).get('country');
-                if (countryId) {
+                if (this.countryId) {
                     params.append('country', this.countryId);
                 }
 
-                fetch('/travel-plans?' + params.toString())
+                const url = '/travel-plans?' + params.toString();
+                console.log('Loading events from:', url, 'countryId:', this.countryId);
+
+                fetch(url)
                     .then(res => res.json())
                     .then(data => {
                         this.events = data.map(plan => ({
@@ -147,7 +165,10 @@
                                 description: plan.description ?? ''
                             }
                         }));
-                        console.log('Events loaded:', this.events);
+                        console.log('Events loaded:', this.events.length, 'events for country:', this.countryId);
+                    })
+                    .catch(error => {
+                        console.error('Error loading events:', error);
                     });
             },
 
@@ -212,9 +233,7 @@
                     start.setHours(0, 0, 0, 0);
                     const end = new Date(e.end);
                     end.setHours(0, 0, 0, 0);
-                    // return checkDate >= start && checkDate <= end;
-                    const countryMatch = this.countryId ? e.extendedProps.country_code === this.countryId : true;
-                    return checkDate >= start && checkDate <= end && countryMatch;
+                    return checkDate >= start && checkDate <= end;
                 });
             },
             selectDate(date) {
