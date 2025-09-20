@@ -89,38 +89,49 @@
         <!-- participants chat -->
         <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
             <h4 class="text-xl text-sky-500 text-center font-bold">participants chat</h4>
-            <!-- others' message -->
-            <div class="flex items-start gap-2 p-3">
-                <!-- icon -->
-                <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i></a>
-                <div>
-                    <!-- username -->
-                    <span class="text-xs text-gray-500">Risa</span>
-
-                    <!-- chat content/time -->
-                    <div class="flex items-end gap-1">
-                        <div class="bg-gray-200 rounded-2xl rounded-tl-none p-3">
-                            Hi, I'm Risa. I'm from Japan.
+            @forelse($travel_plan->participant_chats as $participant_chat)
+                @if($participant_chat->user->id === Auth::user()->id)
+                    <!-- own message -->
+                    <div class="flex justify-end items-start gap-2 p-3">
+                        <div class="flex items-end justify-end gap-1">
+                            <!-- time/content -->
+                            <span class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
+                            <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm break-words">
+                                {{ $participant_chat->body }}
+                            </div>
                         </div>
-                        <div class="text-xs text-gray-500">21:48&nbsp;01/09/2025</div>
                     </div>
-                </div>
-            </div>
+                @else
+                    <!-- others' message -->
+                    <div class="flex items-start gap-2 p-3">
+                        <!-- icon -->
+                        <a href="{{ route('profile.show', $participant_chat->user->id) }}">{!! $participant_chat->user->avatar ? '<img src="'.$participant_chat->user->avatar.'" alt="avatar" class="w-10 h-10 rounded-full">' : '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+                        <div>
+                            <!-- username -->
+                            <span class="text-xs text-gray-500">{{ $participant_chat->user->name }}</span>
 
-            <!-- own message -->
-            <div class="flex justify-end items-start gap-2 p-3">
-                <div class="flex items-end justify-end gap-1">
-                    <!-- time/content -->
-                    <span class="text-xs text-gray-500">21:53&nbsp;01/09/2025</span>
-                    <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm">
-                        Thanks for joining. I'm Rin. glad to see a new member.
+                            <!-- chat content/time -->
+                            <div class="flex items-end gap-1">
+                                <div class="bg-gray-200 rounded-2xl rounded-tl-none p-3 break-words">
+                                    {{ $participant_chat->body }}
+                                </div>
+                                <div class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                @endif
+            @empty
+                <p class="text-gray-500 p-4">no message yet</p>
+            @endforelse
+
+                    
+
+
 
             <div class="border-t border-gray-300 p-3 flex gap-2">
-                <form action="" method="post" class="w-full flex gap-2">
-                    <input type="text" name="" id="" placeholder="message..."
+                <form action="{{ route('participant_chat.store', $travel_plan->id) }}" method="post" class="w-full flex gap-2">
+                    @csrf
+                    <input type="text" name="participant_chat_body{{ $travel_plan->id }}" id="" placeholder="message..."
                         class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
                     <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
                     <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>
@@ -131,7 +142,7 @@
         <!-- comment -->
         <div class="border border-black box-border rounded-md my-5 overflow-y-auto">
             <h4 class="text-xl font-bold ms-3">comments</h4>
-            @foreach($travel_plan->comments as $comment)
+            @forelse($travel_plan->comments as $comment)
                 <div class="flex items-center space-x-3 p-4">
                     <!-- icon -->
                     <a href="{{ route('profile.show', $comment->user->id) }}">{!! $comment->user->avatar ? '<img src="'.$comment->user->avatar.'" alt="avatar" class="w-10 h-10 rounded-full">' : '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
@@ -144,18 +155,20 @@
                         </div>
 
                         <!-- comment content -->
-                        <p class="text-gray-700">
+                        <p class="text-gray-700 break-words">
                             {{ $comment->body }}
                         </p>
                     </div>
                     
                 </div>
-            @endforeach
+            @empty
+                <p class="text-gray-500 p-4">no comment yet</p>
+            @endforelse
 
             <div class="border-t border-gray-300 p-3 flex gap-2">
                 <form action="{{ route('comment.store', $travel_plan->id) }}" method="post" class="w-full flex gap-2">
                     @csrf
-                    <input type="text" name="comment_body{{ $travel_plan->id }}" id="" placeholder="message..."
+                    <input type="text" name="comment_body{{ $travel_plan->id }}" id="" placeholder="comment..."
                         class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
                     <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
                     <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>

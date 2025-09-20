@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\TravelStyleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ReactionController;
+use App\Http\Controllers\ParticipantChatController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,10 +40,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('users/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
 });
 
+// comments
 Route::middleware(['auth'])->group(function () {
     Route::post('/comment/{id}/store', [CommentController::class,'store'])->name('comment.store');
 });
 
+// participant chats
+Route::middleware(['auth'])->group(function () {
+    Route::post('/participant_chat/{id}/store', [ParticipantChatController::class,'store'])->name('participant_chat.store');
+});
 
 // plans
 Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
