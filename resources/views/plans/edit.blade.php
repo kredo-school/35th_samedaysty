@@ -6,7 +6,7 @@
                 <span class="font-bold text-sky-700">&nbsp;PLAN</span>
             </h1>
         </x-slot>
-        <form action="{{ route('plan.update') }}" method="POST"
+        <form action="{{ route('plan.update', $plan->id) }}" method="POST"
             class="p-6 px-12 max-w-7xl mx-auto bg-white rounded-lg mt-6">
             @csrf
             @method('PUT') <!-- PUT METHOD -->
