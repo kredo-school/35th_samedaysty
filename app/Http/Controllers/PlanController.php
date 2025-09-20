@@ -138,6 +138,12 @@ class PlanController extends Controller
         return redirect()->route('plan.edit', $travel_plan->id)
             ->with('success', 'Plan updated successfully!');
     }
+
+    public function deleteConfirm($id)
+    {
+        $travel_plan = TravelPlan::findOrFail($id);
+        return view('plans.delete', compact('travel_plan'));
+    }
     public function destroy($id)
     {
         $travel_plan = TravelPlan::findOrFail($id);
