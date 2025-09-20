@@ -53,12 +53,23 @@
                     </button>
 
                     <!-- Event flags -->
-                    <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                        <template x-for="event in getEventsForDate(date.date)" :key="event.id">
-                            <i x-show="event.extendedProps.country_code"
-                                :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`" class="text-lg"
-                                :title="event.title"></i>
-                        </template>
+                    <div class="absolute bottom-0 left-0 right-0 px-1 pb-1">
+                        <div class="flex flex-wrap justify-center items-center gap-1 max-h-8 overflow-hidden">
+                            <template x-for="(event, index) in getEventsForDate(date.date).slice(0, 3)" :key="event.id">
+                                <div class="relative group">
+                                    <i x-show="event.extendedProps.country_code"
+                                        :class="`fi fi-${event.extendedProps.country_code.toLowerCase()}`"
+                                        class="text-base shadow-md border border-white/50 rounded-sm hover:scale-110 transition-transform duration-200"
+                                        :title="`${event.title} - ${event.extendedProps.country}`"></i>
+                                </div>
+                            </template>
+                            <!-- Show count if more than 3 events -->
+                            <div x-show="getEventsForDate(date.date).length > 3"
+                                class="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full px-2 py-1 font-semibold shadow-md border border-white/30 hover:scale-105 transition-transform duration-200"
+                                :title="`${getEventsForDate(date.date).length} travel plans total`"
+                                x-text="`+${getEventsForDate(date.date).length - 3}`">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>
