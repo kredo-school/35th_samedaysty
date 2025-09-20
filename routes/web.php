@@ -6,6 +6,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Admin\TravelStyleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\ReactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -48,6 +49,17 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
 });
 
+// reactions
+Route::middleware(['auth'])->group(function () {
+    Route::post('/{id}/store', [ReactionController::class, 'store'])->name('reaction.store');
+});
+
+
+// API route for plans
+Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
+
+
+// Chat routes
 // Chat System
 Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
     // Chat Dashboard
