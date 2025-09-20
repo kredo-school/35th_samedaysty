@@ -18,19 +18,28 @@ class ProfileController extends Controller
     public function show($id = null)
     {
         //if don't give ID
+        /** @var \App\Models\User $user */
         $user = $id ? User::findOrFail($id) : Auth::user();
         //3 gadgets
         $gadgets = $user->gadgets()->orderBy('id')->take(3)->get();
+        //create travel plan count
+        $postsCount = $user->travelPlans()->count();
         //follow and follower count
         $followersCount = $user->followers()->count();
         $followingCount = $user->following()->count();
         //follow or unfollow
-        $isFollowing = Auth::check() && Auth::user()->isFollowing($user);
-        return view('profile.show', compact('user', 'gadgets','followersCount','followingCount','isFollowing'));
+        /** @var \App\Models\User $me */
+        $me = Auth::user();
+        $isFollowing = $me ? $me->isFollowing($user) : false;
+        //get conversation
+        // $conversation = $user->conversations->latest()->first();
+
+        return view('profile.show', compact('user', 'gadgets', 'followersCount', 'postsCount', 'followingCount', 'isFollowing'));
     }
 
     public function edit()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $gadgets = $user->gadgets()->orderBy('id')->take(3)->get();
 

@@ -1,4 +1,5 @@
 <x-app-layout>
+    {{-- @var \App\Models\User $user --}}
     <!--header profile-->
     <div class="">
         <x-title name="header">
@@ -11,7 +12,7 @@
             <div class="flex-none w-1/5">
                 <div class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500 overflow-hidden">
                     @if($user->avatar)
-                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Avatar" class="w-full h-full rounded-full object-cover">
+                    <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar" class="w-full h-full rounded-full object-cover">
                     @else
                     <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                         <i class="fa-solid fa-hippo text-gray-400 text-6xl"></i>
@@ -26,15 +27,15 @@
                 <div class="mt-4 flex space-x-6">
                     <div class="flex items-center space-x-3">
                         <span class="text-gray-500">Posts</span>
-                        <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
+                        <span class="font-bold">{{ $postsCount }}</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <span class=" text-gray-500">Following</span>
-                        <span class="font-bold">10{{--{{ $postsCount }}--}}</span>
+                        <span class="font-bold">{{ $postsCount }}</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <span class=" text-gray-500">Followers</span>
-                        <span class="font-bold">20{{--{{ $followersCount }}--}}</span>
+                        <span class="font-bold" id="followers-count-{{ $user->id }}">{{ $followersCount }}</span>
                     </div>
                 </div>
 
@@ -63,20 +64,24 @@
                     @else
                     <!--other user-->
                     @if(Auth::id() !== $user->id)
+
                     <div id="follow-btn-{{ $user->id }}">
+                        @php
+                        $followAction = $isFollowing ? 'unfollow' : 'follow';
+                        @endphp
+
                         <button
-                            class="px-4 py-2 rounded text-white"
-                            style="background-color: {{ $isFollowing ? '#ef4444' : '#3b82f6' }}"
-                            onclick="toggleFollow({{ $user->id }}, '{{ $isFollowing ? 'unfollow' : 'follow' }}')">
+                            id="follow-button-{{ $user->id }}"
+                            class="px-4 py-2 rounded text-white {{ $isFollowing ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600' }}"
+                            onclick="toggleFollow('{{ $user->id }}', '{{ $followAction }}')">
                             {{ $isFollowing ? 'Unfollow' : 'Follow' }}
                         </button>
-                        <span id="followers-count-{{ $user->id }}">{{ $followersCount }}</span> Followers
                     </div>
-                    @endif
 
-                    <a href="{{ route('messages.create', $user) }}"
+                    @endif
+                    <a href=""
                         class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
-                        Message
+                        Chat
                     </a>
                     @endif
                 </div>
@@ -194,7 +199,7 @@
     <!--add calender -->
     <h1 class="text-2xl p-5">Schedule</h1>
     <div class="w-full">
-        <p class="m-3">add calender!!! not yet</p>
+
     </div>
 
     <!--show gadgets -->
@@ -247,39 +252,52 @@
     <!-- ajax part -->
     <script>
         function toggleFollow(userId, action) {
-            let url = action === 'follow' ? `/follow/${userId}` : `/unfollow/${userId}`;
+            // action change URL
+            const url = action === 'follow' ?
+                `/follow/${userId}` :
+                `/unfollow/${userId}`;
 
             fetch(url, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                     },
-                    body: JSON.stringify({})
+                    body: JSON.stringify({
+                        action
+                    })
                 })
-                .then(res => res.json())
+                .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         const btnDiv = document.getElementById(`follow-btn-${userId}`);
+                        const followersCountEl = document.getElementById(`followers-count-${userId}`);
+
                         if (data.action === 'followed') {
                             btnDiv.innerHTML = `
                     <button 
+                        id="follow-button-${userId}"
                         class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                         onclick="toggleFollow(${userId}, 'unfollow')">
                         Unfollow
                     </button>`;
-                        } else {
+                        } else if (data.action === 'unfollowed') {
                             btnDiv.innerHTML = `
                     <button 
+                        id="follow-button-${userId}"
                         class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         onclick="toggleFollow(${userId}, 'follow')">
                         Follow
                     </button>`;
                         }
+
+                        // follower change from controller
+                        if (followersCountEl) {
+                            followersCountEl.textContent = data.followers_count;
+                        }
                     }
                 })
-                .catch(err => console.error(err));
+                .catch(err => console.error('Error:', err));
         }
     </script>
 </x-app-layout>

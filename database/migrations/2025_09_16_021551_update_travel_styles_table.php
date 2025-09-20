@@ -16,16 +16,6 @@ return new class extends Migration
             $table->text('description')->nullable()->after('icon_class');
         });
         
-        Schema::table('travel_styles', function (Blueprint $table) {
-            if (!Schema::hasColumn('travel_styles', 'icon_class')) {
-                $table->string('icon_class')->nullable()->after('style_name');
-            }
-            if (!Schema::hasColumn('travel_styles', 'description')) {
-                $table->text('description')->nullable()->after('icon_class');
-            }
-        });
-        
-        
     }
 
     /**

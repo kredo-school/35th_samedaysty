@@ -15,7 +15,7 @@
             <div class="flex items-center justify-start space-x-2 mb-16">
                 <img src="/images/bellman.png" alt="Avatar" class="w-10 h-10 rounded-full">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
-                    <span class="ml-2 font-bold text-gray-800">カビルンルン</span>
+                    <span class="ml-2 font-bold text-gray-800">{{ $plan->user->name ?? 'User' }}</span>
                 </h1>
             </div>
 

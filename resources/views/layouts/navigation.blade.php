@@ -27,7 +27,7 @@
                             <x-nav-link :href="route('plan.search')" :active="request()->routeIs('plan.*')">
                                 {{ __('Search') }}
                             </x-nav-link>
-                            <x-nav-link>
+                            <x-nav-link :href="route('plan.create')" :active="request()->routeIs('create.*')">
                                 {{ __('Create') }}
                             </x-nav-link>
                             <x-nav-link :href="route('chat.index')" :active="request()->routeIs('chat.*')">

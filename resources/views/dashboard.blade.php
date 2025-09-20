@@ -16,8 +16,9 @@
                             <i class="fa-solid fa-hippo flex-none text-3xl m-2"></i>
                             <span class="leading-none">Search others<br>travel plans</span>
                         </a>
-                        <!--create your travel plan-->
-                        <a class="w-full h-full relative bg-white/5 text-white font-bold rounded-lg flex items-center justify-center text-4xl hover:bg-white/40 border border-transparent hover:border-orange-500 transition px-2 py-3">
+                        <!-- create your travel plan -->
+                        <a href="{{ route('plan.create') }}"
+                            class="w-full h-full relative bg-white/5 text-white font-bold rounded-lg flex items-center justify-center text-4xl hover:bg-white/40 border border-transparent hover:border-orange-500 transition px-2 py-3">
                             <i class="fa-solid fa-plane flex-none text-3xl m-2"></i>
                             <span class="leading-none">Create your<br>travel plan</span>
                         </a>
@@ -32,7 +33,7 @@
                             <span class="">Chat page</span>
                         </a>
                     </div>
-                </div>   
+                </div>
             </div>
         </div>
     </div>
