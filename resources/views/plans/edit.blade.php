@@ -11,6 +11,7 @@
             @csrf
             @method('PUT') <!-- PUT METHOD -->
 
+
             <!-- Avatar + Name -->
             <div class="flex items-center justify-start space-x-2 mb-16">
                 <img src="/images/bellman.png" alt="Avatar" class="w-10 h-10 rounded-full">
@@ -57,6 +58,7 @@
                 <x-country-select name="country_id" :selected="old('country_id', $plan->country_id)" class="w-full" />
             </div>
 
+
             <!-- Description -->
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Description</label>
@@ -82,23 +84,22 @@
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Max Participants</label>
                 <input type="number" name="max_participants"
-                    value="{{ old('max_participants', $plan->max_participants) }}" class="w-full border rounded-lg p-2">
+                    value="{{ old('max_participants', $plan->max_participants) }}"
+                    class="w-full border rounded-lg p-2">
             </div>
 
-            <!-- Submit Button -->
+            <form action="{{ route('plan.update', $plan->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+            
+            <!-- Submit Button (Edit) -->
             <div class="text-center">
-                <button type="submit" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-full">
-                    Update Plan
-                </button>
+                <x-primary-button class="ml-3">
+                    {{ __('Edit') }}
+                </x-primary-button>
             </div>
-
-            @if(session('success'))
-            <div
-                class="mt-4 max-w-2xl mx-auto p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
-                <p class="font-semibold">✅ Success</p>
-                <p>{{ session('success') }}</p>
-            </div>
-            @endif
+            </form>
+            
         </form>
     </div>
 </x-app-layout>

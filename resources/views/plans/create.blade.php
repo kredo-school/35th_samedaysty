@@ -58,7 +58,6 @@
                     <label class="block mb-1 font-semibold text-sm">Country</label>
                     <x-country-select name="country_id" class="w-full" />
                 </div>
-
             </div>
 
             <!-- Description -->

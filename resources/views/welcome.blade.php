@@ -47,11 +47,13 @@
 
         <!-- Right button -->
         <div class="flex justify-end w-full mt-4">
-            <a href="{{ route('register') }}" class="px-6 py-3 text-base md:text-lg inline-block text-center">
-                Join Now
-            </a>
-
+            <x-primary-button class="px-8 py-4 text-xl">
+                <a href="{{ route('register') }}">
+                    {{ __('Join Now') }}
+                </a>
+            </x-primary-button>
         </div>
+        
     </div>
 
     <div class="w-full bg-white mt-24">
@@ -269,8 +271,9 @@
                 </div>
             </div>
 
+
+        </section>
     </div>
-    </section>
 
     <div class="w-full bg-white mt-16">
         <!-- how to screen shot -- tittle -->
@@ -340,10 +343,11 @@
         </p>
         <!-- button（right side） -->
         <div class="flex justify-end w-full mt-4">
-            <a href="{{ route('register') }}" class="px-6 py-3 text-base md:text-lg inline-block text-center">
-                Join Now
-            </a>
-
+            <x-primary-button class="ml-3">
+                <a href="{{ route('register') }}">
+                    {{ __('Join Now') }}
+                </a>
+            </x-primary-button>
         </div>
     </div>
 

@@ -58,10 +58,6 @@ class PlanController extends Controller
         return response()->json($all_plans);
     }
 
-
-
-
-
     //add create method
     public function create()
     {
@@ -90,6 +86,10 @@ class PlanController extends Controller
             'max_participants' => $request->max_participants,
         ]);
 
+        if ($request->travel_styles) {
+            $travel_plan->travelStyles()->sync($request->travel_styles);
+        }
+
         // Link the checked travel style 
         if ($request->has('travel_styles')) {
             $travel_plan->travelStyles()->sync($request->travel_styles);
@@ -105,8 +105,10 @@ class PlanController extends Controller
         return view('plans.edit', compact('plan', 'travel_styles'));
     }
 
-    public function update(Request $request, TravelPlan $travel_plan)
+    public function update(Request $request, $id)
     {
+        $travel_plan = TravelPlan::findOrFail($id);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -133,7 +135,24 @@ class PlanController extends Controller
             $travel_plan->travelStyles()->detach();
         }
 
-        return redirect()->route('plans.edit', $travel_plan->id)
+        return redirect()->route('plan.edit', $travel_plan->id)
             ->with('success', 'Plan updated successfully!');
+    }
+
+    public function deleteConfirm($id)
+    {
+        $travel_plan = TravelPlan::findOrFail($id);
+        return view('plans.delete', compact('travel_plan'));
+    }
+    public function destroy($id)
+    {
+        $travel_plan = TravelPlan::findOrFail($id);
+
+        $travel_plan->travelStyles()->detach();
+
+        $travel_plan->delete();
+
+        return redirect()->route('plan.search')
+            ->with('success', 'Plan deleted successfully!');
     }
 }
