@@ -11,7 +11,7 @@ class ReactionController extends Controller
     {
         $request->validate([
             'plan_id' => 'required|exists:travel_plans,id',
-            'type'=> 'required|in:like,interested,,join_request',
+            'type'=> 'required|in:like,interested,join_request',
         ]);
 
         $plan_id = $request->input('plan_id');
@@ -31,7 +31,6 @@ class ReactionController extends Controller
 
             return back()->with('info','you have already sent a request');
         }
-
         Reaction::create([
             'user_id'=> auth()->id(),
             'plan_id'=> $plan_id,

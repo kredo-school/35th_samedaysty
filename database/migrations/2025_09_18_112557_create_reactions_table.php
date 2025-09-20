@@ -20,9 +20,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('post_id')->references('id')->on('travel_plans')->onDelete('cascade');
+            $table->foreign('plan_id')->references('id')->on('travel_plans')->onDelete('cascade');
 
-            $table->unique(['user_id', 'post_id', 'type']);
+            $table->unique(['user_id', 'plan_id', 'type']);
         });
     }
 

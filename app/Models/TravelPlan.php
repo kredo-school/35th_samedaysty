@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TravelPlan extends Model
@@ -35,6 +36,19 @@ class TravelPlan extends Model
     }
     public function planStyles(){
         return $this->hasMany(PlanStyle::class);
+    }
+
+    public function reactions(){
+        return $this->hasMany(Reaction::class, 'plan_id');
+    }
+
+    public function isReacted(string $type = null){
+        $query = $this->reactions()->where('user_id', Auth::id());
+        // dd($query);
+        if($type){
+            $query->where('type', $type);
+        }
+        return $query->exists();
     }
 
 }

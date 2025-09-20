@@ -51,7 +51,7 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
 
 // reactions
 Route::middleware(['auth'])->group(function () {
-    Route::get('/{id}/store', [ReactionController::class, 'store'])->name('reaction.store');
+    Route::post('/{id}/store', [ReactionController::class, 'store'])->name('reaction.store');
 });
 
 
