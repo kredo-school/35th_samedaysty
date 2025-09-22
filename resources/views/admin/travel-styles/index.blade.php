@@ -47,10 +47,6 @@
                                     </th>
                                     <th
                                         class="px-6 py-3 border-b-2 border-gray-300 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        Icon
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 border-b-2 border-gray-300 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         Display Name
                                     </th>
                                     <th
@@ -75,14 +71,6 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{ $style->style_name }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        @if($style->icon_class)
-                                        <i class="{{ $style->icon_class }}"></i>
-                                        <span class="ml-2 text-xs text-gray-500">{{ $style->icon_class }}</span>
-                                        @else
-                                        <span class="text-gray-400">-</span>
-                                        @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{ $style->display_name }}

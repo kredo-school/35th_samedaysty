@@ -70,7 +70,11 @@ class PlanController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
+            'country_id' => 'required|exists:countries,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'max_participants' => 'required|integer|min:1',
             'travel_styles' => 'nullable|array',
             'travel_styles.*' => 'exists:travel_styles,id',
         ]);
@@ -94,7 +98,8 @@ class PlanController extends Controller
         if ($request->has('travel_styles')) {
             $travel_plan->travelStyles()->sync($request->travel_styles);
         }
-        return redirect()->route('plan.create')->with('success', 'Plan created!');
+        return redirect()->route('plan.detail', $travel_plan->id)
+            ->with('success', 'Plan created successfully!');
     }
 
     public function edit(TravelPlan $travel_plan, $id)
@@ -111,11 +116,11 @@ class PlanController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
             'country_id' => 'required|exists:countries,id',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'max_participants' => 'nullable|integer|min:1',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'max_participants' => 'required|integer|min:1',
             'travel_styles' => 'nullable|array',
             'travel_styles.*' => 'exists:travel_styles,id',
         ]);
@@ -135,7 +140,7 @@ class PlanController extends Controller
             $travel_plan->travelStyles()->detach();
         }
 
-        return redirect()->route('plan.edit', $travel_plan->id)
+        return redirect()->route('plan.detail', $travel_plan->id)
             ->with('success', 'Plan updated successfully!');
     }
 

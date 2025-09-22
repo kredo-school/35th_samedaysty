@@ -26,7 +26,7 @@ class ReactionController extends Controller
         if($existing){ 
             if ($type !== 'join_request'){
                 $existing->delete();
-                return back()->with('success', 'successfully deleted');
+                return back();
             }
 
             return back()->with('info','you have already sent a request');
@@ -38,6 +38,6 @@ class ReactionController extends Controller
             'status' => $type === 'join_request' ? 'pending' : null,
         ]);
 
-        return back()->with('success', 'added a reaction');
+        return back();
     }
 }
