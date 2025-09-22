@@ -38,22 +38,6 @@
                             </p>
                         </div>
 
-                        <div class="mb-6">
-                            <label for="icon_class" class="block text-sm font-medium text-gray-700 mb-2">
-                                Icon Class (FontAwesome)
-                            </label>
-                            <input type="text" id="icon_class" name="icon_class" value="{{ old('icon_class') }}"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="e.g., fas fa-spa, fas fa-mountain">
-
-                            @error('icon_class')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                Enter FontAwesome icon class (optional)
-                            </p>
-                        </div>
 
                         <div class="mb-6">
                             <label for="description" class="block text-sm font-medium text-gray-700 mb-2">

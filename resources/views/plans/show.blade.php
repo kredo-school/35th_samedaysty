@@ -75,16 +75,15 @@
                     <input type="hidden" name="plan_id" value="{{ $travel_plan->id }}">
 
                     <button type="submit" name="type" value="like">
-                        <i
-                            class="fa-{{ $travel_plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl"></i>
+                        <i class="fa-{{ $travel_plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl">
+                        </i>
                         <span class="text-2xl ms-1">like</span>
                         <!-- to do -->
                         <span class="text-md ms-1">{{ $travel_plan->isReacted('like') }}</span>
                     </button>
 
                     <button type="submit" name="type" value="interested">
-                        <i
-                            class="fa-{{ $travel_plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
+                        <i class="fa-{{ $travel_plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
                         <span class="text-2xl ms-1">interested</span>
                         <!-- to do -->
                         <span class="text-md ms-1">{{ $travel_plan->isReacted('interested') }}</span>
@@ -93,7 +92,6 @@
                     <x-secondary-button type="submit" name="type" value="join_request"
                         class="ms-4">JOIN</x-secondary-button>
                 </form>
-
             </div>
 
             <!-- approve join request -->
@@ -232,8 +230,6 @@
                     <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>
                 </form>
             </div>
-
         </div>
-
     </div>
 </x-app-layout>

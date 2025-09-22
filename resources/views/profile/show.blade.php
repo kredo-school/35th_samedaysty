@@ -100,20 +100,38 @@
                             <span class="text-sky-700">Plans</span>
                         </h2>
                         <div class="space-y-4">
+                            @forelse($travelPlans->take(2) as $plan)
                             <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Japan</h3>
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">{{ $plan->country->name ?? 'Unknown Country' }}</h3>
                                 <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan:Going to see cherry blossoms in Nara
+                                    Plan <a href="{{ route('plan.detail', $plan->id) }}"
+                                        class="text-sky-600 hover:underline">
+                                        {{ $plan->title }}
+                                    </a>
                                 </span>
                             </div>
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Italy</h3>
-                                <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan: Dreaming of a trip to Venice
-                                </span>
-                            </div>
+                            @empty
+                            <p class="text-gray-500 text-sm">No travel plans yet.</p>
+                            @endforelse
                         </div>
+                        <!-- button to display the modal-->
+                        @if($travelPlans->count() > 2)
+                        <div class="mt-3">
+                            <x-plan-modal :plans="$travelPlans->skip(2)" title="Created Plans" routePrefix="plan" idSuffix="Created" />
+                            <x-primary-button type="button" onclick="document.getElementById('plansModal').showModal()">
+                                Show all plans
+                            </x-primary-button>
+                        </div>
+                        @endif
                     </div>
+                    <!-- Created Plans Modal -->
+                    <dialog id="plansModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
+                        <h2 class="text-lg font-bold mb-4">All Created Plans</h2>
+                        <div class="space-y-4 max-h-96 overflow-y-auto"> @foreach($travelPlans as $plan) <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1"> {{ $plan->country->name ?? 'Unknown Country' }} </h3> <span class="text-gray-600 dark:text-gray-500 text-sm"> Plan <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline"> {{ $plan->title }} </a> </span>
+                            </div> @endforeach </div>
+                        <form method="dialog" class="mt-4 text-right"> <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"> Close </button> </form>
+                    </dialog>
 
                     <!-- 2. Joined Plans -->
                     <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
@@ -140,25 +158,65 @@
 
                     <!-- 3. Interested Plans -->
                     <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
-                        <h2 class="text-lg font-bold mb-2"><i class="fa-solid fa-flag text-green-500 text-2xl mr-2"></i>
+                        <h2 class="text-lg font-bold mb-2">
+                            <i class="fa-solid fa-flag text-green-500 text-2xl mr-2"></i>
                             <span class="text-orange-500">INTERESTED </span>
                             <span class="text-sky-700">Plans</span>
                         </h2>
+
                         <div class="space-y-4">
+                            @forelse($latestInterestedPlans as $plan)
                             <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">France</h3>
-                                <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan:Visit Paris and enjoy pastries
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                                    {{ $plan->country->name ?? 'Unknown Country' }}
+                                </h3>
+                                <span class="text-gray-600 dark:text-gray-500 text-sm">
+                                    Plan:
+                                    <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                        {{ $plan->title }}
+                                    </a>
                                 </span>
                             </div>
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Italy</h3>
-                                <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan: Dreaming of a trip to Venice
-                                </span>
-                            </div>
+                            @empty
+                            <p class="text-gray-500 text-sm">No interested plans yet.</p>
+                            @endforelse
                         </div>
+
+                        @if($remainingInterestedPlans->count() > 0)
+                        <div class="mt-3">
+                            <x-primary-button type="button" onclick="document.getElementById('interestedModal').showModal()">
+                                Show all plans
+                            </x-primary-button>
+                        </div>
+                        @endif
                     </div>
+
+                    <!-- Modal for remaining plans -->
+                    <dialog id="interestedModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
+                        <h2 class="text-lg font-bold mb-4">All Interested Plans</h2>
+                        <div class="space-y-4 max-h-96 overflow-y-auto">
+                            @foreach($remainingInterestedPlans as $plan)
+                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                                    {{ $plan->country->name ?? 'Unknown Country' }}
+                                </h3>
+                                <span class="text-gray-600 dark:text-gray-500 text-sm">
+                                    Plan:
+                                    <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                        {{ $plan->title }}
+                                    </a>
+                                </span>
+                            </div>
+                            @endforeach
+                        </div>
+                        <form method="dialog" class="mt-4 text-right">
+                            <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+                                Close
+                            </button>
+                        </form>
+                    </dialog>
+
+
 
                     <!-- 4. Liked Plans -->
                     <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
@@ -210,7 +268,7 @@
             @if($gadget->photo_url && file_exists(storage_path('app/public/' . $gadget->photo_url)))
             <img src="{{ asset('storage/' . $gadget->photo_url) }}"
                 alt="{{ $gadget->item_name }}"
-                class="w-32 h-32 rounded-full object-cover border">
+                class="w-32 h-32 rounded-lg object-cover border mb-2">
             @else
             <img src="{{ asset('images/airplane.png') }}"
                 alt="Sample"
