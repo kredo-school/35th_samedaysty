@@ -1,10 +1,9 @@
 <x-app-layout>
     <div class="w-full px-30">
         <x-slot name="header">
-            <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
-                <span class="font-bold text-orange-500">CREATE</span>
-                <span class="font-bold text-sky-700">&nbsp;PLAN</span>
-            </h1>
+            <x-title>
+                Create plans
+            </x-title>
         </x-slot>
 
         <form action="{{ route('plan.store') }}" method="POST"
@@ -13,9 +12,13 @@
 
             <!-- Avatar + Name -->
             <div class="flex items-center justify-start space-x-2 mb-16">
-                <img src="/images/bellman.png" alt="Avatar" class="w-10 h-10 rounded-full">
+                <img src="{{ $user->avatar_url ?? '/images/default-avatar.png' }}" alt="Avatar" class="w-10 h-10 rounded-full">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
-                    <span class="ml-2 font-bold text-gray-800">{{ $plan->user->name ?? 'User' }}</span>
+                    <span class="ml-2 font-bold text-gray-800">
+                    @auth
+                        {{ auth()->user()->name }}
+                    @endauth
+                    </span>
                 </h1>
             </div>
 
@@ -48,22 +51,35 @@
                     @endforeach
                 </div>
             </div>
-            <!-- Title と Country -->
+            <!-- Title  Country -->
             <div class="flex mb-6 space-x-4">
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">Title</label>
-                    <input type="text" name="title" class="w-full border rounded-lg p-2">
+                    <input type="text" name="title" value="{{ old('title') }}"
+                        class="w-full border rounded-lg p-2 @error('title') border-red-500 @enderror">
+                    @error('title')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
+
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">Country</label>
-                    <x-country-select name="country_id" class="w-full" />
+                    <x-country-select name="country_id" class="w-full @error('country_id') border-red-500 @enderror" />
+                    @error('country_id')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
+
             </div>
 
             <!-- Description -->
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Description</label>
-                <textarea name="description" rows="4" class="w-full border rounded-lg p-2"></textarea>
+                <textarea name="description" rows="4"
+                    class="w-full border rounded-lg p-2 @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
+                @error('description')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Plan Date -->
@@ -75,13 +91,18 @@
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">To</label>
                     <input type="date" name="end_date" class="w-full border rounded-lg p-2">
+
                 </div>
             </div>
 
             <!-- Max Participants -->
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Max Participants</label>
-                <input type="number" name="max_participants" class="w-full border rounded-lg p-2">
+                <input type="number" name="max_participants" value="{{ old('max_participants') }}"
+                    class="w-full border rounded-lg p-2 @error('max_participants') border-red-500 @enderror">
+                @error('max_participants')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Submit Button -->
@@ -91,14 +112,6 @@
                     Create Plan
                 </button>
             </div>
-
-            @if(session('success'))
-            <div
-                class="mt-4 max-w-2xl mx-auto p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
-                <p class="font-semibold">✅ Success</p>
-                <p>{{ session('success') }}</p>
-            </div>
-            @endif
         </form>
     </div>
 </x-app-layout>
