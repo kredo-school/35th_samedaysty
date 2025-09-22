@@ -9,7 +9,6 @@ class TravelStyle extends Model
 {
     protected $fillable = [
         'style_name',
-        'icon_class',
         'description'
     ];
 
@@ -32,7 +31,8 @@ class TravelStyle extends Model
         return ucfirst($this->style_name);
     }
 
-    public function planStyles(){
+    public function planStyles()
+    {
         return $this->hasMany(PlanStyle::class);
     }
     public function getFontawesomeIconAttribute()
