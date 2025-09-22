@@ -80,23 +80,18 @@
             <!--bio-->
             <div class="mt-6" x-data="{ charCount: 0, max: 500 }" x-init="charCount = $refs.intro.value.length">
                 <x-input-label for="bio" :value="__('Introduction')" />
-
                 <textarea
                     id="bio" name="bio" rows="4" maxlength="500" x-ref="intro" @input="charCount = $refs.intro.value.length"
                     class="text-lg mt-1 block w-full rounded-md border p-2
                         border-gray-300 focus:ring-indigo-500 focus:border-indigo-500
                         dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm sm:text-sm"
                     placeholder="Write a short introduction about yourself">{{ old('bio', $user->bio) }}</textarea>
-
                 <p class="text-sm mt-1" :class="charCount > max ? 'text-red-500' : 'text-gray-400'">
                     <span x-text="max - charCount"></span> characters remaining
                 </p>
-
                 <x-input-error class="mt-2" :messages="$errors->get('bio')" />
             </div>
-
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-
             <div>
                 <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                     {{ __('Your email address is unverified.') }}
@@ -105,7 +100,6 @@
                         {{ __('Click here to re-send the verification email.') }}
                     </button>
                 </p>
-
                 @if (session('status') === 'verification-link-sent')
                 <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
                     {{ __('A new verification link has been sent to your email address.') }}

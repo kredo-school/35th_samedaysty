@@ -34,7 +34,18 @@ class ProfileController extends Controller
         //get conversation
         // $conversation = $user->conversations->latest()->first();
 
-        return view('profile.show', compact('user', 'gadgets', 'followersCount', 'postsCount', 'followingCount', 'isFollowing'));
+        //travel plan made by logged-in users
+        $travelPlans = $user->travelPlans()->with('country')->latest()->get();
+        // get interested plan 
+        $interestedPlans = $user->interestedPlans()
+            ->orderBy('travel_plans.created_at', 'desc')
+            ->get();
+        $latestInterestedPlans = $interestedPlans->take(2);
+        $remainingInterestedPlans = $interestedPlans->skip(2)->values();
+
+
+        return view('profile.show', compact('user', 'gadgets', 'followersCount', 'postsCount', 'followingCount', 'isFollowing', 'travelPlans', 'interestedPlans','latestInterestedPlans',
+        'remainingInterestedPlans'));
     }
 
     public function edit()
