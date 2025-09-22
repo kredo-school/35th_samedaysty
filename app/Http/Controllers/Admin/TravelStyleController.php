@@ -34,13 +34,11 @@ class TravelStyleController extends Controller
     {
         $request->validate([
             'style_name' => 'required|string|max:255|unique:travel_styles,style_name',
-            'icon_class' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
         ]);
 
         TravelStyle::create([
             'style_name' => strtolower(trim($request->style_name)),
-            'icon_class' => $request->icon_class,
             'description' => $request->description,
         ]);
 
@@ -71,13 +69,11 @@ class TravelStyleController extends Controller
     {
         $request->validate([
             'style_name' => 'required|string|max:255|unique:travel_styles,style_name,' . $travelStyle->id,
-            'icon_class' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
         ]);
 
         $travelStyle->update([
             'style_name' => strtolower(trim($request->style_name)),
-            'icon_class' => $request->icon_class,
             'description' => $request->description,
         ]);
 
