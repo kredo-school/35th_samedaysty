@@ -11,7 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('travel_styles', function (Blueprint $table) {
-            $table->dropColumn('icon_class');
+            if (Schema::hasColumn('travel_styles', 'icon_class')) {
+                $table->dropColumn('icon_class');
+            }
         });
     }
 
