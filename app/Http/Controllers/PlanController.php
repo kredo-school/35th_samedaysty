@@ -13,10 +13,12 @@ class PlanController extends Controller
 
     public function detail($id)
     {
-        $travel_plan = TravelPlan::findOrFail($id);
+        $travel_plan = TravelPlan::with(['joinRequests.user'])->findOrFail($id);
         $all_styles = TravelStyle::all();
+
         return view('plans.show')->with('travel_plan', $travel_plan)
-            ->with('all_styles', $all_styles);
+                                    ->with('all_styles', $all_styles)
+                                    ->with('join_requests', $travel_plan->joinRequests);
     }
 
     public function search(Request $request)
