@@ -5,10 +5,10 @@
     </x-title>
 
     @if(session('success'))
-    <div class="max-w-4xl mx-auto mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
-        <p class="font-semibold">✅ Success</p>
-        <p>{{ session('success') }}</p>
-    </div>
+        <div class="max-w-4xl mx-auto mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
+            <p class="font-semibold">✅ Success</p>
+            <p>{{ session('success') }}</p>
+        </div>
     @endif
 
     <div class="px-20">
@@ -24,7 +24,8 @@
 
         <!-- plan details -->
         <div class="pt-3 flex items-center">
-            <a href="{{ route ('profile.show',$travel_plan->user->id)}}"><i class="fa-solid fa-circle-user text-gray-500 text-5xl"></i></a>
+            <a href="{{ route('profile.show', $travel_plan->user->id)}}"><i
+                    class="fa-solid fa-circle-user text-gray-500 text-5xl"></i></a>
             <h4 class="text-xl ps-2">{{ $travel_plan->user->name }}</h4>
             <h4 class="text-xl ms-auto px-2">{{ $travel_plan->country->name }}</h4>
             <i class="fi fi-{{ $travel_plan->country->code }} text-3xl"></i>
@@ -35,7 +36,7 @@
             <div class="flex pt-5 items-center font-bold">
                 <h4 class="text-xl py-1">Style&nbsp;:</h4>
                 @foreach ($all_styles as $style)
-                <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>
+                    <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>
                 @endforeach
             </div>
 
@@ -94,6 +95,44 @@
 
             </div>
 
+            <!-- approve join request -->
+            <div class="flex justify-end">
+                <div class="bg-gray-200 w-1/2 shadow-md rounded-lg p-2">
+                    <h2 class="text-xl font-semibold mb-4 text-center">join requests</h2>
+                    <!-- icon/name/time + buttons -->
+                    <div class="flex items-center">
+                        <!-- leftside: user info -->
+                        <div class="flex items-center space-x-2">
+                            <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i></a>
+                            <div class="flex flex-col">
+                                <span class="font-semibold">username</span>
+                                <span class="text-sm text-gray-500">2h ago*</span>
+                            </div>
+                        </div>
+
+                        <!-- rightside： buttons -->
+                        <div class="flex space-x-2 ml-auto">
+                            <!-- accept -->
+                            <form action="" method="POST" class="inline">
+                                @csrf
+                                <input type="hidden" name="status" value="approved">
+                                <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded">
+                                    Accept
+                                </button>
+                            </form>
+
+                            <!-- decline -->
+                            <form action="" method="POST" class="inline">
+                                @csrf
+                                <input type="hidden" name="status" value="declined">
+                                <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded">
+                                    Decline
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- participants chat -->
@@ -115,7 +154,8 @@
                     <!-- others' message -->
                     <div class="flex items-start gap-2 p-3">
                         <!-- icon -->
-                        <a href="{{ route('profile.show', $participant_chat->user->id) }}">{!! $participant_chat->user->avatar ? '<img src="'.$participant_chat->user->avatar.'" alt="avatar" class="w-10 h-10 rounded-full">' : '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+                        <a
+                            href="{{ route('profile.show', $participant_chat->user->id) }}">{!! $participant_chat->user->avatar ? '<img src="' . $participant_chat->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
                         <div>
                             <!-- username -->
                             <span class="text-xs text-gray-500">{{ $participant_chat->user->name }}</span>
@@ -134,12 +174,13 @@
                 <p class="text-gray-500 p-4">no message yet</p>
             @endforelse
 
-                    
+
 
 
 
             <div class="border-t border-gray-300 p-3 flex gap-2">
-                <form action="{{ route('participant_chat.store', $travel_plan->id) }}" method="post" class="w-full flex gap-2">
+                <form action="{{ route('participant_chat.store', $travel_plan->id) }}" method="post"
+                    class="w-full flex gap-2">
                     @csrf
                     <input type="text" name="participant_chat_body{{ $travel_plan->id }}" id="" placeholder="message..."
                         class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
@@ -153,26 +194,26 @@
         <div class="border border-black box-border rounded-md my-5 overflow-y-auto">
             <h4 class="text-xl font-bold ms-3">comments</h4>
             @foreach($travel_plan->comments as $comment)
-            <div class="flex items-center space-x-3 p-4">
-                <!-- icon -->
-                <a href="{{ route('profile.show', $comment->user->id) }}">{!! $comment->user->avatar ? '<img
-                        src="'.$comment->user->avatar.'" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
-                        class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+                <div class="flex items-center space-x-3 p-4">
+                    <!-- icon -->
+                    <a href="{{ route('profile.show', $comment->user->id) }}">{!! $comment->user->avatar ? '<img
+                                src="' . $comment->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
+                                class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
 
-                <div class="flex flex-col justify-center">
-                    <!-- name/time -->
-                    <div class="flex items-center space-x-2">
-                        <span class="font-semibold">{{ $comment->user->name }}</span>
-                        <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                    <div class="flex flex-col justify-center">
+                        <!-- name/time -->
+                        <div class="flex items-center space-x-2">
+                            <span class="font-semibold">{{ $comment->user->name }}</span>
+                            <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                        </div>
+
+                        <!-- comment content -->
+                        <p class="text-gray-700">
+                            {{ $comment->body }}
+                        </p>
                     </div>
 
-                    <!-- comment content -->
-                    <p class="text-gray-700">
-                        {{ $comment->body }}
-                    </p>
                 </div>
-
-            </div>
             @endforeach
 
             <div class="border-t border-gray-300 p-3 flex gap-2">
