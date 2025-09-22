@@ -24,8 +24,9 @@
 
         <!-- plan details -->
         <div class="pt-3 flex items-center">
-            <a href="{{ route('profile.show', $travel_plan->user->id)}}"><i
-                    class="fa-solid fa-circle-user text-gray-500 text-5xl"></i></a>
+            <a href="{{ route('profile.show', $travel_plan->user->id)}}">{!! $travel_plan->user->avatar ? '<img
+                                src="' . $travel_plan->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
+                                class="fa-solid fa-circle-user text-gray-500 text-5xl"></i>' !!}</a>
             <h4 class="text-xl ps-2">{{ $travel_plan->user->name }}</h4>
             <h4 class="text-xl ms-auto px-2">{{ $travel_plan->country->name }}</h4>
             <i class="fi fi-{{ $travel_plan->country->code }} text-3xl"></i>
@@ -97,38 +98,44 @@
             <div class="flex justify-end">
                 <div class="bg-gray-200 w-1/2 shadow-md rounded-lg p-2">
                     <h2 class="text-xl font-semibold mb-4 text-center">join requests</h2>
-                    <!-- icon/name/time + buttons -->
-                    <div class="flex items-center">
-                        <!-- leftside: user info -->
-                        <div class="flex items-center space-x-2">
-                            <a href=""><i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i></a>
-                            <div class="flex flex-col">
-                                <span class="font-semibold">username</span>
-                                <span class="text-sm text-gray-500">2h ago*</span>
+                    @forelse($join_requests as $request)
+                        <!-- icon/name/time + buttons -->
+                        <div class="flex items-center">
+                            <!-- leftside: user info -->
+                            <div class="flex items-center space-x-2">
+                                <a href="{{ route('profile.show', $request->user->id) }}">{!! $request->user->avatar ? '<img
+                                src="' . $request->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
+                                class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+                                <div class="flex flex-col">
+                                    <span class="font-semibold">{{ $request->user->name }}</span>
+                                    <span class="text-sm text-gray-500">{{ $request->created_at->diffForHumans() }}</span>
+                                </div>
+                            </div>
+
+                            <!-- rightside： buttons -->
+                            <div class="flex space-x-2 ml-auto">
+                                <!-- accept -->
+                                <form action="" method="POST" class="inline">
+                                    @csrf
+                                    <input type="hidden" name="status" value="approved">
+                                    <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded">
+                                        Accept
+                                    </button>
+                                </form>
+
+                                <!-- decline -->
+                                <form action="" method="POST" class="inline">
+                                    @csrf
+                                    <input type="hidden" name="status" value="declined">
+                                    <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded">
+                                        Decline
+                                    </button>
+                                </form>
                             </div>
                         </div>
-
-                        <!-- rightside： buttons -->
-                        <div class="flex space-x-2 ml-auto">
-                            <!-- accept -->
-                            <form action="" method="POST" class="inline">
-                                @csrf
-                                <input type="hidden" name="status" value="approved">
-                                <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded">
-                                    Accept
-                                </button>
-                            </form>
-
-                            <!-- decline -->
-                            <form action="" method="POST" class="inline">
-                                @csrf
-                                <input type="hidden" name="status" value="declined">
-                                <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded">
-                                    Decline
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                    @empty
+                        <p>No join requests yet.</p>
+                    @endforelse
                 </div>
             </div>
         </div>

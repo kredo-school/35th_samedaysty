@@ -59,4 +59,9 @@ class TravelPlan extends Model
         return $this->hasMany(ParticipantChat::class, 'plan_id');
     }
 
+    public function joinRequests(){
+        return $this->hasMany(Reaction::class,'plan_id')
+                    ->where('type', 'join_request');
+    }
+
 }
