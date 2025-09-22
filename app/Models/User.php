@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Gadget;
+use App\Models\Reaction;
+use App\Models\TravelPlan;
+
 
 class User extends Authenticatable
 {
@@ -138,5 +141,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(TravelPlan::class);
     }
-
+    /**  to show travel plan on profile page */
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class);
+    }
+    /**  to get only interested plan on profile page */
+    public function interestedPlans()
+    {
+        return $this->belongsToMany(
+            TravelPlan::class,'reactions','user_id','plan_id')
+        ->wherePivot('type', 'interested')
+        ->withTimestamps();
+    }  
 }

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-title name="header">
-            {{ __('Dashboard') }}
+            {{ __('Home') }}
     </x-title>
 
     <!--add user icon,created,joined,interested,liked!!!!!!!!!!!!!!!!!!!!! -->

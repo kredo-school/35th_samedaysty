@@ -58,7 +58,6 @@
         </div>
         @endforeach
 
-
         <div class="flex items-center gap-4">
             <x-secondary-button type="submit">{{ __('Save All Items') }}</x-secondary-button>
         </div>
