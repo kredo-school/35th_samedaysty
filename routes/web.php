@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{id?}', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/update-recommended-form', [ProfileController::class, 'updateGadget'])
-    ->name('profile.updateGadget');
+        ->name('profile.updateGadget');
     Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
@@ -42,12 +42,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 // comments
 Route::middleware(['auth'])->group(function () {
-    Route::post('/comment/{id}/store', [CommentController::class,'store'])->name('comment.store');
+    Route::post('/comment/{id}/store', [CommentController::class, 'store'])->name('comment.store');
 });
 
 // participant chats
 Route::middleware(['auth'])->group(function () {
-    Route::post('/participant_chat/{id}/store', [ParticipantChatController::class,'store'])->name('participant_chat.store');
+    Route::post('/participant_chat/{id}/store', [ParticipantChatController::class, 'store'])->name('participant_chat.store');
 });
 
 // plans
@@ -66,10 +66,6 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/{id}/store', [ReactionController::class, 'store'])->name('reaction.store');
 });
-
-
-// API route for plans
-Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
 
 
 // Chat routes
