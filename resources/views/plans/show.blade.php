@@ -78,19 +78,20 @@
                         <i class="fa-{{ $travel_plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl">
                         </i>
                         <span class="text-2xl ms-1">like</span>
-                        <!-- to do -->
                         <span class="text-md ms-1">{{ $travel_plan->isReacted('like') }}</span>
                     </button>
 
                     <button type="submit" name="type" value="interested">
                         <i class="fa-{{ $travel_plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
                         <span class="text-2xl ms-1">interested</span>
-                        <!-- to do -->
                         <span class="text-md ms-1">{{ $travel_plan->isReacted('interested') }}</span>
                     </button>
 
-                    <x-secondary-button type="submit" name="type" value="join_request"
-                        class="ms-4">JOIN</x-secondary-button>
+                </form>
+                <form action="{{ route('participations.store') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="travel_plan_id" value="{{ $travel_plan->id }}">
+                    <x-secondary-button type="submit" class="ms-4">JOIN</x-secondary-button>
                 </form>
             </div>
 
@@ -98,35 +99,37 @@
             <div class="flex justify-end">
                 <div class="bg-gray-200 w-1/2 shadow-md rounded-lg p-2">
                     <h2 class="text-xl font-semibold mb-4 text-center">join requests</h2>
-                    @forelse($join_requests as $request)
+                    @forelse($travel_plan->pendingParticipations as $pending)
                         <!-- icon/name/time + buttons -->
                         <div class="flex items-center">
                             <!-- leftside: user info -->
                             <div class="flex items-center space-x-2">
-                                <a href="{{ route('profile.show', $request->user->id) }}">{!! $request->user->avatar ? '<img
-                                src="' . $request->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
+                                <a href="{{ route('profile.show', $pending->user->id) }}">{!! $pending->user->avatar ? '<img
+                                src="' . $pending->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
                                 class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
                                 <div class="flex flex-col">
-                                    <span class="font-semibold">{{ $request->user->name }}</span>
-                                    <span class="text-sm text-gray-500">{{ $request->created_at->diffForHumans() }}</span>
+                                    <span class="font-semibold">{{ $pending->user->name }}</span>
+                                    <span class="text-sm text-gray-500">{{ $pending->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
 
                             <!-- rightside： buttons -->
                             <div class="flex space-x-2 ml-auto">
                                 <!-- accept -->
-                                <form action="" method="POST" class="inline">
+                                <form action="{{ route('participations.update', $pending->id) }}" method="POST" class="inline">
                                     @csrf
-                                    <input type="hidden" name="status" value="approved">
+                                    @method('PATCH')
+                                    <input type="hidden" name="status" value="accepted">
                                     <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded">
                                         Accept
                                     </button>
                                 </form>
 
                                 <!-- decline -->
-                                <form action="" method="POST" class="inline">
+                                <form action="{{ route('participations.update', $pending->id) }}" method="POST" class="inline">
                                     @csrf
-                                    <input type="hidden" name="status" value="declined">
+                                    @method('PATCH')
+                                    <input type="hidden" name="status" value="rejected">
                                     <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded">
                                         Decline
                                     </button>

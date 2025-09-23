@@ -150,8 +150,25 @@ class User extends Authenticatable
     public function interestedPlans()
     {
         return $this->belongsToMany(
-            TravelPlan::class,'reactions','user_id','plan_id')
-        ->wherePivot('type', 'interested')
-        ->withTimestamps();
-    }  
+            TravelPlan::class,
+            'reactions',
+            'user_id',
+            'plan_id'
+        )
+            ->wherePivot('type', 'interested')
+            ->withTimestamps();
+    }
+
+    public function participations()
+    {
+        return $this->hasMany(Participation::class);
+    }
+
+    public function joinedPlans()
+    {
+        return $this->belongsToMany(TravelPlan::class, 'participations')
+            ->withPivot('status', 'joined_at')
+            ->withTimestamps();
+    }
+
 }
