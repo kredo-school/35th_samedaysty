@@ -34,34 +34,59 @@ class TravelPlan extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function planStyles(){
+    public function planStyles()
+    {
         return $this->hasMany(PlanStyle::class);
     }
 
-    public function reactions(){
+    public function reactions()
+    {
         return $this->hasMany(Reaction::class, 'plan_id');
     }
 
-    public function isReacted(string $type = null){
+    public function isReacted(string $type = null)
+    {
         $query = $this->reactions()->where('user_id', Auth::id());
         // dd($query);
-        if($type){
+        if ($type) {
             $query->where('type', $type);
         }
         return $query->exists();
     }
 
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany(Comment::class, 'plan_id');
     }
 
-    public function participant_chats(){
+    public function participant_chats()
+    {
         return $this->hasMany(ParticipantChat::class, 'plan_id');
     }
 
-    public function joinRequests(){
-        return $this->hasMany(Reaction::class,'plan_id')
-                    ->where('type', 'join_request');
+    // to do (delete this one)
+    public function joinRequests()
+    {
+        return $this->hasMany(Reaction::class, 'plan_id')
+            ->where('type', 'join_request');
     }
+
+    public function participations()
+    {
+        return $this->hasMany(Participation::class);
+    }
+
+    public function pendingParticipations()
+    {
+        return $this->hasMany(Participation::class)->where('status', 'pending');
+    }
+
+    public function participants()
+    {
+        return $this->belongsToMany(User::class, 'participations')
+            ->withPivot('status', 'joined_at')
+            ->withTimestamps();
+    }
+
 
 }

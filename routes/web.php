@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\ParticipantChatController;
+use App\Http\Controllers\ParticipationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -66,6 +67,13 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/{id}/store', [ReactionController::class, 'store'])->name('reaction.store');
 });
+
+// participations
+Route::middleware(['auth'])->group(function () {
+    Route::post('/participations', [ParticipationController::class, 'store'])->name('participations.store');
+    Route::patch('/participations/{participation}/update/', [ParticipationController::class, 'update'])->name('participations.update');
+});
+
 
 
 // Chat routes
