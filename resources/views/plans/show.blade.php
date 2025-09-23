@@ -15,9 +15,9 @@
         <!-- edit/delete buttons -->
         <div class="flex justify-end space-x-2 py-2">
             @can('update', $travel_plan)
-                <a href="{{ route('plan.edit', $travel_plan->id) }}">
-                    <x-primary-button>edit</x-primary-button>
-                </a>
+            <a href="{{ route('plan.edit', $travel_plan->id) }}">
+                <x-primary-button>edit</x-primary-button>
+            </a>
             @endcan
 
             @can('delete', $travel_plan)
@@ -37,8 +37,8 @@
         <!-- plan details -->
         <div class="pt-3 flex items-center">
             <a href="{{ route('profile.show', $travel_plan->user->id)}}">{!! $travel_plan->user->avatar ? '<img
-                                src="' . $travel_plan->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
-                                class="fa-solid fa-circle-user text-gray-500 text-5xl"></i>' !!}</a>
+                    src="' . $travel_plan->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
+                    class="fa-solid fa-circle-user text-gray-500 text-5xl"></i>' !!}</a>
             <h4 class="text-xl ps-2">{{ $travel_plan->user->name }}</h4>
             <h4 class="text-xl ms-auto px-2">{{ $travel_plan->country->name }}</h4>
             <i class="fi fi-{{ $travel_plan->country->code }} text-3xl"></i>
@@ -49,7 +49,7 @@
             <div class="flex pt-5 items-center font-bold">
                 <h4 class="text-xl py-1">Style&nbsp;:</h4>
                 @foreach ($all_styles as $style)
-                    <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>
+                <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>
                 @endforeach
             </div>
 
@@ -153,7 +153,7 @@
                             </div>
                         </div>
                     @empty
-                        <p>No join requests yet.</p>
+                    <p>No join requests yet.</p>
                     @endforelse
                 </div>
             </div>
@@ -163,39 +163,40 @@
         <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
             <h4 class="text-xl text-sky-500 text-center font-bold">participants chat</h4>
             @forelse($travel_plan->participant_chats as $participant_chat)
-                @if($participant_chat->user->id === Auth::user()->id)
-                    <!-- own message -->
-                    <div class="flex justify-end items-start gap-2 p-3">
-                        <div class="flex items-end justify-end gap-1">
-                            <!-- time/content -->
-                            <span class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
-                            <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm break-words">
-                                {{ $participant_chat->body }}
-                            </div>
-                        </div>
+            @if($participant_chat->user->id === Auth::user()->id)
+            <!-- own message -->
+            <div class="flex justify-end items-start gap-2 p-3">
+                <div class="flex items-end justify-end gap-1">
+                    <!-- time/content -->
+                    <span class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
+                    <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm break-words">
+                        {{ $participant_chat->body }}
                     </div>
-                @else
-                    <!-- others' message -->
-                    <div class="flex items-start gap-2 p-3">
-                        <!-- icon -->
-                        <a
-                            href="{{ route('profile.show', $participant_chat->user->id) }}">{!! $participant_chat->user->avatar ? '<img src="' . $participant_chat->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
-                        <div>
-                            <!-- username -->
-                            <span class="text-xs text-gray-500">{{ $participant_chat->user->name }}</span>
+                </div>
+            </div>
+            @else
+            <!-- others' message -->
+            <div class="flex items-start gap-2 p-3">
+                <!-- icon -->
+                <a href="{{ route('profile.show', $participant_chat->user->id) }}">{!! $participant_chat->user->avatar ?
+                    '<img src="' . $participant_chat->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' :
+                    '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+                <div>
+                    <!-- username -->
+                    <span class="text-xs text-gray-500">{{ $participant_chat->user->name }}</span>
 
-                            <!-- chat content/time -->
-                            <div class="flex items-end gap-1">
-                                <div class="bg-gray-200 rounded-2xl rounded-tl-none p-3 break-words">
-                                    {{ $participant_chat->body }}
-                                </div>
-                                <div class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</div>
-                            </div>
+                    <!-- chat content/time -->
+                    <div class="flex items-end gap-1">
+                        <div class="bg-gray-200 rounded-2xl rounded-tl-none p-3 break-words">
+                            {{ $participant_chat->body }}
                         </div>
+                        <div class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</div>
                     </div>
-                @endif
+                </div>
+            </div>
+            @endif
             @empty
-                <p class="text-gray-500 p-4">no message yet</p>
+            <p class="text-gray-500 p-4">no message yet</p>
             @endforelse
 
 
@@ -224,20 +225,20 @@
                                         src="' . $comment->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
                                         class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
 
-                    <div class="flex flex-col justify-center">
-                        <!-- name/time -->
-                        <div class="flex items-center space-x-2">
-                            <span class="font-semibold">{{ $comment->user->name }}</span>
-                            <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
-                        </div>
-
-                        <!-- comment content -->
-                        <p class="text-gray-700">
-                            {{ $comment->body }}
-                        </p>
+                <div class="flex flex-col justify-center">
+                    <!-- name/time -->
+                    <div class="flex items-center space-x-2">
+                        <span class="font-semibold">{{ $comment->user->name }}</span>
+                        <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                     </div>
 
+                    <!-- comment content -->
+                    <p class="text-gray-700">
+                        {{ $comment->body }}
+                    </p>
                 </div>
+
+            </div>
             @endforeach
 
             <div class="border-t border-gray-300 p-3 flex gap-2">
