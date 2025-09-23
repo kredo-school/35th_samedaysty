@@ -13,10 +13,9 @@ public function store(Request $request)
         'travel_plan_id' => 'required|exists:travel_plans,id',
     ]);
 
-    // ここで必ずログインユーザーの ID を使う
     $userId = auth()->id();
     if (!$userId) {
-        return redirect()->back()->with('error', 'ログインしてください');
+        return redirect()->back()->with('error', 'log-in is required');
     }
 
     Participation::firstOrCreate(
