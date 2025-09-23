@@ -7,29 +7,26 @@ use Illuminate\Http\Request;
 
 class ParticipationController extends Controller
 {
-public function store(Request $request)
-{
-    $request->validate([
-        'travel_plan_id' => 'required|exists:travel_plans,id',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'travel_plan_id' => 'required|exists:travel_plans,id',
+        ]);
 
-    $userId = auth()->id();
-    if (!$userId) {
-        return redirect()->back()->with('error', 'log-in is required');
+        $userId = auth()->id();
+
+        Participation::firstOrCreate(
+            [
+                'user_id' => $userId,
+                'travel_plan_id' => $request->travel_plan_id,
+            ],
+            [
+                'status' => 'pending',
+            ]
+        );
+
+        return back()->with('success', 'Join request sent!');
     }
-
-    Participation::firstOrCreate(
-        [
-            'user_id' => $userId,
-            'travel_plan_id' => $request->travel_plan_id,
-        ],
-        [
-            'status' => 'pending',
-        ]
-    );
-
-    return back()->with('success', 'Join request sent!');
-}
 
     public function update(Request $request, Participation $participation)
     {
