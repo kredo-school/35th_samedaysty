@@ -8,18 +8,19 @@
         <div class="flex space-x-4">
             <!-- Submit Button (Delete)-->
             <div class="text-center mb-6">
-                <form action="{{ route('plan.delete', $travel_plan->id) }}" method="POST"
+                <form action="{{ route('plan.delete', $plan->id) }}" method="POST"
                     onsubmit="return confirm('Are you sure you want to delete this plan?');">
-                    @csrf
-                    @method('DELETE')
-                    <x-danger-button class="ml-3">
-                        {{ __('Delete Plan') }}
-                    </x-danger-button>
-                </form>
-
+                  @csrf
+                  @method('DELETE')
+                  <x-danger-button>
+                      {{ __('Delete') }}
+                  </x-danger-button>
+              </form>
+            
                 <a href="{{ route('plan.detail', $travel_plan->id) }}" class="bg-gray-300 px-4 py-2 rounded">
                     Cancel
                 </a>
+
             </div>
         </div>
     </div>

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Country;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; 
 use App\Models\TravelPlan;
 use App\Models\TravelStyle;
+use App\Models\Country;
+use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
+    use AuthorizesRequests; 
+
 
     public function detail($id)
     {
@@ -104,10 +107,13 @@ class PlanController extends Controller
             ->with('success', 'Plan created successfully!');
     }
 
-    public function edit(TravelPlan $travel_plan, $id)
+    public function edit($id)
     {
-        $travel_styles = TravelStyle::all();
         $plan = TravelPlan::findOrFail($id);
+
+        $this->authorize('update', $plan);
+
+        $travel_styles = TravelStyle::all();
 
         return view('plans.edit', compact('plan', 'travel_styles'));
     }
@@ -115,6 +121,8 @@ class PlanController extends Controller
     public function update(Request $request, $id)
     {
         $travel_plan = TravelPlan::findOrFail($id);
+
+        $this->authorize('update', $travel_plan);
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -149,14 +157,19 @@ class PlanController extends Controller
     public function deleteConfirm($id)
     {
         $travel_plan = TravelPlan::findOrFail($id);
+
+        $this->authorize('delete', $travel_plan);
+
         return view('plans.delete', compact('travel_plan'));
     }
+
     public function destroy($id)
     {
         $travel_plan = TravelPlan::findOrFail($id);
 
-        $travel_plan->travelStyles()->detach();
+        $this->authorize('delete', $travel_plan);
 
+        $travel_plan->travelStyles()->detach();
         $travel_plan->delete();
 
         return redirect()->route('plan.search')
