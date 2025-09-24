@@ -24,7 +24,6 @@ class FollowController extends Controller
             'followers_count' => $user->followers()->count()
         ]);
     }
-
     //unfollow = delete
     public function unfollow(User $user)
     {
@@ -38,5 +37,17 @@ class FollowController extends Controller
             'action' => 'unfollowed',
             'followers_count' => $user->followers()->count()
         ]);
+    }
+    //following list
+    public function followingJson(User $user)
+    {
+        $following = $user->following()->get(['users.id', 'users.name', 'users.avatar']);
+        return response()->json($following);
+    }
+    //follower list
+    public function followersJson(User $user)
+    {
+        $followers = $user->followers()->get(['users.id', 'users.name', 'users.avatar']);
+        return response()->json($followers);
     }
 }

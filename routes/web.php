@@ -60,7 +60,6 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
     Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
     Route::delete('/{id}/delete', [PlanController::class, 'destroy'])->name('delete');
-
 });
 
 // reactions
@@ -107,6 +106,10 @@ Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
 Route::middleware(['auth'])->group(function () {
     Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
     Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+    Route::get('/users/{user}/following/json', [FollowController::class, 'followingJson'])
+        ->name('users.following.json');
+    Route::get('/users/{user}/followers/json', [FollowController::class, 'followersJson'])
+        ->name('users.followers.json');
 });
 
 

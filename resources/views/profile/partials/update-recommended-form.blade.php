@@ -11,11 +11,10 @@
         @csrf
         @method('PATCH')
 
-        {{-- item --}}
+        {{-- Gadgets --}}
         @foreach (['item1' => $item1 ?? null, 'item2' => $item2 ?? null, 'item3' => $item3 ?? null] as $key => $gadget)
-        <div class="flex flex-col md:flex-row md:space-x-4 items-start mb-6">
-            {{-- image --}}
-            <div x-data="{ previewUrl: '{{ isset($gadget) && $gadget->photo_url ? asset('storage/' . $gadget->photo_url) : '' }}' }" class="flex flex-col items-center">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:gap-6">
+            <div x-data="{ previewUrl: '{{ isset($gadget) && $gadget->photo_url ? asset('storage/' . $gadget->photo_url) : '' }}' }" class="flex flex-col items-start lg:w-1/3">
                 <input x-ref="{{ $key }}_photo" type="file" name="{{ $key }}_photo" id="{{ $key }}_photo" class="hidden" accept="image/*"
                     @change="
                         const file = $event.target.files[0];
@@ -32,34 +31,39 @@
                         <i class="fa-solid fa-image text-3xl"></i>
                     </div>
                 </template>
-                <x-primary-button type="button" @click="$refs.{{ $key }}_photo.click()">
-                    Select Image
+                <x-primary-button type="button" @click="$refs.{{ $key }}_photo.click()">Select Image
                 </x-primary-button>
             </div>
 
-            {{-- gadgets name + description --}}
-            <div class="flex-1">
+            {{-- gadgets name(right site) --}}
+            <div class="flex-1 lg:w-2/3">
                 <x-input-label for="{{ $key }}" :value="__(ucfirst($key) . ' Name')" />
-                <x-text-input id="{{ $key }}" name="{{ $key }}" type="text" class="mt-1 block w-full"
+                <x-text-input id="{{ $key }}" name="{{ $key }}" type="text" color="orange" class="mt-1 block w-full"
                     :value="old($key, $gadget->item_name ?? '')" />
-
+                {{-- gadgets description --}}
                 <x-input-label for="{{ $key }}_description" :value="__(ucfirst($key) . ' Description')" class="mt-2" />
-                <div x-data="{ charCount: 0, max: 300 }" x-init="charCount = $refs.desc.value.length">
-                    <textarea id="{{ $key }}_description" name="{{ $key }}_description" rows="2" maxlength="300" x-ref="desc"
+                <div x-data="{ charCount: 0, max: 500 }" x-init="charCount = $refs.desc.value.length">
+                    <textarea id="{{ $key }}_description" name="{{ $key }}_description" rows="4" maxlength="300" x-ref="desc"
                         @input="charCount = $refs.desc.value.length"
-                        class="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 resize-none"
                         placeholder="Write a short description">{{ old($key . '_description', $gadget->memo ?? '') }}</textarea>
                     <p class="text-sm mt-1" :class="charCount > max ? 'text-red-500' : 'text-gray-400'">
                         <span x-text="max - charCount"></span> characters remaining
                     </p>
                 </div>
                 <x-input-error class="mt-1" :messages="$errors->get($key . '_description')" />
+                {{-- gadgets url --}}
+                <x-input-label for="{{ $key }}_url" :value="__(ucfirst($key) . ' URL')" class="mt-2" />
+                <x-text-input id="{{ $key }}_url" name="{{ $key }}_url" type="url" color="orange" class="mt-1 block w-full"
+                    placeholder="https://example.com"
+                    :value="old($key . '_url', $gadget->shop_url ?? '')" />
+                <x-input-error class="mt-1" :messages="$errors->get($key . '_url')" />
             </div>
         </div>
         @endforeach
 
         <div class="flex items-center gap-4">
-            <x-secondary-button type="submit">{{ __('Save All Items') }}</x-secondary-button>
+            <x-secondary-button type="submit">{{ __('Save All Gadgets') }}</x-secondary-button>
         </div>
     </form>
 </section>
