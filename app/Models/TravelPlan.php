@@ -85,6 +85,7 @@ class TravelPlan extends Model
     {
         return $this->belongsToMany(User::class, 'participations')
             ->withPivot('status', 'joined_at')
+            ->wherePivotNotNull('joined_at')
             ->withTimestamps();
     }
 
