@@ -165,4 +165,18 @@ class User extends Authenticatable
             ->wherePivot('type', '=', 'like')
             ->withTimestamps();
     }
+
+
+    public function participations()
+    {
+        return $this->hasMany(Participation::class);
+    }
+
+    public function joinedPlans()
+    {
+        return $this->belongsToMany(TravelPlan::class, 'participations')
+            ->withPivot('status', 'joined_at')
+            ->withTimestamps();
+    }
+
 }

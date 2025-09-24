@@ -37,15 +37,20 @@ class TravelPlanPolicy
      * Determine whether the user can update the model.
      */
     // app/Policies/TravelPlanPolicy.php
-public function update(User $user, TravelPlan $plan)
-{
-    return $user->id === $plan->user_id;
-}
+    public function view_own(User $user, TravelPlan $plan)
+    {
+        return $user->id === $plan->user_id;
+    }
 
-public function delete(User $user, TravelPlan $plan)
-{
-    return $user->id === $plan->user_id;
-}
+    public function react(User $user, TravelPlan $plan)
+    {
+        return $user->id !== $plan->user_id;
+    }
+
+    public function participate(User $user, TravelPlan $plan)
+    {
+        return $plan->participants->contains($user->id);    
+    }
 
 
     /**
