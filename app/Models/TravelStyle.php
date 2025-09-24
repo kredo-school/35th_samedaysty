@@ -57,4 +57,8 @@ class TravelStyle extends Model
 
         return $map[$this->style_name] ?? 'fa-solid fa-circle-question text-gray-400';
     }
+    public function travelPlans()
+    {
+        return $this->belongsToMany(TravelPlan::class, 'travel_plan_travel_style');
+    }
 }

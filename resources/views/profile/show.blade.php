@@ -37,7 +37,6 @@
                             {{ $followingCount }}
                         </button>
                     </div>
-
                     <div class="flex items-center space-x-3">
                         <span class="text-gray-500">Followers</span>
                         <button
@@ -125,7 +124,6 @@
                         </div>
                         @if($travelPlans->count() > 2)
                         <div class="mt-3">
-                            <x-plan-modal :plans="$travelPlans->skip(2)" title="Created Plans" routePrefix="plan" idSuffix="Created" />
                             <x-primary-button type="button" onclick="document.getElementById('plansModal').showModal()">
                                 Show all plans
                             </x-primary-button>
