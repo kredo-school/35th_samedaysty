@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests; 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\TravelPlan;
 use App\Models\TravelStyle;
 use App\Models\Country;
@@ -11,17 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
-    use AuthorizesRequests; 
+    use AuthorizesRequests;
 
 
     public function detail($id)
     {
-        $travel_plan = TravelPlan::with(['joinRequests.user'])->findOrFail($id);
+        $travel_plan = TravelPlan::with(['joinRequests.user', 'travelStyles'])->findOrFail($id);
+
         $all_styles = TravelStyle::all();
 
         return view('plans.show')->with('travel_plan', $travel_plan)
-                                    ->with('all_styles', $all_styles)
-                                    ->with('join_requests', $travel_plan->joinRequests);
+            ->with('all_styles', $all_styles)
+            ->with('join_requests', $travel_plan->joinRequests);
     }
 
     public function search(Request $request)
