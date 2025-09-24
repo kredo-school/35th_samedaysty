@@ -43,9 +43,29 @@ class ProfileController extends Controller
         $latestInterestedPlans = $interestedPlans->take(2);
         $remainingInterestedPlans = $interestedPlans->skip(2)->values();
 
+        //get liked plan
+        $likedPlans = $user->likedPlans()
+            ->orderBy('travel_plans.created_at', 'desc')
+            ->get();
 
-        return view('profile.show', compact('user', 'gadgets', 'followersCount', 'postsCount', 'followingCount', 'isFollowing', 'travelPlans', 'interestedPlans','latestInterestedPlans',
-        'remainingInterestedPlans'));
+        $latestLikedPlans = $likedPlans->take(2);
+        $remainingLikedPlans = $likedPlans->skip(2)->values();
+
+        return view('profile.show', compact(
+            'user',
+            'gadgets',
+            'followersCount',
+            'postsCount',
+            'followingCount',
+            'isFollowing',
+            'travelPlans',
+            'interestedPlans',
+            'latestInterestedPlans',
+            'remainingInterestedPlans',
+            'likedPlans',
+            'latestLikedPlans',
+            'remainingLikedPlans'
+        ));
     }
 
     public function edit()
@@ -71,6 +91,7 @@ class ProfileController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
+            'bio' => ['nullable', 'string', 'max:500'],
         ]);
 
         /*avatar has changed*/
@@ -100,14 +121,17 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'item1' => 'nullable|string|max:255',
-            'item1_description' => 'nullable|string|max:1000',
+            'item1_description' => 'nullable|string|max:500',
             'item1_photo' => 'nullable|image|max:2048',
+            'item1_url' => 'nullable|url|max:255',
             'item2' => 'nullable|string|max:255',
-            'item2_description' => 'nullable|string|max:1000',
+            'item2_description' => 'nullable|string|max:500',
             'item2_photo' => 'nullable|image|max:2048',
+            'item2_url'=> 'nullable|url|max:255',
             'item3' => 'nullable|string|max:255',
-            'item3_description' => 'nullable|string|max:1000',
+            'item3_description' => 'nullable|string|max:500',
             'item3_photo' => 'nullable|image|max:2048',
+            'item3_url'=> 'nullable|url|max:255'
         ]);
 
         foreach (['item1', 'item2', 'item3'] as $index => $itemKey) {
@@ -116,6 +140,7 @@ class ProfileController extends Controller
             $data = [
                 'item_name' => $validated[$itemKey] ?? $gadget->item_name ?? '',
                 'memo' => $validated[$itemKey . '_description'] ?? $gadget->memo ?? '',
+                'shop_url' => $validated[$itemKey . '_url'] ?? $gadget->shop_url ?? '',
             ];
             if ($request->hasFile($itemKey . '_photo')) {
                 if ($gadget && $gadget->photo_url) {
@@ -131,8 +156,6 @@ class ProfileController extends Controller
         }
         return redirect()->route('profile.show')->with('status', 'Gadgets updated successfully');
     }
-
-
     /** Delete the user's account.*/
     public function destroy(Request $request): RedirectResponse
     {

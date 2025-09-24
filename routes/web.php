@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{id?}', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/update-recommended-form', [ProfileController::class, 'updateGadget'])
-    ->name('profile.updateGadget');
+        ->name('profile.updateGadget');
     Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
@@ -42,12 +42,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 // comments
 Route::middleware(['auth'])->group(function () {
-    Route::post('/comment/{id}/store', [CommentController::class,'store'])->name('comment.store');
+    Route::post('/comment/{id}/store', [CommentController::class, 'store'])->name('comment.store');
 });
 
 // participant chats
 Route::middleware(['auth'])->group(function () {
-    Route::post('/participant_chat/{id}/store', [ParticipantChatController::class,'store'])->name('participant_chat.store');
+    Route::post('/participant_chat/{id}/store', [ParticipantChatController::class, 'store'])->name('participant_chat.store');
 });
 
 // plans
@@ -59,7 +59,6 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
     Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
     Route::delete('/{id}/delete', [PlanController::class, 'destroy'])->name('delete');
-
 });
 
 // reactions
@@ -103,6 +102,10 @@ Route::get('/travel-plans', [PlanController::class, 'apiIndex']);
 Route::middleware(['auth'])->group(function () {
     Route::post('/follow/{user}', [FollowController::class, 'follow'])->name('follow');
     Route::post('/unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+    Route::get('/users/{user}/following/json', [FollowController::class, 'followingJson'])
+        ->name('users.following.json');
+    Route::get('/users/{user}/followers/json', [FollowController::class, 'followersJson'])
+        ->name('users.followers.json');
 });
 
 

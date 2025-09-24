@@ -22,7 +22,7 @@
     
             @can('delete', $travel_plan)
                 <form action="{{ route('plan.delete', $travel_plan->id) }}" method="POST"
-                      onsubmit="return confirm('Are you sure you want to delete this plan?');">
+                    onsubmit="return confirm('Are you sure you want to delete this plan?');">
                     @csrf
                     @method('DELETE')
                     <x-danger-button>

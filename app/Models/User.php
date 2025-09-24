@@ -150,8 +150,19 @@ class User extends Authenticatable
     public function interestedPlans()
     {
         return $this->belongsToMany(
-            TravelPlan::class,'reactions','user_id','plan_id')
-        ->wherePivot('type', 'interested')
-        ->withTimestamps();
-    }  
+            TravelPlan::class,
+            'reactions',
+            'user_id',
+            'plan_id'
+        )
+            ->wherePivot('type', 'interested')
+            ->withTimestamps();
+    }
+    /**  to get only liked plan on profile page */
+    public function likedPlans()
+    {
+        return $this->belongsToMany(TravelPlan::class, 'reactions', 'user_id', 'plan_id')
+            ->wherePivot('type', '=', 'like')
+            ->withTimestamps();
+    }
 }
