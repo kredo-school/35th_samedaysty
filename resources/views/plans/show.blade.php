@@ -44,9 +44,9 @@
             <!-- plan style -->
             <div class="flex pt-5 items-center font-bold">
                 <h4 class="text-xl py-1">Style&nbsp;:</h4>
-                @foreach ($all_styles as $style)
-                    <p class="text-xl ms-2 px-2 bg-gray-300 rounded">{{ $style->style_name }}</p>
-                @endforeach
+                    <!-- to do -->
+                    <p class="text-xl ms-2 px-2 bg-gray-300 rounded"></p>
+                    <p>no styles selected</p>
             </div>
 
             <!-- plan name -->
@@ -162,7 +162,16 @@
         <!-- participants chat -->
         @canany(['view_own', 'participate'], $travel_plan)
             <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
-                <h4 class="text-xl text-sky-500 text-center font-bold">participants chat</h4>
+                <div class="flex items-center">
+                    <h4 class="text-xl text-sky-500 font-bold mx-auto">participants chat</h4>
+                    <div class="flex space-x-2 ml-4">
+                        @forelse($travel_plan->participant_chats as $participant_chat)
+                            <span class="py-1 text-gray-400">{{ $participant_chat->user->name }},</span>
+                        @empty
+                            <p>no other participnts yet</p>
+                        @endforelse
+                    </div>
+                </div>
                 @forelse($travel_plan->participant_chats as $participant_chat)
                     @if($participant_chat->user->id === Auth::user()->id)
                         <!-- own message -->
