@@ -168,14 +168,18 @@
                 @endcan
             </div>
 
-            <!-- participants chat -->
-            @canany(['view_own', 'participate'], $travel_plan)
+        <!-- stepper -->
+        <x-stepper :status="$status"></x-stepper>
+
+        <!-- participants chat -->
+        @canany(['view_own', 'participate'], $travel_plan)
             <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
                 <div class="flex items-center">
                     <h4 class="text-xl text-sky-500 font-bold mx-auto">participants chat</h4>
                     <div class="flex space-x-2 ml-4">
-                        @forelse($travel_plan->participant_chats as $participant_chat)
-                        <span class="py-1 text-gray-400">{{ $participant_chat->user->name }},</span>
+                            <span class="py-1 text-gray-400">{{ $travel_plan->user->name }},</span>
+                        @forelse($travel_plan->participations as $participation)
+                            <span class="py-1 text-gray-400">{{ $participation->user->name }},</span>
                         @empty
                         <p>no other participnts yet</p>
                         @endforelse

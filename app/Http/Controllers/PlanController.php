@@ -19,10 +19,17 @@ class PlanController extends Controller
         $travel_plan = TravelPlan::with(['joinRequests.user', 'travelStyles'])->findOrFail($id);
 
         $all_styles = TravelStyle::all();
+        
+        $participation = $travel_plan->participations()
+            ->where('user_id', auth()->id())
+            ->first();
+
+        $status = $participation ? $participation->status :null;
 
         return view('plans.show')->with('travel_plan', $travel_plan)
-            ->with('all_styles', $all_styles)
-            ->with('join_requests', $travel_plan->joinRequests);
+                                    ->with('all_styles', $all_styles)
+                                    ->with('join_requests', $travel_plan->joinRequests)
+                                    ->with('status', $status);
     }
 
     public function search(Request $request)
