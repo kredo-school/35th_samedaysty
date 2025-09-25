@@ -28,7 +28,7 @@ class TravelPlan extends Model
     }
     public function travelStyles()
     {
-        return $this->belongsToMany(TravelStyle::class);
+        return $this->belongsToMany(TravelStyle::class, 'travel_plan_travel_style');
     }
     public function user()
     {
@@ -88,6 +88,4 @@ class TravelPlan extends Model
             ->wherePivotNotNull('joined_at')
             ->withTimestamps();
     }
-
-
 }

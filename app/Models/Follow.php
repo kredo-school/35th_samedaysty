@@ -8,10 +8,13 @@ class Follow extends Model
 {
     public $timestamps = false;
     //follow belongs to user(paired with follows())
-    public function following(){
-        return $this->belongsTo(User::class,'following_id')->withTrashed();
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
-    public function follower(){
-        return $this->belongsTo(User::class,'follower_id')->withTrashed();
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
     }
 }
