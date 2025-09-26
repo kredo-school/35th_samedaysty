@@ -106,11 +106,23 @@
 
                     </form>
                     @cannot('view_own', $travel_plan)
-                    <form action="{{ route('participations.store') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="travel_plan_id" value="{{ $travel_plan->id }}">
-                        <x-secondary-button type="submit" class="ms-4">JOIN</x-secondary-button>
-                    </form>
+                        <form action="{{ route('participations.store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="travel_plan_id" value="{{ $travel_plan->id }}">
+                            @switch($status)
+                                @case('pending')
+                                    <x-secondary-button type="submit" disabled class="ms-4">REQUESTED</x-secondary-button>
+                                    @break
+                                @case('accepted')
+                                    <x-secondary-button type="submit" disabled class="ms-4">JOINED</x-secondary-button>
+                                    @break
+                                @case('declined')
+                                    <x-secondary-button type="submit" disabled class="ms-4">DECLINED</x-secondary-button>
+                                    @break
+                                @default
+                                    <x-secondary-button type="submit" class="ms-4">JOIN</x-secondary-button>
+                            @endswitch
+                        </form>
                     @endcan
                 </div>
 
@@ -169,7 +181,9 @@
             </div>
 
         <!-- stepper -->
-        <x-stepper :status="$status"></x-stepper>
+        @if($travel_plan->user->id !== Auth::id())
+            <x-stepper :status="$status"></x-stepper>
+        @endif
 
         <!-- participants chat -->
         @canany(['view_own', 'participate'], $travel_plan)
