@@ -10,21 +10,21 @@
         </div>
 
         <!-- Links  -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:ml-8 sm:text-left">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 px-4">
 
             <!-- Quick Links -->
             <div>
                 <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                 <ul class="space-y-2">
-                    <li><a href="{{ route('dashboard') }}"
-                            class="text-white hover:text-orange-400 text-sm">{{ __('HOME') }}</a>
+                    <li><a href="{{ route('dashboard') }}" class="text-white hover:text-orange-400 text-sm">{{
+                            __('HOME') }}</a>
                     </li>
                     <li><a href="#" class="text-white hover:text-orange-400 text-sm">{{ __('ABOUT') }}</a>
                     </li>
-                    <li><a href="{{ route('plan.search') }}"
-                            class="text-white hover:text-orange-400 text-sm">{{ __('Find other plans') }}</a></li>
-                    <li><a href="{{ route('plan.create') }}"
-                            class="text-white hover:text-orange-400 text-sm">{{ __('Share your plans') }}</a></li>
+                    <li><a href="{{ route('plan.search') }}" class="text-white hover:text-orange-400 text-sm">{{
+                            __('Find other plans') }}</a></li>
+                    <li><a href="{{ route('plan.create') }}" class="text-white hover:text-orange-400 text-sm">{{
+                            __('Share your plans') }}</a></li>
                 </ul>
             </div>
 
@@ -32,24 +32,24 @@
             <div>
                 <h3 class="text-lg font-semibold mb-4">Account</h3>
                 <ul class="space-y-2">
-                    <li><a href="{{ route('dashboard') }}"
-                            class="text-white hover:text-orange-400 text-sm">{{ __('Dashboard') }}</a>
+                    <li><a href="{{ route('dashboard') }}" class="text-white hover:text-orange-400 text-sm">{{
+                            __('Dashboard') }}</a>
                     </li>
-                    <li><a href="{{ route('login') }}"
-                            class="text-white hover:text-orange-400 text-sm">{{ __('Login') }}</a>
+                    <li><a href="{{ route('login') }}" class="text-white hover:text-orange-400 text-sm">{{ __('Login')
+                            }}</a>
                     </li>
-                    <li><a href="{{ route('register') }}"
-                            class="text-white hover:text-orange-400 text-sm">{{ __('Register') }}</a>
+                    <li><a href="{{ route('register') }}" class="text-white hover:text-orange-400 text-sm">{{
+                            __('Register') }}</a>
                     </li>
                 </ul>
             </div>
 
             <!-- Contact -->
             <div>
-                <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                <h3 class="text-md font-semibold mb-4">Contact</h3>
                 <ul class="space-y-2">
-                    <li><a href="#"
-                            class="text-white hover:text-orange-400 text-sm">{{ __('Help and Support') }}</a></li>
+                    <li><a href="#" class="text-white hover:text-orange-400 text-sm">{{ __('Help and Support') }}</a>
+                    </li>
                     <li><span>📍 Address: Tokyo, Japan</span></li>
                     <li><span>✉️ Email: info@example.com</span></li>
                 </ul>
