@@ -232,8 +232,7 @@
                                 <!-- Calendar Grid -->
                                 <div class="grid grid-cols-7 gap-1">
                                     <template x-for="date in calendarDays" :key="date.key">
-                                        <button @click="selectDate(date)"
-                                            :class="{
+                                        <button @click="selectDate(date)" :class="{
                                                 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg': date.isSelected,
                                                 'bg-gray-200 text-gray-400': date.isOtherMonth,
                                                 'bg-white text-gray-700 hover:bg-blue-100 border border-gray-200': !date
@@ -246,8 +245,7 @@
                                 </div>
 
                                 <!-- Selected Date Display -->
-                                <div class="mt-6 p-4 bg-white rounded-lg border border-blue-200"
-                                    x-show="selectedDate">
+                                <div class="mt-6 p-4 bg-white rounded-lg border border-blue-200" x-show="selectedDate">
                                     <p class="text-sm text-blue-600">
                                         Selected Date: <span class="font-bold" x-text="selectedDateFormatted"></span>
                                     </p>
@@ -396,236 +394,236 @@
         // Mock Data for Calendar Testing
         const mockData = {
             users: [{
-                    id: 1,
-                    username: 'John Tanaka',
-                    email: 'john@example.com',
-                    profile_picture_url: '/images/avatar1.jpg'
-                },
-                {
-                    id: 2,
-                    username: 'Sarah Sato',
-                    email: 'sarah@example.com',
-                    profile_picture_url: '/images/avatar2.jpg'
-                },
-                {
-                    id: 3,
-                    username: 'Mike Yamada',
-                    email: 'mike@example.com',
-                    profile_picture_url: '/images/avatar3.jpg'
-                },
-                {
-                    id: 4,
-                    username: 'Emma Suzuki',
-                    email: 'emma@example.com',
-                    profile_picture_url: '/images/avatar4.jpg'
-                },
-                {
-                    id: 5,
-                    username: 'David Takahashi',
-                    email: 'david@example.com',
-                    profile_picture_url: '/images/avatar5.jpg'
-                }
+                id: 1,
+                username: 'John Tanaka',
+                email: 'john@example.com',
+                profile_picture_url: '/images/avatar1.jpg'
+            },
+            {
+                id: 2,
+                username: 'Sarah Sato',
+                email: 'sarah@example.com',
+                profile_picture_url: '/images/avatar2.jpg'
+            },
+            {
+                id: 3,
+                username: 'Mike Yamada',
+                email: 'mike@example.com',
+                profile_picture_url: '/images/avatar3.jpg'
+            },
+            {
+                id: 4,
+                username: 'Emma Suzuki',
+                email: 'emma@example.com',
+                profile_picture_url: '/images/avatar4.jpg'
+            },
+            {
+                id: 5,
+                username: 'David Takahashi',
+                email: 'david@example.com',
+                profile_picture_url: '/images/avatar5.jpg'
+            }
             ],
             travelPlans: [{
-                    id: 1,
-                    user_id: 1,
-                    title: 'Bali Relaxation Trip',
-                    country: 'Indonesia',
-                    start_date: new Date().toISOString().split('T')[0],
-                    end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    description: 'Relaxing trip to Bali for ultimate relaxation',
-                    max_participants: 4,
-                    styles: ['chill', 'relax']
-                },
-                {
-                    id: 2,
-                    user_id: 2,
-                    title: 'Bangkok Adventure',
-                    country: 'Thailand',
-                    start_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    end_date: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    description: 'Adventure through the streets of Bangkok',
-                    max_participants: 6,
-                    styles: ['activity', 'adventure']
-                },
-                {
-                    id: 3,
-                    user_id: 3,
-                    title: 'Kyoto & Nara Historical Tour',
-                    country: 'Japan',
-                    start_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    end_date: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    description: 'Learning about Japanese history and culture',
-                    max_participants: 8,
-                    styles: ['culture', 'history']
-                },
-                {
-                    id: 4,
-                    user_id: 4,
-                    title: 'Sydney Australia Trip',
-                    country: 'Australia',
-                    start_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    end_date: new Date(Date.now() + 37 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    description: 'Enjoying the city of Sydney',
-                    max_participants: 5,
-                    styles: ['city', 'food']
-                },
-                {
-                    id: 5,
-                    user_id: 5,
-                    title: 'Cebu Island Philippines',
-                    country: 'Philippines',
-                    start_date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    end_date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                    description: 'Diving adventure in Cebu Island',
-                    max_participants: 4,
-                    styles: ['adventure', 'nature']
-                }
+                id: 1,
+                user_id: 1,
+                title: 'Bali Relaxation Trip',
+                country: 'Indonesia',
+                start_date: new Date().toISOString().split('T')[0],
+                end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                description: 'Relaxing trip to Bali for ultimate relaxation',
+                max_participants: 4,
+                styles: ['chill', 'relax']
+            },
+            {
+                id: 2,
+                user_id: 2,
+                title: 'Bangkok Adventure',
+                country: 'Thailand',
+                start_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                end_date: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                description: 'Adventure through the streets of Bangkok',
+                max_participants: 6,
+                styles: ['activity', 'adventure']
+            },
+            {
+                id: 3,
+                user_id: 3,
+                title: 'Kyoto & Nara Historical Tour',
+                country: 'Japan',
+                start_date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                end_date: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                description: 'Learning about Japanese history and culture',
+                max_participants: 8,
+                styles: ['culture', 'history']
+            },
+            {
+                id: 4,
+                user_id: 4,
+                title: 'Sydney Australia Trip',
+                country: 'Australia',
+                start_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                end_date: new Date(Date.now() + 37 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                description: 'Enjoying the city of Sydney',
+                max_participants: 5,
+                styles: ['city', 'food']
+            },
+            {
+                id: 5,
+                user_id: 5,
+                title: 'Cebu Island Philippines',
+                country: 'Philippines',
+                start_date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                end_date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                description: 'Diving adventure in Cebu Island',
+                max_participants: 4,
+                styles: ['adventure', 'nature']
+            }
             ],
             participations: [{
-                    id: 1,
-                    user_id: 2,
-                    travel_plan_id: 1,
-                    status: 'accepted',
-                    joined_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
-                },
-                {
-                    id: 2,
-                    user_id: 3,
-                    travel_plan_id: 1,
-                    status: 'pending',
-                    joined_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
-                },
-                {
-                    id: 3,
-                    user_id: 1,
-                    travel_plan_id: 2,
-                    status: 'accepted',
-                    joined_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-                },
-                {
-                    id: 4,
-                    user_id: 4,
-                    travel_plan_id: 2,
-                    status: 'accepted',
-                    joined_at: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000)
-                },
-                {
-                    id: 5,
-                    user_id: 5,
-                    travel_plan_id: 3,
-                    status: 'accepted',
-                    joined_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000)
-                }
+                id: 1,
+                user_id: 2,
+                travel_plan_id: 1,
+                status: 'accepted',
+                joined_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 2,
+                user_id: 3,
+                travel_plan_id: 1,
+                status: 'pending',
+                joined_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 3,
+                user_id: 1,
+                travel_plan_id: 2,
+                status: 'accepted',
+                joined_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 4,
+                user_id: 4,
+                travel_plan_id: 2,
+                status: 'accepted',
+                joined_at: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 5,
+                user_id: 5,
+                travel_plan_id: 3,
+                status: 'accepted',
+                joined_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000)
+            }
             ],
             events: [{
-                    id: 1,
-                    title: 'Bali Relaxation Trip',
-                    start: new Date().toISOString().split('T')[0] + 'T09:00:00',
-                    end: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T18:00:00',
-                    backgroundColor: '#3B82F6',
-                    borderColor: '#3B82F6',
-                    extendedProps: {
-                        type: 'travel_plan',
-                        travel_plan_id: 1,
-                        participants: 2,
-                        max_participants: 4,
-                        country: 'Indonesia'
-                    }
-                },
-                {
-                    id: 2,
-                    title: 'Bangkok Adventure',
-                    start: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] +
-                        'T10:00:00',
-                    end: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T17:00:00',
-                    backgroundColor: '#10B981',
-                    borderColor: '#10B981',
-                    extendedProps: {
-                        type: 'travel_plan',
-                        travel_plan_id: 2,
-                        participants: 2,
-                        max_participants: 6,
-                        country: 'Thailand'
-                    }
-                },
-                {
-                    id: 3,
-                    title: 'Kyoto & Nara Historical Tour',
-                    start: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T08:00:00',
-                    end: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T19:00:00',
-                    backgroundColor: '#F59E0B',
-                    borderColor: '#F59E0B',
-                    extendedProps: {
-                        type: 'travel_plan',
-                        travel_plan_id: 3,
-                        participants: 1,
-                        max_participants: 8,
-                        country: 'Japan'
-                    }
-                },
-                {
-                    id: 4,
-                    title: 'Sydney Australia Trip',
-                    start: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] +
-                        'T11:00:00',
-                    end: new Date(Date.now() + 37 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T16:00:00',
-                    backgroundColor: '#EF4444',
-                    borderColor: '#EF4444',
-                    extendedProps: {
-                        type: 'travel_plan',
-                        travel_plan_id: 4,
-                        participants: 0,
-                        max_participants: 5,
-                        country: 'Australia'
-                    }
-                },
-                {
-                    id: 5,
-                    title: 'Cebu Island Philippines',
-                    start: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] +
-                        'T07:00:00',
-                    end: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T20:00:00',
-                    backgroundColor: '#8B5CF6',
-                    borderColor: '#8B5CF6',
-                    extendedProps: {
-                        type: 'travel_plan',
-                        travel_plan_id: 5,
-                        participants: 0,
-                        max_participants: 4,
-                        country: 'Philippines'
-                    }
-                },
-                {
-                    id: 6,
-                    title: 'Travel Plan Meeting',
-                    start: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T14:00:00',
-                    end: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T15:30:00',
-                    backgroundColor: '#6B7280',
-                    borderColor: '#6B7280',
-                    extendedProps: {
-                        type: 'meeting',
-                        location: 'Online',
-                        participants: ['John Tanaka', 'Sarah Sato']
-                    }
-                },
-                {
-                    id: 7,
-                    title: 'Travel Preparation Check',
-                    start: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T10:00:00',
-                    end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T11:00:00',
-                    backgroundColor: '#059669',
-                    borderColor: '#059669',
-                    extendedProps: {
-                        type: 'preparation',
-                        checklist: ['Passport', 'Flight Tickets', 'Hotel Booking']
-                    }
+                id: 1,
+                title: 'Bali Relaxation Trip',
+                start: new Date().toISOString().split('T')[0] + 'T09:00:00',
+                end: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T18:00:00',
+                backgroundColor: '#3B82F6',
+                borderColor: '#3B82F6',
+                extendedProps: {
+                    type: 'travel_plan',
+                    travel_plan_id: 1,
+                    participants: 2,
+                    max_participants: 4,
+                    country: 'Indonesia'
                 }
+            },
+            {
+                id: 2,
+                title: 'Bangkok Adventure',
+                start: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] +
+                    'T10:00:00',
+                end: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T17:00:00',
+                backgroundColor: '#10B981',
+                borderColor: '#10B981',
+                extendedProps: {
+                    type: 'travel_plan',
+                    travel_plan_id: 2,
+                    participants: 2,
+                    max_participants: 6,
+                    country: 'Thailand'
+                }
+            },
+            {
+                id: 3,
+                title: 'Kyoto & Nara Historical Tour',
+                start: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T08:00:00',
+                end: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T19:00:00',
+                backgroundColor: '#F59E0B',
+                borderColor: '#F59E0B',
+                extendedProps: {
+                    type: 'travel_plan',
+                    travel_plan_id: 3,
+                    participants: 1,
+                    max_participants: 8,
+                    country: 'Japan'
+                }
+            },
+            {
+                id: 4,
+                title: 'Sydney Australia Trip',
+                start: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] +
+                    'T11:00:00',
+                end: new Date(Date.now() + 37 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T16:00:00',
+                backgroundColor: '#EF4444',
+                borderColor: '#EF4444',
+                extendedProps: {
+                    type: 'travel_plan',
+                    travel_plan_id: 4,
+                    participants: 0,
+                    max_participants: 5,
+                    country: 'Australia'
+                }
+            },
+            {
+                id: 5,
+                title: 'Cebu Island Philippines',
+                start: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] +
+                    'T07:00:00',
+                end: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T20:00:00',
+                backgroundColor: '#8B5CF6',
+                borderColor: '#8B5CF6',
+                extendedProps: {
+                    type: 'travel_plan',
+                    travel_plan_id: 5,
+                    participants: 0,
+                    max_participants: 4,
+                    country: 'Philippines'
+                }
+            },
+            {
+                id: 6,
+                title: 'Travel Plan Meeting',
+                start: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T14:00:00',
+                end: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T15:30:00',
+                backgroundColor: '#6B7280',
+                borderColor: '#6B7280',
+                extendedProps: {
+                    type: 'meeting',
+                    location: 'Online',
+                    participants: ['John Tanaka', 'Sarah Sato']
+                }
+            },
+            {
+                id: 7,
+                title: 'Travel Preparation Check',
+                start: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T10:00:00',
+                end: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T11:00:00',
+                backgroundColor: '#059669',
+                borderColor: '#059669',
+                extendedProps: {
+                    type: 'preparation',
+                    checklist: ['Passport', 'Flight Tickets', 'Hotel Booking']
+                }
+            }
             ]
         };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // 基本的なFullCalendar
+        document.addEventListener('DOMContentLoaded', function () {
+            // Basic FullCalendar
             const basicCalendar = new FullCalendar.Calendar(document.getElementById('fullcalendar-basic'), {
                 initialView: 'dayGridMonth',
                 locale: 'ja',
@@ -649,7 +647,7 @@
                 },
                 height: 400,
                 events: mockData.events,
-                eventClick: function(info) {
+                eventClick: function (info) {
                     const event = info.event;
                     const props = event.extendedProps;
 
@@ -672,7 +670,7 @@
             });
             eventsCalendar.render();
 
-            // インタラクティブFullCalendar
+            // Interactive FullCalendar
             let selectedDate = null;
             const interactiveCalendar = new FullCalendar.Calendar(document.getElementById(
                 'fullcalendar-interactive'), {
@@ -690,12 +688,12 @@
                 dayMaxEvents: true,
                 weekends: true,
                 events: mockData.events,
-                select: function(arg) {
+                select: function (arg) {
                     selectedDate = arg.startStr;
                     document.getElementById('event-start').value = arg.startStr + 'T10:00';
                     document.getElementById('event-end').value = arg.endStr + 'T11:00';
                 },
-                eventClick: function(arg) {
+                eventClick: function (arg) {
                     const event = arg.event;
                     const props = event.extendedProps;
 
@@ -708,10 +706,10 @@
                         }
                     }
                 },
-                eventDrop: function(arg) {
+                eventDrop: function (arg) {
                     updateEventList();
                 },
-                eventResize: function(arg) {
+                eventResize: function (arg) {
                     updateEventList();
                 }
             });
@@ -743,7 +741,7 @@
             }
 
             // イベント追加機能
-            document.getElementById('add-event').addEventListener('click', function() {
+            document.getElementById('add-event').addEventListener('click', function () {
                 const title = document.getElementById('event-title').value;
                 const start = document.getElementById('event-start').value;
                 const end = document.getElementById('event-end').value;
@@ -798,7 +796,7 @@
                                     </div>
                                     <div class="text-xs text-gray-500">
                                         ${event.start.toLocaleDateString('ja-JP')} 
-                                        ${event.allDay ? '' : event.start.toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'})}
+                                        ${event.allDay ? '' : event.start.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
                                     </div>
                                 </div>
                                 <div class="flex space-x-2">
@@ -818,7 +816,7 @@
                                     <div class="font-medium">${event.title}</div>
                                     <div class="text-sm text-gray-600">
                                         ${event.start.toLocaleDateString('ja-JP')} 
-                                        ${event.allDay ? '' : event.start.toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'})}
+                                        ${event.allDay ? '' : event.start.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
                                     </div>
                                 </div>
                                 <button onclick="deleteEvent('${event.id}')" class="text-red-600 hover:text-red-800">
@@ -834,7 +832,7 @@
             }
 
             // Global delete function
-            window.deleteEvent = function(eventId) {
+            window.deleteEvent = function (eventId) {
                 const event = interactiveCalendar.getEventById(eventId);
                 if (event) {
                     event.remove();
@@ -843,40 +841,40 @@
             };
 
             // Global details display function
-            window.showTravelPlanDetails = function(eventId) {
+            window.showTravelPlanDetails = function (eventId) {
                 const event = interactiveCalendar.getEventById(eventId);
                 if (event) {
                     showTravelPlanDetails(event);
                 }
             };
 
-            // 異なるビューを持つFullCalendar
+            // FullCalendar with different views
             const viewsCalendar = new FullCalendar.Calendar(document.getElementById('fullcalendar-views'), {
                 initialView: 'dayGridMonth',
                 locale: 'ja',
-                headerToolbar: false, // カスタムボタンを使用
+                headerToolbar: false, // Use custom buttons
                 height: 400,
                 events: mockData.events
             });
             viewsCalendar.render();
 
-            // ビュー切り替えボタン
-            document.getElementById('view-month').addEventListener('click', function() {
+            // View switching buttons
+            document.getElementById('view-month').addEventListener('click', function () {
                 viewsCalendar.changeView('dayGridMonth');
                 updateViewButtons('month');
             });
 
-            document.getElementById('view-week').addEventListener('click', function() {
+            document.getElementById('view-week').addEventListener('click', function () {
                 viewsCalendar.changeView('timeGridWeek');
                 updateViewButtons('week');
             });
 
-            document.getElementById('view-day').addEventListener('click', function() {
+            document.getElementById('view-day').addEventListener('click', function () {
                 viewsCalendar.changeView('timeGridDay');
                 updateViewButtons('day');
             });
 
-            document.getElementById('view-list').addEventListener('click', function() {
+            document.getElementById('view-list').addEventListener('click', function () {
                 viewsCalendar.changeView('listWeek');
                 updateViewButtons('list');
             });
