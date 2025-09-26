@@ -117,7 +117,7 @@ class TravelPlanSeeder extends Seeder
             'max_participants' => 4,
         ]);
 
-        // ベトナムビーチホリデー - 複数日程
+        // Vietnam Beach Holiday - Multiple dates
         TravelPlan::create([
             'title' => 'Vietnam Beach Holiday - Da Nang',
             'user_id' => 4,

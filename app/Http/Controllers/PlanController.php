@@ -16,20 +16,20 @@ class PlanController extends Controller
 
     public function detail($id)
     {
-        $travel_plan = TravelPlan::with(['joinRequests.user', 'travelStyles'])->findOrFail($id);
+        $plan = TravelPlan::with(['joinRequests.user', 'planStyles.travelStyle'])->findOrFail($id);
 
         $all_styles = TravelStyle::all();
-        
-        $participation = $travel_plan->participations()
+
+        $participation = $plan->participations()
             ->where('user_id', auth()->id())
             ->first();
 
-        $status = $participation ? $participation->status :null;
+        $status = $participation ? $participation->status : null;
 
-        return view('plans.show')->with('travel_plan', $travel_plan)
-                                    ->with('all_styles', $all_styles)
-                                    ->with('join_requests', $travel_plan->joinRequests)
-                                    ->with('status', $status);
+        return view('plans.show')->with('plan', $plan)
+            ->with('all_styles', $all_styles)
+            ->with('join_requests', $plan->joinRequests)
+            ->with('status', $status);
     }
 
     public function search(Request $request)
@@ -93,7 +93,7 @@ class PlanController extends Controller
         ]);
 
         // create a plan  and assign it to $plan 
-        $travel_plan = TravelPlan::create([
+        $plan = TravelPlan::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => Auth::id(),
@@ -103,15 +103,11 @@ class PlanController extends Controller
             'max_participants' => $request->max_participants,
         ]);
 
-        if ($request->travel_styles) {
-            $travel_plan->travelStyles()->sync($request->travel_styles);
-        }
-
-        // Link the checked travel style 
+        // Link the checked travel styles
         if ($request->has('travel_styles')) {
-            $travel_plan->travelStyles()->sync($request->travel_styles);
+            $plan->syncTravelStyles($request->travel_styles);
         }
-        return redirect()->route('plan.detail', $travel_plan->id)
+        return redirect()->route('plan.detail', $plan->id)
             ->with('success', 'Plan created successfully!');
     }
 
@@ -128,9 +124,9 @@ class PlanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $travel_plan = TravelPlan::findOrFail($id);
+        $plan = TravelPlan::findOrFail($id);
 
-        $this->authorize('update', $travel_plan);
+        $this->authorize('update', $plan);
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -143,7 +139,7 @@ class PlanController extends Controller
             'travel_styles.*' => 'exists:travel_styles,id',
         ]);
 
-        $travel_plan->update([
+        $plan->update([
             'title' => $request->title,
             'description' => $request->description,
             'country_id' => $request->country_id,
@@ -153,32 +149,32 @@ class PlanController extends Controller
         ]);
 
         if ($request->has('travel_styles')) {
-            $travel_plan->travelStyles()->sync($request->travel_styles);
+            $plan->syncTravelStyles($request->travel_styles);
         } else {
-            $travel_plan->travelStyles()->detach();
+            $plan->detachTravelStyles();
         }
 
-        return redirect()->route('plan.detail', $travel_plan->id)
+        return redirect()->route('plan.detail', $plan->id)
             ->with('success', 'Plan updated successfully!');
     }
 
     public function deleteConfirm($id)
     {
-        $travel_plan = TravelPlan::findOrFail($id);
+        $plan = TravelPlan::findOrFail($id);
 
-        $this->authorize('delete', $travel_plan);
+        $this->authorize('delete', $plan);
 
-        return view('plans.delete', compact('travel_plan'));
+        return view('plans.delete', compact('plan'));
     }
 
     public function destroy($id)
     {
-        $travel_plan = TravelPlan::findOrFail($id);
+        $plan = TravelPlan::findOrFail($id);
 
-        $this->authorize('delete', $travel_plan);
+        $this->authorize('delete', $plan);
 
-        $travel_plan->travelStyles()->detach();
-        $travel_plan->delete();
+        $plan->detachTravelStyles();
+        $plan->delete();
 
         return redirect()->route('plan.search')
             ->with('success', 'Plan deleted successfully!');

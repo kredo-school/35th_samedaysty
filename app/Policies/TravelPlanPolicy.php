@@ -15,14 +15,14 @@ class TravelPlanPolicy
     {
         return false;
     }
-    
+
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, TravelPlan $travelPlan): bool
     {
-        return false;
+        return true; // 誰でも閲覧可能
     }
 
     /**
@@ -30,13 +30,25 @@ class TravelPlanPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true; // any user can create
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    // app/Policies/TravelPlanPolicy.php
+    public function update(User $user, TravelPlan $travelPlan): bool
+    {
+        return $user->id === $travelPlan->user_id; // only creator can update
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, TravelPlan $travelPlan): bool
+    {
+        return $user->id === $travelPlan->user_id; // only creator can delete
+    }
+
     public function view_own(User $user, TravelPlan $plan)
     {
         return $user->id === $plan->user_id;
@@ -49,7 +61,7 @@ class TravelPlanPolicy
 
     public function participate(User $user, TravelPlan $plan)
     {
-        return $plan->participants->contains($user->id);    
+        return $plan->participants->contains($user->id);
     }
 
 

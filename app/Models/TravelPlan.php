@@ -26,17 +26,13 @@ class TravelPlan extends Model
     {
         return $this->belongsTo(Country::class);
     }
-    public function travelStyles()
-    {
-        return $this->belongsToMany(TravelStyle::class, 'travel_plan_travel_style');
-    }
     public function user()
     {
         return $this->belongsTo(User::class);
     }
     public function planStyles()
     {
-        return $this->hasMany(PlanStyle::class);
+        return $this->hasMany(PlanStyle::class, 'plan_id');
     }
 
     public function reactions()
@@ -44,7 +40,7 @@ class TravelPlan extends Model
         return $this->hasMany(Reaction::class, 'plan_id');
     }
 
-    public function isReacted(string $type = null)
+    public function isReacted(?string $type = null)
     {
         $query = $this->reactions()->where('user_id', Auth::id());
         // dd($query);
@@ -87,5 +83,18 @@ class TravelPlan extends Model
             ->withPivot('status', 'joined_at')
             ->wherePivotNotNull('joined_at')
             ->withTimestamps();
+    }
+
+    public function syncTravelStyles(array $styleIds)
+    {
+        $this->planStyles()->delete();
+        foreach ($styleIds as $styleId) {
+            $this->planStyles()->create(['style_id' => $styleId]);
+        }
+    }
+
+    public function detachTravelStyles()
+    {
+        $this->planStyles()->delete();
     }
 }

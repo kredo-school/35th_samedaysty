@@ -14,7 +14,8 @@
 
             <!-- Avatar + Name -->
             <div class="flex items-center justify-start space-x-2 mb-16">
-                <img src="{{ $plan->user->avatar_url ?? '/images/default-avatar.png' }}"  alt="Avatar" class="w-10 h-10 rounded-full">
+                <img src="{{ $plan->user->avatar_url ?? '/images/default-avatar.png' }}" alt="Avatar"
+                    class="w-10 h-10 rounded-full">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
                     <span class="ml-2 font-bold text-gray-800">{{ $plan->user->name ?? 'User' }}</span>
                 </h1>
@@ -30,7 +31,7 @@
                         <div class="flex items-center space-x-2">
                             <input type="checkbox" name="travel_styles[]" value="{{ $style->id }}"
                                 class="h-4 w-4 text-blue-600 flex-shrink-0" {{ in_array($style->id, old('travel_styles',
-                            $plan->travelStyles->pluck('id')->toArray())) ? 'checked' : '' }}>
+                            $plan->planStyles->pluck('style_id')->toArray())) ? 'checked' : '' }}>
                             <i class="{{ $style->fontawesome_icon }} text-xl flex-shrink-0"></i>
                             <h3 class="font-semibold text-sm truncate">{{ ucfirst($style->style_name) }}</h3>
                         </div>
