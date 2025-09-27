@@ -110,19 +110,17 @@
             {{ __('What you can do this website?') }}
         </x-title>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-16 text-lg font-bold text-gray-700">
             <!-- 2line in pC、1line use the phone -->
             <div class="border-4 border-sky-700 rounded overflow-hidden p-6 flex flex-col items-start">
-                <h3 class="text-3xl font-bold mb-2"><i class="fa-solid fa-magnifying-glass"></i></h3>
-                <h3 class="text-3xl font-bold mb-2">Find the trip you want to go on !</h3>
-                <p class="text-gray-600">Don't want to plan? Just hop on a trip that's already ready to go. Search your
+                <h3 class="text-xl mb-2"><span class="text-3xl mb-2"><i class="fa-solid fa-magnifying-glass"></i>Find</span> the trip you want to go on !</h3>
+                <p class="text-gray-500">Don't want to plan? Just hop on a trip that's already ready to go. Search your
                     travel destinations, dates, or your fun- sharing account !Discover available trips and request to
                     join the ones you like !</p>
             </div>
             <div class="border-4 border-sky-700 rounded overflow-hidden p-6 flex flex-col items-start">
-                <h3 class="text-3xl font-bold mb-2"><i class="fa-solid fa-hammer"></i></h3>
-                <h3 class="text-3xl font-bold mb-2">Create and Share Your Trip Plan !</h3>
-                <p class="text-gray-600">Got a trip in mind? See who's excited to join you on the road. Turn your travel
+                <h3 class="text-xl mb-2"><span class="text-3xl mb-2"><i class="fa-solid fa-hammer"></i>Create</span> and Share Your Trip Plan !</h3>
+                <p class="text-gray-500">Got a trip in mind? See who's excited to join you on the road. Turn your travel
                     idea into a real journey by posting your plan.
                     Invite others and start your adventure together !</p>
             </div>
@@ -270,8 +268,6 @@
                     <p class="text-sm text-gray-600">Beautiful drives & views</p>
                 </div>
             </div>
-
-
         </section>
     </div>
 
