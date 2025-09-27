@@ -286,7 +286,7 @@
             <!-- 1 -->
             <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Calender page</h1>
-                <img src="/images/newcalender.png" alt="screenshot1" class="w-full h-auto">
+                <img src="/images/screenshot.calender.png" alt="screenshot1" class="w-full h-auto">
                 <div class="p-4">
                     <p>・ Choose your travel dates and see who else is going at the same time.</p>
                 </div>
@@ -295,7 +295,7 @@
             <!-- 2 -->
             <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Plan detail page</h1>
-                <img src="/images/plandetail.png" alt="screenshot2" class="w-full h-auto">
+                <img src="/images/screenshot.plandetail.png" alt="screenshot2" class="w-full h-auto">
                 <div class="p-4">
                     <p>・ Share your destination and travel style so others can find a good match.</p>
                 </div>
@@ -313,7 +313,7 @@
             <!-- 4 -->
             <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Chat page</h1>
-                <img src="/images/newchatpage.png" alt="screenshot4" class="w-full h-auto">
+                <img src="/images/screenshot.chat.png" alt="screenshot4" class="w-full h-auto">
                 <div class="p-4">
                     <p>・ Start chatting to finalize plans and get to know your travel mates.</p>
                 </div>
