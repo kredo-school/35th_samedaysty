@@ -10,18 +10,18 @@ $countries = \App\Models\Country::getGroupedByRegion();
 $selectedCountry = $selected ? \App\Models\Country::find($selected) : null;
 @endphp
 
-<div class="flex items-center space-x-3">
+<div class="w-full">
     <!-- Selected Country Flag Display -->
     @if($selectedCountry)
-    <div class="flex items-center">
-        <i class="fi fi-{{ strtolower($selectedCountry->code) }} text-2xl mr-2"></i>
+    <div class="flex items-center mb-2 p-2 border rounded-lg">
+        <i class="fi fi-{{ strtolower($selectedCountry->code) }} text-xl mr-2"></i>
         <span class="font-medium">{{ $selectedCountry->name }}</span>
     </div>
     @endif
 
     <!-- Simple Select -->
     <select name="{{ $name }}" {{ $autoSubmit ? 'onchange=this.form.submit()' : '' }} {{ $attributes->merge(['class' =>
-        'border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500']) }}>
+        'w-full border rounded-lg p-2']) }} @error($name) class="border-red-500" @enderror>
 
         <option value="">🌍 {{ $placeholder }}</option>
 

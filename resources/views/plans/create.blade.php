@@ -12,12 +12,13 @@
 
             <!-- Avatar + Name -->
             <div class="flex items-center justify-start space-x-2 mb-16">
-                <img src="{{ $user->avatar_url ?? '/images/default-avatar.png' }}" alt="Avatar" class="w-10 h-10 rounded-full">
+                <img src="{{ auth()->user()->avatar_url ?? '/images/default-avatar.png' }}" alt="Avatar"
+                    class="w-10 h-10 rounded-full">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
                     <span class="ml-2 font-bold text-gray-800">
-                    @auth
+                        @auth
                         {{ auth()->user()->name }}
-                    @endauth
+                        @endauth
                     </span>
                 </h1>
             </div>
@@ -64,7 +65,7 @@
 
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">Country</label>
-                    <x-country-select name="country_id" class="w-full @error('country_id') border-red-500 @enderror" />
+                    <x-country-select name="country_id" class="w-full" />
                     @error('country_id')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
