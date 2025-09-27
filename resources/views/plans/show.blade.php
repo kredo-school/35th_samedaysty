@@ -83,48 +83,78 @@
                 <p class="text-base ms-1">people</p>
             </div>
 
-            <!-- like/interested/join buttons -->
+            <!-- like/interested buttons -->
             <div class="flex justify-end space-x-5 py-2 items-center">
-                <form action="{{ route('reaction.store', $plan->id) }}" method="POST" class="flex gap-4">
-                    @csrf
-                    <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                <div x-data="{ open: false, type: null }">
+                    <form action="{{ route('reaction.store', $plan->id) }}" method="POST" class="flex gap-4">
+                        @csrf
+                        <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                        <button type="submit" name="type" value="like">
+                            <i
+                                class="fa-{{ $plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl">
+                            </i>
+                            <span class="text-2xl ms-1">like</span>
+                        </button>
+                        <!-- modal button -->
+                        <button @click="type = 'like'; open = true" class="text-md text-gray-600" type="button">
+                            {{ $plan->isReacted('like') }}
+                        </button>
 
-                    <button type="submit" name="type" value="like">
-                        <i
-                            class="fa-{{ $plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl">
-                        </i>
-                        <span class="text-2xl ms-1">like</span>
-                        <span class="text-md ms-1">{{ $plan->isReacted('like') }}</span>
-                    </button>
-
-                    <button type="submit" name="type" value="interested">
-                        <i
-                            class="fa-{{ $plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
-                        <span class="text-2xl ms-1">interested</span>
-                        <span class="text-md ms-1">{{ $plan->isReacted('interested') }}</span>
-                    </button>
-
+                        <button type="submit" name="type" value="interested">
+                            <i
+                                class="fa-{{ $plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
+                            <span class="text-2xl ms-1">interested</span>
+                        </button>
+                        <!-- modal button -->
+                        <button @click="type = 'interested'; open = true" class="text-md text-gray-600" type="button">
+                            {{ $plan->isReacted('interested') }}
+                        </button>
                     </form>
-                    @cannot('view_own', $plan)
-                        <form action="{{ route('participations.store') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="travel_plan_id" value="{{ $plan->id }}">
-                            @switch($status)
-                                @case('pending')
-                                    <x-secondary-button type="submit" disabled class="ms-4">REQUESTED</x-secondary-button>
-                                    @break
-                                @case('accepted')
-                                    <x-secondary-button type="submit" disabled class="ms-4">JOINED</x-secondary-button>
-                                    @break
-                                @case('declined')
-                                    <x-secondary-button type="submit" disabled class="ms-4">DECLINED</x-secondary-button>
-                                    @break
-                                @default
-                                    <x-secondary-button type="submit" class="ms-4">JOIN</x-secondary-button>
-                            @endswitch
-                        </form>
-                    @endcan
+                    <!-- Modal for like/interested -->
+                    <div x-show="open" x-transition x-cloak class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                        <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
+                            <h2 class="text-lg font-bold mb-4" x-text="type === 'like' ? 'like' : 'interested'"></h2>
+                            <ul class="divide-y max-h-60 overflow-y-auto">
+                                @foreach(['like', 'interested'] as $t)
+                                    <template x-if="type === '{{ $t }}'">
+                                        @foreach($plan->reactions()->where('type', $t)->with('user')->get() as $reaction)
+                                            <li class="py-2">{{ $reaction->user->name }}</li>
+                                        @endforeach
+                                    </template>
+                                @endforeach
+                            </ul>
+    
+                            <div class="flex justify-end mt-4">
+                                <button @click="open = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">
+                                    close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+                <!-- join button -->
+                @cannot('view_own', $plan)
+                    <form action="{{ route('participations.store') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="travel_plan_id" value="{{ $plan->id }}">
+                        @switch($status)
+                            @case('pending')
+                                <x-secondary-button type="submit" disabled class="ms-4">REQUESTED</x-secondary-button>
+                                @break
+                            @case('accepted')
+                                <x-secondary-button type="submit" disabled class="ms-4">JOINED</x-secondary-button>
+                                @break
+                            @case('declined')
+                                <x-secondary-button type="submit" disabled class="ms-4">DECLINED</x-secondary-button>
+                                @break
+                            @default
+                                <x-secondary-button type="submit" class="ms-4">JOIN</x-secondary-button>
+                        @endswitch
+                    </form>
+                @endcan
+            </div>
 
                 <!-- approve join request -->
                 @can('view_own', $plan)
