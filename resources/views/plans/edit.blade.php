@@ -56,8 +56,7 @@
             <!-- Country -->
             <div class="mb-6">
                 <label class="block mb-1 font-semibold text-sm">Country</label>
-                <x-country-select name="country_id" :selected="old('country_id', $plan->country_id)"
-                    class="w-full @error('country_id') border-red-500 @enderror" />
+                <x-country-select name="country_id" :selected="old('country_id', $plan->country_id)" class="w-full" />
                 @error('country_id')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
