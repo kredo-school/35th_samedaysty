@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use SebastianBergmann\Type\TrueType;
 
 return [
 
@@ -169,7 +170,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => env('SESSION_SECURE_COOKIE', true),
 
     /*
     |--------------------------------------------------------------------------
