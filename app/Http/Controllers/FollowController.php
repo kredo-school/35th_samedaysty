@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Services\NotificationService;
 
 class FollowController extends Controller
 {
@@ -16,6 +17,9 @@ class FollowController extends Controller
         $me = Auth::user();
         if (!$me->isFollowing($user)) {
             $me->following()->attach($user->id);
+
+            // 通知を送信
+            NotificationService::sendFollowRequestNotification($me, $user);
         }
 
         return response()->json([

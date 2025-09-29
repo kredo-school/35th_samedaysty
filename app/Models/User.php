@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Gadget;
 use App\Models\Reaction;
 use App\Models\TravelPlan;
+use App\Models\Notification;
 
 
 class User extends Authenticatable
@@ -177,6 +178,30 @@ class User extends Authenticatable
         return $this->belongsToMany(TravelPlan::class, 'participations')
             ->withPivot('status', 'joined_at')
             ->withTimestamps();
+    }
+
+    /**
+     * ユーザーの通知
+     */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    /**
+     * 未読通知
+     */
+    public function unreadNotifications(): HasMany
+    {
+        return $this->hasMany(Notification::class)->where('read', false);
+    }
+
+    /**
+     * 未読通知数
+     */
+    public function unreadNotificationsCount(): int
+    {
+        return $this->unreadNotifications()->count();
     }
 
 }
