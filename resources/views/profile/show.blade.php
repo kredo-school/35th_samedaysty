@@ -69,21 +69,91 @@
                     <x-primary-button>
                         Change your status
                     </x-primary-button>
+
+                    <!--pending list-->
+                    @if(Auth::id() === $user->id)
+                    <x-secondary-button onclick="document.getElementById('pendingModal').showModal()">
+                        Pending Requests ({{ $user->followerRequests->count() }})
+                    </x-secondary-button>
+                    @endif
+
+                    <!--pending list Modal-->
+                    <dialog id="pendingModal" class="rounded-lg p-6 w-3/4 max-w-md">
+                        <h2 class="text-lg font-bold mb-4">Follow Requests</h2>
+
+                        <div class="space-y-4 max-h-80 overflow-y-auto">
+                            @forelse($user->followerRequests as $request)
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <img src="{{ $request->follower->avatar 
+                                ? asset('storage/' . $request->follower->avatar) 
+                                : asset('images/default-avatar.png') }}"
+                                        class="w-10 h-10 rounded-full object-cover">
+                                    <a href="{{ route('profile.show', $request->follower->id) }}"
+                                        class="text-blue-600 hover:underline">
+                                        {{ $request->follower->name }}
+                                    </a>
+                                </div>
+                                <div class="space-x-2">
+                                    <form action="{{ route('follow.approve', $request->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button class="px-3 py-1 bg-sky-500 text-white rounded hover:bg-green-600">
+                                            Approve
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('follow.reject', $request->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button class="px-3 py-1 bg-red-500 text-white rounded hover:bg-yellow-500">
+                                            Reject
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            @empty
+                            <p class="text-gray-500">No pending requests.</p>
+                            @endforelse
+                        </div>
+
+                        <form method="dialog" class="mt-4 text-right">
+                            <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+                                Close
+                            </button>
+                        </form>
+                    </dialog>
+
                     @else
                     <!--other user-->
                     @if(Auth::id() !== $user->id)
-
                     <div id="follow-btn-{{ $user->id }}">
-                        @php
-                        $followAction = $isFollowing ? 'unfollow' : 'follow';
-                        @endphp
+                        @php $me = Auth::user(); @endphp
 
+                        @if($me->isFollowing($user))
+                        <!--approve-->
                         <button
                             id="follow-button-{{ $user->id }}"
-                            class="px-4 py-2 rounded text-white {{ $isFollowing ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600' }}"
-                            onclick="toggleFollow('{{ $user->id }}', '{{ $followAction }}')">
-                            {{ $isFollowing ? 'Unfollow' : 'Follow' }}
+                            class="px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600"
+                            onclick="toggleFollow('{{ $user->id }}', 'unfollow')">
+                            Following
                         </button>
+
+                        @elseif($me->isPending($user))
+                        <!--sent request-->
+                        <button
+                            id="follow-button-{{ $user->id }}"
+                            class="px-4 py-2 rounded text-white bg-gray-400 cursor-not-allowed"
+                            disabled>
+                            Request Sent
+                        </button>
+
+                        @else
+                        <!--not follow-->
+                        <button
+                            id="follow-button-{{ $user->id }}"
+                            class="px-4 py-2 rounded text-white bg-blue-500 hover:bg-blue-600"
+                            onclick="toggleFollow('{{ $user->id }}', 'follow')">
+                            Follow
+                        </button>
+                        @endif
                     </div>
 
                     @endif
@@ -140,27 +210,66 @@
                     </dialog>
 
                     <!-- 2. Joined Plans -->
+                    <!--  Joined Plans -->
                     <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
                         <h2 class="text-lg font-bold mb-2">
                             <i class="fa-solid fa-handshake text-yellow-500 text-2xl mr-2"></i>
                             <span class="text-sky-700">JOINED </span>
                             <span class="text-orange-500">Plans</span>
                         </h2>
+
                         <div class="space-y-4">
+                            @forelse($joinedPlan as $plan)
                             <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">France</h3>
-                                <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                                    {{ $plan->country->name ?? 'Unknown Country' }}
+                                </h3>
+                                <span class="text-gray-600 dark:text-gray-500 text-sm">
                                     Plan:
+                                    <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                        {{ $plan->title }}
+                                    </a>
                                 </span>
                             </div>
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Italy</h3>
-                                <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan: Dreaming of a trip to Venice
-                                </span>
-                            </div>
+                            @empty
+                            <p class="text-gray-500 text-sm">No joined plans yet.</p>
+                            @endforelse
                         </div>
+
+                        @if($remainingJoinedPlans->count() > 0)
+                        <div class="mt-3">
+                            <x-primary-button type="button" onclick="document.getElementById('joinedModal').showModal()">
+                                Show all joined plans
+                            </x-primary-button>
+                        </div>
+                        @endif
                     </div>
+
+                    <!-- Modal for remaining Joined Plans -->
+                    <dialog id="joinedModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
+                        <h2 class="text-lg font-bold mb-4">All Joined Plans</h2>
+                        <div class="space-y-4 max-h-96 overflow-y-auto">
+                            @foreach($remainingJoinedPlans as $plan)
+                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                                    {{ $plan->country->name ?? 'Unknown Country' }}
+                                </h3>
+                                <span class="text-gray-600 dark:text-gray-500 text-sm">
+                                    Plan:
+                                    <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                        {{ $plan->title }}
+                                    </a>
+                                </span>
+                            </div>
+                            @endforeach
+                        </div>
+                        <form method="dialog" class="mt-4 text-right">
+                            <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+                                Close
+                            </button>
+                        </form>
+                    </dialog>
+
 
                     <!-- 3. Interested Plans -->
                     <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
@@ -346,9 +455,7 @@
     <!-- ajax part -->
     <script>
         function toggleFollow(userId, action) {
-            // action change URL
-            const url = action === 'follow' ?
-                `/follow/${userId}` :
+            const url = action === 'follow' ? `/follow/${userId}/request` :
                 `/unfollow/${userId}`;
 
             fetch(url, {
@@ -356,42 +463,25 @@
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({
-                        action
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const btnDiv = document.getElementById(`follow-btn-${userId}`);
-                        const followersCountEl = document.getElementById(`followers-count-${userId}`);
-
-                        if (data.action === 'followed') {
-                            btnDiv.innerHTML = `
-                    <button 
-                        id="follow-button-${userId}"
-                        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                        onclick="toggleFollow(${userId}, 'unfollow')">
-                        Unfollow
-                    </button>`;
-                        } else if (data.action === 'unfollowed') {
-                            btnDiv.innerHTML = `
-                    <button 
-                        id="follow-button-${userId}"
-                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                        onclick="toggleFollow(${userId}, 'follow')">
-                        Follow
-                    </button>`;
-                        }
-
-                        // follower change from controller
-                        if (followersCountEl) {
-                            followersCountEl.textContent = data.followers_count;
-                        }
                     }
                 })
-                .catch(err => console.error('Error:', err));
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.success) {
+                        const btn = document.getElementById(`follow-button-${userId}`);
+                        if (data.status === 'pending') {
+                            btn.textContent = "Request Sent";
+                            btn.className = "px-4 py-2 rounded text-white bg-gray-400 cursor-not-allowed";
+                            btn.disabled = true;
+                        } else if (data.action === 'unfollowed') {
+                            btn.textContent = "Follow";
+                            btn.className = "px-4 py-2 rounded text-white bg-blue-500 hover:bg-blue-600";
+                            btn.disabled = false;
+                            btn.setAttribute("onclick", `toggleFollow('${userId}', 'follow')`);
+                        }
+                    }
+                });
         }
 
         function showFollowModal(url, title) {

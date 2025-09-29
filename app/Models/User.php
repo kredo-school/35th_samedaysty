@@ -122,21 +122,45 @@ class User extends Authenticatable
     {
         return $this->hasMany(Gadget::class);
     }
-    /**  relation */
+    /**  About follow and Follower */
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id')
+            ->wherePivot('status', 'accepted');;
     }
-
     public function following()
     {
-        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id')
+            ->wherePivot('status', 'accepted');
     }
-
+    //method
     public function isFollowing(User $user)
     {
-        return $this->following()->where('following_id', $user->id)->exists();
+        return Follow::where('follower_id', $this->id)
+            ->where('following_id', $user->id)
+            ->where('status', 'accepted')
+            ->exists();
     }
+
+    public function isPending(User $user)
+    {
+        return Follow::where('follower_id', $this->id)
+            ->where('following_id', $user->id)
+            ->where('status', 'pending')
+            ->exists();
+    }
+    /**  relation */
+    public function followingRequests()
+    {
+        return $this->hasMany(Follow::class, 'follower_id')
+            ->where('status', 'pending');
+    }
+    public function followerRequests()
+    {
+        return $this->hasMany(Follow::class, 'following_id')
+            ->where('status', 'pending');
+    }
+
     public function travelPlans(): HasMany
     {
         return $this->hasMany(TravelPlan::class);
@@ -175,8 +199,8 @@ class User extends Authenticatable
     public function joinedPlans()
     {
         return $this->belongsToMany(TravelPlan::class, 'participations')
+            ->wherePivot('status', 'accepted')
             ->withPivot('status', 'joined_at')
             ->withTimestamps();
     }
-
 }
