@@ -112,7 +112,7 @@
                             <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
                                 <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">{{ $plan->country->name ?? 'Unknown Country' }}</h3>
                                 <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan <a href="{{ route('plan.detail', $plan->id) }}"
+                                    Plan <a href="{{ route('plan.show', $plan->id) }}"
                                         class="text-sky-600 hover:underline">
                                         {{ $plan->title }}
                                     </a>
@@ -134,7 +134,7 @@
                     <dialog id="plansModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
                         <h2 class="text-lg font-bold mb-4">All Created Plans</h2>
                         <div class="space-y-4 max-h-96 overflow-y-auto"> @foreach($travelPlans as $plan) <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1"> {{ $plan->country->name ?? 'Unknown Country' }} </h3> <span class="text-gray-600 dark:text-gray-500 text-sm"> Plan <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline"> {{ $plan->title }} </a> </span>
+                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1"> {{ $plan->country->name ?? 'Unknown Country' }} </h3> <span class="text-gray-600 dark:text-gray-500 text-sm"> Plan <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline"> {{ $plan->title }} </a> </span>
                             </div> @endforeach </div>
                         <form method="dialog" class="mt-4 text-right"> <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"> Close </button> </form>
                     </dialog>
@@ -178,7 +178,7 @@
                                 </h3>
                                 <span class="text-gray-600 dark:text-gray-500 text-sm">
                                     Plan:
-                                    <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
                                         {{ $plan->title }}
                                     </a>
                                 </span>
@@ -207,7 +207,7 @@
                                 </h3>
                                 <span class="text-gray-600 dark:text-gray-500 text-sm">
                                     Plan:
-                                    <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
                                         {{ $plan->title }}
                                     </a>
                                 </span>
@@ -233,7 +233,7 @@
                             <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
                                 <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">{{ $plan->country->name ?? 'Unknown Country' }}</h3>
                                 <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
                                         {{ $plan->title }}
                                     </a>
                                 </span>
@@ -260,7 +260,7 @@
                                     {{ $plan->country->name ?? 'Unknown Country' }}
                                 </h3>
                                 <span class="text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan: <a href="{{ route('plan.detail', $plan->id) }}" class="text-sky-600 hover:underline">
+                                    Plan: <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
                                         {{ $plan->title }}
                                     </a>
                                 </span>

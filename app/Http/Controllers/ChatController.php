@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
@@ -120,7 +121,11 @@ class ChatController extends Controller
 
         $message->load('sender');
 
-
+        // 通知を送信
+        $recipient = $conversation->getOtherUser(auth()->id());
+        if ($recipient) {
+            NotificationService::sendChatMessageNotification($recipient, auth()->user(), $conversation);
+        }
 
         return response()->json([
             'message' => $message,

@@ -107,7 +107,7 @@ class PlanController extends Controller
         if ($request->has('travel_styles')) {
             $plan->syncTravelStyles($request->travel_styles);
         }
-        return redirect()->route('plan.detail', $plan->id)
+        return redirect()->route('plan.show', $plan->id)
             ->with('success', 'Plan created successfully!');
     }
 
@@ -154,7 +154,7 @@ class PlanController extends Controller
             $plan->detachTravelStyles();
         }
 
-        return redirect()->route('plan.detail', $plan->id)
+        return redirect()->route('plan.show', $plan->id)
             ->with('success', 'Plan updated successfully!');
     }
 

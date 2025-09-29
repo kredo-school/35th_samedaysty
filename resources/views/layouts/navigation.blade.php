@@ -7,13 +7,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div class="flex justify-between items-center h-full">
             <div class="flex items-center">
-        <!-- Logo  -->
-        <div class="mb-8 sm:mb-0 flex-shrink-0 bg-white px-4 py-2 rounded-lg">
-            <a href="/" class="flex items-center space-x-2">
-                <img src="/images/logo.png" alt="Logo" class="h-10 w-auto">
+                <!-- Logo  -->
+                <div class="mb-8 sm:mb-0 flex-shrink-0 bg-white px-4 py-2 rounded-lg">
+                    <a href="/" class="flex items-center space-x-2">
+                        <img src="/images/logo.png" alt="Logo" class="h-10 w-auto">
 
-            </a>
-        </div>
+                    </a>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -46,13 +46,13 @@
                             <span>{{ __('Chat') }}</span>
                         </div>
                     </x-nav-link>
-                    <x-nav-link href="#" :active="request()->routeIs('notifications.*')">
+                    <x-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
                         <div class="flex items-center space-x-2">
                             <div class="relative">
                                 <i class="fas fa-bell text-lg"></i>
                                 <!-- Notification badge -->
-                                <span
-                                    class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                                <span id="notification-badge"
+                                    class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
                             </div>
                             <span>{{ __('Notifications') }}</span>
                         </div>
@@ -197,13 +197,13 @@
                     <span>{{ __('Chat') }}</span>
                 </div>
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="#" :active="request()->routeIs('notifications.*')">
+            <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
                 <div class="flex items-center">
                     <div class="relative">
                         <i class="fas fa-bell mr-2"></i>
                         <!-- Notification badge -->
-                        <span
-                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                        <span id="notification-badge-mobile"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
                     </div>
                     {{ __('Notifications') }}
                 </div>
@@ -245,3 +245,52 @@
         @endauth
     </div>
 </nav>
+
+<script>
+    // 未読通知数を取得してバッジを更新
+    function updateNotificationBadge() {
+        fetch('/notifications/unread-count', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const badge = document.getElementById('notification-badge');
+                const mobileBadge = document.getElementById('notification-badge-mobile');
+
+                if (data.unread_count > 0) {
+                    badge.textContent = data.unread_count;
+                    badge.classList.remove('hidden');
+                    mobileBadge.textContent = data.unread_count;
+                    mobileBadge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                    mobileBadge.classList.add('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating notification badge:', error);
+                // エラー時はバッジを非表示にする
+                const badge = document.getElementById('notification-badge');
+                const mobileBadge = document.getElementById('notification-badge-mobile');
+                badge.classList.add('hidden');
+                mobileBadge.classList.add('hidden');
+            });
+    }
+
+    // ページ読み込み時に実行
+    document.addEventListener('DOMContentLoaded', function () {
+        updateNotificationBadge();
+
+        // 30秒ごとに更新
+        setInterval(updateNotificationBadge, 30000);
+    });
+</script>
