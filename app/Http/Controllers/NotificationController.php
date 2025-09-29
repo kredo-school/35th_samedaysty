@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class NotificationController extends Controller
 {
     /**
-     * 通知一覧を取得
+     * Get notifications list
      */
     public function index(Request $request)
     {
@@ -24,7 +24,7 @@ class NotificationController extends Controller
 
         $unreadCount = NotificationService::getUnreadCount($user);
 
-        // APIリクエストの場合はJSONを返す
+        // Return JSON for API requests
         if ($request->expectsJson()) {
             return response()->json([
                 'notifications' => $notifications,
@@ -32,12 +32,12 @@ class NotificationController extends Controller
             ]);
         }
 
-        // 通常のリクエストの場合はビューを返す
+        // Return view for regular requests
         return view('notifications.index', compact('notifications', 'unreadCount'));
     }
 
     /**
-     * 未読通知のみを取得
+     * Get unread notifications only
      */
     public function unread(Request $request): JsonResponse
     {
@@ -51,7 +51,7 @@ class NotificationController extends Controller
     }
 
     /**
-     * 未読通知数を取得
+     * Get unread notification count
      */
     public function unreadCount(Request $request): JsonResponse
     {
@@ -61,7 +61,7 @@ class NotificationController extends Controller
     }
 
     /**
-     * 特定の通知を既読にする
+     * Mark specific notification as read
      */
     public function markAsRead(Request $request, Notification $notification): JsonResponse
     {
@@ -74,7 +74,7 @@ class NotificationController extends Controller
     }
 
     /**
-     * すべての通知を既読にする
+     * Mark all notifications as read
      */
     public function markAllAsRead(Request $request): JsonResponse
     {
@@ -84,7 +84,7 @@ class NotificationController extends Controller
     }
 
     /**
-     * 通知を削除
+     * Delete notification
      */
     public function destroy(Notification $notification): JsonResponse
     {
