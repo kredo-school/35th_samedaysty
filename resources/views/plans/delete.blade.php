@@ -17,7 +17,7 @@
                     </x-danger-button>
                 </form>
 
-                <a href="{{ route('plan.detail', $plan->id) }}" class="bg-gray-300 px-4 py-2 rounded">
+                <a href="{{ route('plan.show', $plan->id) }}" class="bg-gray-300 px-4 py-2 rounded">
                     Cancel
                 </a>
 

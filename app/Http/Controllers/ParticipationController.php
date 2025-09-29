@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Participation;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class ParticipationController extends Controller
@@ -14,8 +15,10 @@ class ParticipationController extends Controller
         ]);
 
         $userId = auth()->id();
+        $plan = \App\Models\TravelPlan::find($request->travel_plan_id);
+        $requester = auth()->user();
 
-        Participation::firstOrCreate(
+        $participation = Participation::firstOrCreate(
             [
                 'user_id' => $userId,
                 'travel_plan_id' => $request->travel_plan_id,
@@ -24,6 +27,33 @@ class ParticipationController extends Controller
                 'status' => 'pending',
             ]
         );
+
+        // Send notification for new join request
+        if ($participation->wasRecentlyCreated && $plan->user_id !== $userId) {
+            \Log::info('Sending join request notification', [
+                'plan_id' => $plan->id,
+                'requester_id' => $userId,
+                'owner_id' => $plan->user_id
+            ]);
+
+            $title = "New Join Request";
+            $message = "{$requester->name} wants to join your plan: \"{$plan->title}\".";
+            $data = [
+                'plan_id' => $plan->id,
+                'plan_title' => $plan->title,
+                'requester_id' => $requester->id,
+                'requester_name' => $requester->name,
+                'type' => 'join_request',
+            ];
+
+            \App\Models\Notification::create([
+                'user_id' => $plan->user_id,
+                'type' => 'join_request',
+                'title' => $title,
+                'message' => $message,
+                'data' => $data,
+            ]);
+        }
 
         return back()->with('success', 'Join request sent!');
     }
@@ -44,6 +74,13 @@ class ParticipationController extends Controller
         }
 
         $participation->save();
+
+        // 通知を送信
+        if ($request->status === 'accepted') {
+            NotificationService::sendJoinRequestAcceptedNotification($participation->user, $participation->travelPlan);
+        } else {
+            NotificationService::sendJoinRequestRejectedNotification($participation->user, $participation->travelPlan);
+        }
 
         return back()->with('success', "Participation {$request->status} successfully!");
     }
