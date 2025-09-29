@@ -47,7 +47,7 @@ class PlanController extends Controller
 
     public function apiIndex(Request $request)
     {
-        $query = TravelPlan::with('country');
+        $query = TravelPlan::with(['country', 'participants']);
 
         // if there is a selected country, plans would be narrowed down 
         if ($request->has('country') && $request->country) {
@@ -62,7 +62,7 @@ class PlanController extends Controller
                 'id' => $travel_plan->id,
                 'country' => $travel_plan->country ? $travel_plan->country->name : '',
                 'country_code' => $travel_plan->country ? $travel_plan->country->code : '',
-                'participants' => $travel_plan->participants ?? 0,
+                'participants' => $travel_plan->participants()->count(),
                 'max_participants' => $travel_plan->max_participants ?? 0,
                 'description' => $travel_plan->description ?? '',
             ];
