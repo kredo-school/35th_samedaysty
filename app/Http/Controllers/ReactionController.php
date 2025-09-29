@@ -31,6 +31,7 @@ class ReactionController extends Controller
 
             return back()->with('info','you have already sent a request');
         }
+
         Reaction::create([
             'user_id'=> auth()->id(),
             'plan_id'=> $plan_id,
