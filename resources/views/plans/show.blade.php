@@ -97,7 +97,7 @@
                         </button>
                         <!-- modal button -->
                         <button @click="type = 'like'; open = true" class="text-md text-gray-600" type="button">
-                            {{ $plan->isReacted('like') }}
+                            {{ $plan->reactions()->where('type', 'like')->count() }}
                         </button>
 
                         <button type="submit" name="type" value="interested">
@@ -107,9 +107,10 @@
                         </button>
                         <!-- modal button -->
                         <button @click="type = 'interested'; open = true" class="text-md text-gray-600" type="button">
-                            {{ $plan->isReacted('interested') }}
+                            {{ $plan->reactions()->where('type', 'like')->count() }}
                         </button>
                     </form>
+                    
                     <!-- Modal for like/interested -->
                     <div x-show="open" x-transition x-cloak class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
                         <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
@@ -222,10 +223,10 @@
                 <h4 class="text-xl text-sky-500 font-bold mx-auto">participants chat</h4>
                 <div class="flex space-x-2 ml-4">
                     <span class="py-1 text-gray-400">{{ $plan->user->name }},</span>
-                    @forelse($plan->participations as $participation)
-                    <span class="py-1 text-gray-400">{{ $participation->user->name }},</span>
+                    @forelse($plan->participations->where('status', 'accepted') as $participation)
+                        <span class="py-1 text-gray-400">{{ $participation->user->name }},</span>
                     @empty
-                    <p>no other participnts yet</p>
+                        <p>no other participnts yet</p>
                     @endforelse
                 </div>
             </div>
