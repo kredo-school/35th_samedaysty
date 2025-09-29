@@ -5,10 +5,10 @@
     </x-title>
 
     @if(session('success'))
-    <div class="max-w-4xl mx-auto mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
-        <p class="font-semibold">✅ Success</p>
-        <p>{{ session('success') }}</p>
-    </div>
+        <div class="max-w-4xl mx-auto mt-4 p-4 bg-green-50 border border-green-300 text-green-800 rounded-lg shadow">
+            <p class="font-semibold">✅ Success</p>
+            <p>{{ session('success') }}</p>
+        </div>
     @endif
 
     <div class="px-20">
@@ -85,7 +85,7 @@
 
             <!-- like/interested buttons -->
             <div class="flex justify-end space-x-5 py-2 items-center">
-                <div x-data="{ open: false, type: null }">
+                <div x-data="{ openLike: false, openInterested: false }">
                     <form action="{{ route('reaction.store', $plan->id) }}" method="POST" class="flex gap-4">
                         @csrf
                         <input type="hidden" name="plan_id" value="{{ $plan->id }}">
@@ -96,7 +96,7 @@
                             <span class="text-2xl ms-1">like</span>
                         </button>
                         <!-- modal button -->
-                        <button @click="type = 'like'; open = true" class="text-md text-gray-600" type="button">
+                        <button @click="openLike = true" class="text-md text-gray-600" type="button">
                             {{ $plan->reactions()->where('type', 'like')->count() }}
                         </button>
 
@@ -106,34 +106,49 @@
                             <span class="text-2xl ms-1">interested</span>
                         </button>
                         <!-- modal button -->
-                        <button @click="type = 'interested'; open = true" class="text-md text-gray-600" type="button">
-                            {{ $plan->reactions()->where('type', 'like')->count() }}
+                        <button @click="openInterested = true" class="text-md text-gray-600" type="button">
+                            {{ $plan->reactions()->where('type', 'interested')->count() }}
                         </button>
                     </form>
-                    
-                    <!-- Modal for like/interested -->
-                    <div x-show="open" x-transition x-cloak class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+
+                    <!-- Like Modal -->
+                    <div x-show="openLike" x-transition x-cloak 
+                        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
                         <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
-                            <h2 class="text-lg font-bold mb-4" x-text="type === 'like' ? 'like' : 'interested'"></h2>
+                            <h2 class="text-lg font-bold mb-4">Likes</h2>
                             <ul class="divide-y max-h-60 overflow-y-auto">
-                                @foreach(['like', 'interested'] as $t)
-                                    <template x-if="type === '{{ $t }}'">
-                                        @foreach($plan->reactions()->where('type', $t)->with('user')->get() as $reaction)
-                                            <li class="py-2">{{ $reaction->user->name }}</li>
-                                        @endforeach
-                                    </template>
+                                @foreach($plan->reactions()->where('type', 'like')->with('user')->get() as $reaction)
+                                    <li class="py-2">{{ $reaction->user->name }}</li>
                                 @endforeach
                             </ul>
-    
+
                             <div class="flex justify-end mt-4">
-                                <button @click="open = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">
+                                <button @click="openLike = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">
+                                    close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interested Modal -->
+                    <div x-show="openInterested" x-transition x-cloak 
+                        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                        <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
+                            <h2 class="text-lg font-bold mb-4">Interested</h2>
+                            <ul class="divide-y max-h-60 overflow-y-auto">
+                                @foreach($plan->reactions()->where('type', 'interested')->with('user')->get() as $reaction)
+                                    <li class="py-2">{{ $reaction->user->name }}</li>
+                                @endforeach
+                            </ul>
+
+                            <div class="flex justify-end mt-4">
+                                <button @click="openInterested = false" class="px-4 py-2 bg-gray-500 text-white rounded-lg">
                                     close
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- join button -->
                 @cannot('view_own', $plan)
@@ -156,164 +171,165 @@
                     </form>
                 @endcan
             </div>
-
-                <!-- approve join request -->
-                @can('view_own', $plan)
-                <div class="flex justify-end">
-                    <div class="bg-gray-200 w-1/2 shadow-md rounded-lg p-2">
-                        <h2 class="text-xl font-semibold mb-4 text-center">join requests</h2>
-                        @forelse($plan->pendingParticipations as $pending)
-                        <!-- icon/name/time + buttons -->
-                        <div class="flex items-center">
-                            <!-- leftside: user info -->
-                            <div class="flex items-center space-x-2">
-                                <a href="{{ route('profile.show', $pending->user->id) }}">{!! $pending->user->avatar ?
-                                    '<img src="' . $pending->user->avatar . '" alt="avatar"
-                                        class="w-10 h-10 rounded-full">' :
-                                    '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
-                                <div class="flex flex-col">
-                                    <span class="font-semibold">{{ $pending->user->name }}</span>
-                                    <span class="text-sm text-gray-500">{{ $pending->created_at->diffForHumans()
-                                        }}</span>
-                                </div>
-                            </div>
-
-                            <!-- rightside： buttons -->
-                            <div class="flex space-x-2 ml-auto">
-                                <!-- accept -->
-                                <form action="{{ route('participations.update', $pending->id) }}" method="POST"
-                                    class="inline">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="status" value="accepted">
-                                    <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded">
-                                        Accept
-                                    </button>
-                                </form>
-
-                                <!-- decline -->
-                                <form action="{{ route('participations.update', $pending->id) }}" method="POST"
-                                    class="inline">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="status" value="declined">
-                                    <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded">
-                                        Decline
-                                    </button>
-                                </form>
+           
+            <!-- approve join request -->
+            @can('view_own', $plan)
+            <div class="flex justify-end">
+                <div class="bg-gray-200 w-1/2 shadow-md rounded-lg p-2">
+                    <h2 class="text-xl font-semibold mb-4 text-center">join requests</h2>
+                    @forelse($plan->pendingParticipations as $pending)
+                    <!-- icon/name/time + buttons -->
+                    <div class="flex items-center">
+                        <!-- leftside: user info -->
+                        <div class="flex items-center space-x-2">
+                            <a href="{{ route('profile.show', $pending->user->id) }}">{!! $pending->user->avatar ?
+                                '<img src="' . $pending->user->avatar . '" alt="avatar"
+                                    class="w-10 h-10 rounded-full">' :
+                                '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+                            <div class="flex flex-col">
+                                <span class="font-semibold">{{ $pending->user->name }}</span>
+                                <span class="text-sm text-gray-500">{{ $pending->created_at->diffForHumans()
+                                    }}</span>
                             </div>
                         </div>
-                        @empty
-                        <p>No join requests yet.</p>
-                        @endforelse
+
+                        <!-- rightside： buttons -->
+                        <div class="flex space-x-2 ml-auto">
+                            <!-- accept -->
+                            <form action="{{ route('participations.update', $pending->id) }}" method="POST"
+                                class="inline">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="accepted">
+                                <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded">
+                                    Accept
+                                </button>
+                            </form>
+
+                            <!-- decline -->
+                            <form action="{{ route('participations.update', $pending->id) }}" method="POST"
+                                class="inline">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="declined">
+                                <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded">
+                                    Decline
+                                </button>
+                            </form>
+                        </div>
                     </div>
+                    @empty
+                    <p>No join requests yet.</p>
+                    @endforelse
                 </div>
-                @endcan
             </div>
+            @endcan
+
             
             <!-- stepper -->
             @if($plan->user->id !== Auth::id())
             <x-stepper :status="$status"></x-stepper>
-        @endif
-
-        <!-- participants chat -->
-        @canany(['view_own', 'participate'], $plan)
-        <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
-            <div class="flex items-center">
-                <h4 class="text-xl text-sky-500 font-bold mx-auto">participants chat</h4>
-                <div class="flex space-x-2 ml-4">
-                    <span class="py-1 text-gray-400">{{ $plan->user->name }},</span>
-                    @forelse($plan->participations->where('status', 'accepted') as $participation)
-                        <span class="py-1 text-gray-400">{{ $participation->user->name }},</span>
-                    @empty
-                        <p>no other participnts yet</p>
-                    @endforelse
-                </div>
-            </div>
-            @forelse($plan->participant_chats as $participant_chat)
-            @if($participant_chat->user->id === Auth::user()->id)
-            <!-- own message -->
-            <div class="flex justify-end items-start gap-2 p-3">
-                <div class="flex items-end justify-end gap-1">
-                    <!-- time/content -->
-                    <span class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
-                    <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm break-words">
-                        {{ $participant_chat->body }}
-                    </div>
-                </div>
-            </div>
-            @else
-            <!-- others' message -->
-            <div class="flex items-start gap-2 p-3">
-                <!-- icon -->
-                <a href="{{ route('profile.show', $participant_chat->user->id) }}">{!!
-                    $participant_chat->user->avatar ?
-                    '<img src="' . $participant_chat->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' :
-                    '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
-                <div>
-                    <!-- username -->
-                    <span class="text-xs text-gray-500">{{ $participant_chat->user->name }}</span>
-                    
-                    <!-- chat content/time -->
-                    <div class="flex items-end gap-1">
-                        <div class="bg-gray-200 rounded-2xl rounded-tl-none p-3 break-words">
-                            {{ $participant_chat->body }}
-                        </div>
-                        <div class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}
-                        </div>
-                    </div>
-                </div>
-            </div>
             @endif
-            @empty
-            <p class="text-gray-500 p-4">no message yet</p>
-            @endforelse
-            
-            <div class="border-t border-gray-300 p-3 flex gap-2">
-                <form action="{{ route('participant_chat.store', $plan->id) }}" method="post" class="w-full flex gap-2">
-                    @csrf
-                    <input type="text" name="participant_chat_body{{ $plan->id }}" id="" placeholder="message..."
-                    class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
-                    <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
-                    <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>
-                </form>
-            </div>
-        </div>
-        @endcanany
 
-        <!-- comment -->
-        <div class="border border-black box-border rounded-md my-5 overflow-y-auto">
-            <h4 class="text-xl font-bold ms-3">comments</h4>
-            @foreach($plan->comments as $comment)
-            <div class="flex items-center space-x-3 p-4">
-                <!-- icon -->
-                <a href="{{ route('profile.show', $comment->user->id) }}">{!! $comment->user->avatar ? '<img
-                        src="' . $comment->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
-                        class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
-
-                <div class="flex flex-col justify-center">
-                    <!-- name/time -->
-                    <div class="flex items-center space-x-2">
-                        <span class="font-semibold">{{ $comment->user->name }}</span>
-                        <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+            <!-- participants chat -->
+            @canany(['view_own', 'participate'], $plan)
+                <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
+                    <div class="flex items-center">
+                        <h4 class="text-xl text-sky-500 font-bold mx-auto">participants chat</h4>
+                        <div class="flex space-x-2 ml-4">
+                            <span class="py-1 text-gray-400">{{ $plan->user->name }},</span>
+                            @forelse($plan->participations->where('status', 'accepted') as $participation)
+                                <span class="py-1 text-gray-400">{{ $participation->user->name }},</span>
+                            @empty
+                                <p>no other participants yet</p>
+                            @endforelse
+                        </div>
                     </div>
+                    @forelse($plan->participant_chats as $participant_chat)
+                        @if($participant_chat->user->id === Auth::user()->id)
+                            <!-- own message -->
+                            <div class="flex justify-end items-start gap-2 p-3">
+                                <div class="flex items-end justify-end gap-1">
+                                    <!-- time/content -->
+                                    <span class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
+                                    <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm break-words">
+                                        {{ $participant_chat->body }}
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <!-- others' message -->
+                            <div class="flex items-start gap-2 p-3">
+                                <!-- icon -->
+                                <a href="{{ route('profile.show', $participant_chat->user->id) }}">{!!
+                                    $participant_chat->user->avatar ?
+                                    '<img src="' . $participant_chat->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' :
+                                    '<i class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+                                <div>
+                                    <!-- username -->
+                                    <span class="text-xs text-gray-500">{{ $participant_chat->user->name }}</span>
+                                    
+                                    <!-- chat content/time -->
+                                    <div class="flex items-end gap-1">
+                                        <div class="bg-gray-200 rounded-2xl rounded-tl-none p-3 break-words">
+                                            {{ $participant_chat->body }}
+                                        </div>
+                                        <div class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @empty
+                        <p class="text-gray-500 p-4">no message yet</p>
+                    @endforelse
                     
-                    <!-- comment content -->
-                    <p class="text-gray-700">
-                        {{ $comment->body }}
-                    </p>
+                    <div class="border-t border-gray-300 p-3 flex gap-2">
+                        <form action="{{ route('participant_chat.store', $plan->id) }}" method="post" class="w-full flex gap-2">
+                            @csrf
+                            <input type="text" name="participant_chat_body{{ $plan->id }}" id="" placeholder="message..."
+                            class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
+                            <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
+                            <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            @endforeach
-            
-            <div class="border-t border-gray-300 p-3 flex gap-2">
-                <form action="{{ route('comment.store', $plan->id) }}" method="post" class="w-full flex gap-2">
-                    @csrf
-                    <input type="text" name="comment_body{{ $plan->id }}" id="" placeholder="comment..."
-                        class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
-                    <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
-                    <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>
-                </form>
+            @endcanany
+
+            <!-- comment -->
+            <div class="border border-black box-border rounded-md my-5 overflow-y-auto">
+                <h4 class="text-xl font-bold ms-3">comments</h4>
+                @foreach($plan->comments as $comment)
+                <div class="flex items-center space-x-3 p-4">
+                    <!-- icon -->
+                    <a href="{{ route('profile.show', $comment->user->id) }}">{!! $comment->user->avatar ? '<img
+                            src="' . $comment->user->avatar . '" alt="avatar" class="w-10 h-10 rounded-full">' : '<i
+                            class="fa-solid fa-circle-user text-gray-500 text-3xl"></i>' !!}</a>
+
+                    <div class="flex flex-col justify-center">
+                        <!-- name/time -->
+                        <div class="flex items-center space-x-2">
+                            <span class="font-semibold">{{ $comment->user->name }}</span>
+                            <span class="text-sm text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                        </div>
+                        
+                        <!-- comment content -->
+                        <p class="text-gray-700">
+                            {{ $comment->body }}
+                        </p>
+                    </div>
+                </div>
+                @endforeach
+                
+                <div class="border-t border-gray-300 p-3 flex gap-2">
+                    <form action="{{ route('comment.store', $plan->id) }}" method="post" class="w-full flex gap-2">
+                        @csrf
+                        <input type="text" name="comment_body{{ $plan->id }}" id="" placeholder="comment..."
+                            class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
+                        <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
+                        <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
