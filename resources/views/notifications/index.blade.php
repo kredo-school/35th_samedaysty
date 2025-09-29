@@ -34,7 +34,7 @@
                                     <p class="text-xs text-gray-500 mt-1">{{ $notification->created_at->diffForHumans()
                                         }}</p>
 
-                                    <!-- 通知タイプに応じたリンク -->
+                                    <!-- Links based on notification type -->
                                     @php
                                     $data = $notification->data ?? [];
                                     $linkUrl = null;

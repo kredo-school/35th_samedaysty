@@ -60,7 +60,7 @@ class NotificationService
     }
 
     /**
-     * プランが「いいね」された通知
+     * Send notification when a plan is liked
      */
     public static function sendPlanLikedNotification(Reaction $reaction): ?Notification
     {
@@ -86,7 +86,7 @@ class NotificationService
     }
 
     /**
-     * プランが「興味あり」された通知
+     * Send notification when a plan is marked as interested
      */
     public static function sendPlanInterestedNotification(Reaction $reaction): ?Notification
     {
@@ -112,7 +112,7 @@ class NotificationService
     }
 
     /**
-     * プランにJoin申請された通知
+     * Send notification when a join request is made for a plan
      */
     public static function sendJoinRequestNotification(Reaction $reaction): ?Notification
     {
@@ -138,7 +138,7 @@ class NotificationService
     }
 
     /**
-     * Join申請が承認された通知
+     * Send notification when a join request is accepted
      */
     public static function sendJoinRequestAcceptedNotification(User $requester, $plan): Notification
     {
@@ -154,7 +154,7 @@ class NotificationService
     }
 
     /**
-     * Join申請が却下された通知
+     * Send notification when a join request is rejected
      */
     public static function sendJoinRequestRejectedNotification(User $requester, $plan): Notification
     {
@@ -187,7 +187,7 @@ class NotificationService
     }
 
     /**
-     * プランにコメントがついた通知
+     * Send notification when a comment is added to a plan
      */
     public static function sendPlanCommentNotification(Comment $comment): ?Notification
     {
@@ -214,7 +214,7 @@ class NotificationService
     }
 
     /**
-     * プランのグループチャットにコメントがついた通知
+     * Send notification when a comment is added to a plan's group chat
      */
     public static function sendGroupCommentNotification(ParticipantChat $chatMessage): ?Notification
     {
