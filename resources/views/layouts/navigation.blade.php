@@ -7,12 +7,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div class="flex justify-between items-center h-full">
             <div class="flex items-center">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="/">
-                        <x-application-logo class="h-12 w-auto" />
-                    </a>
-                </div>
+        <!-- Logo  -->
+        <div class="mb-8 sm:mb-0 flex-shrink-0 bg-white px-4 py-2 rounded-lg">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="/images/logo.png" alt="Logo" class="h-10 w-auto">
+
+            </a>
+        </div>
             </div>
 
             <!-- Settings Dropdown -->
