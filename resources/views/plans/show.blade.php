@@ -113,7 +113,7 @@
 
                     <!-- Like Modal -->
                     <div x-show="openLike" x-transition x-cloak 
-                        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
                         <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
                             <h2 class="text-lg font-bold mb-4">Likes</h2>
                             <ul class="divide-y max-h-60 overflow-y-auto">
@@ -132,7 +132,7 @@
 
                     <!-- Interested Modal -->
                     <div x-show="openInterested" x-transition x-cloak 
-                        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
                         <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
                             <h2 class="text-lg font-bold mb-4">Interested</h2>
                             <ul class="divide-y max-h-60 overflow-y-auto">
