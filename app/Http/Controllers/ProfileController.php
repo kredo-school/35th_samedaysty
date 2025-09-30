@@ -22,7 +22,6 @@ class ProfileController extends Controller
         $user = $id ? User::findOrFail($id) : Auth::user();
         //3 gadgets
         $gadgets = $user->gadgets()->orderBy('id')->take(3)->get();
-        //create travel plan count
         $postsCount = $user->travelPlans()->count();
         //follow and follower count
         $followersCount = $user->followers()->count();
@@ -51,6 +50,10 @@ class ProfileController extends Controller
         $latestLikedPlans = $likedPlans->take(2);
         $remainingLikedPlans = $likedPlans->skip(2)->values();
 
+        $allJoined = $user->joinedPlans()->with('country')->latest()->get();
+        $joinedPlan = $allJoined->take(2);
+        $remainingJoinedPlans = $allJoined->skip(2)->values();
+
         return view('profile.show', compact(
             'user',
             'gadgets',
@@ -64,7 +67,9 @@ class ProfileController extends Controller
             'remainingInterestedPlans',
             'likedPlans',
             'latestLikedPlans',
-            'remainingLikedPlans'
+            'remainingLikedPlans',
+            'joinedPlan',
+            'remainingJoinedPlans'
         ));
     }
 
@@ -127,11 +132,11 @@ class ProfileController extends Controller
             'item2' => 'nullable|string|max:255',
             'item2_description' => 'nullable|string|max:500',
             'item2_photo' => 'nullable|image|max:2048',
-            'item2_url'=> 'nullable|url|max:255',
+            'item2_url' => 'nullable|url|max:255',
             'item3' => 'nullable|string|max:255',
             'item3_description' => 'nullable|string|max:500',
             'item3_photo' => 'nullable|image|max:2048',
-            'item3_url'=> 'nullable|url|max:255'
+            'item3_url' => 'nullable|url|max:255'
         ]);
 
         foreach (['item1', 'item2', 'item3'] as $index => $itemKey) {

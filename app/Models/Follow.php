@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Follow extends Model
 {
-    public $timestamps = false;
-    //follow belongs to user(paired with follows())
-    public function following()
-    {
-        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
-    }
+	protected $fillable = ['follower_id', 'following_id', 'status'];
+	// sent request
+	public function follower()
+	{
+		return $this->belongsTo(User::class, 'follower_id');
+	}
 
-    public function followers()
-    {
-        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
-    }
+	// accept request
+	public function following()
+	{
+		return $this->belongsTo(User::class, 'following_id');
+	}
 }
