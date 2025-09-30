@@ -10,6 +10,7 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\ParticipantChatController;
 use App\Http\Controllers\ParticipationController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
 
 // plans
 Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
-    Route::get('/{id}/detail', [PlanController::class, 'detail'])->name('detail');
+    Route::get('/{id}/detail', [PlanController::class, 'detail'])->name('show');
     Route::get('/search', [PlanController::class, 'search'])->name('search');
     Route::get('/create', [PlanController::class, 'create'])->name('create');
     Route::post('/store', [PlanController::class, 'store'])->name('store');
@@ -113,6 +114,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/follow/approve/{id}', [FollowController::class, 'approveRequest'])->name('follow.approve');
     Route::post('/follow/reject/{id}', [FollowController::class, 'rejectRequest'])->name('follow.reject');
     Route::post('/follow/{user}/request', [FollowController::class, 'followRequest'])->name('follow.request');
+
+    // Notification System
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::get('/unread', [NotificationController::class, 'unread'])->name('unread');
+        Route::get('/unread-count', [NotificationController::class, 'unreadCount'])->name('unread-count');
+        Route::patch('/{id}/read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
+        Route::patch('/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('mark-all-read');
+        Route::delete('/{id}', [NotificationController::class, 'destroy'])->name('destroy');
+    });
 });
 
 

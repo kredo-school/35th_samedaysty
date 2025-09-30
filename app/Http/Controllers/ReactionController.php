@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reaction;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class ReactionController extends Controller
@@ -11,7 +12,7 @@ class ReactionController extends Controller
     {
         $request->validate([
             'plan_id' => 'required|exists:travel_plans,id',
-            'type'=> 'required|in:like,interested,join_request',
+            'type' => 'required|in:like,interested,join_request',
         ]);
 
         $plan_id = $request->input('plan_id');
@@ -22,21 +23,38 @@ class ReactionController extends Controller
             ->where('plan_id', $plan_id)
             ->where('type', $type)
             ->first();
-        
-        if($existing){ 
-            if ($type !== 'join_request'){
+
+        if ($existing) {
+            if ($type !== 'join_request') {
                 $existing->delete();
                 return back();
             }
 
-            return back()->with('info','you have already sent a request');
+            return back()->with('info', 'you have already sent a request');
         }
-        Reaction::create([
-            'user_id'=> auth()->id(),
-            'plan_id'=> $plan_id,
-            'type'=> $type,
+
+        $reaction = Reaction::create([
+            'user_id' => auth()->id(),
+            'plan_id' => $plan_id,
+            'type' => $type,
             'status' => $type === 'join_request' ? 'pending' : null,
         ]);
+
+        // Load relationships before sending notification
+        $reaction->load(['user', 'plan.user']);
+
+        // Send notification
+        switch ($type) {
+            case 'like':
+                NotificationService::sendPlanLikedNotification($reaction);
+                break;
+            case 'interested':
+                NotificationService::sendPlanInterestedNotification($reaction);
+                break;
+            case 'join_request':
+                NotificationService::sendJoinRequestNotification($reaction);
+                break;
+        }
 
         return back();
     }
