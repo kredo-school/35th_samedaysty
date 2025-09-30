@@ -111,6 +111,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('users.following.json');
     Route::get('/users/{user}/followers/json', [FollowController::class, 'followersJson'])
         ->name('users.followers.json');
+    Route::post('/follow/approve/{id}', [FollowController::class, 'approveRequest'])->name('follow.approve');
+    Route::post('/follow/reject/{id}', [FollowController::class, 'rejectRequest'])->name('follow.reject');
+    Route::post('/follow/{user}/request', [FollowController::class, 'followRequest'])->name('follow.request');
 
     // Notification System
     Route::prefix('notifications')->name('notifications.')->group(function () {

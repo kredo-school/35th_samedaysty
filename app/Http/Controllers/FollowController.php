@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Follow;
 use Illuminate\Support\Facades\Auth;
 use App\Services\NotificationService;
 
@@ -53,5 +54,52 @@ class FollowController extends Controller
     {
         $followers = $user->followers()->get(['users.id', 'users.name', 'users.avatar']);
         return response()->json($followers);
+    }
+    //follow request
+    public function followRequest(User $user)
+    {
+        $me = Auth::user();
+
+        $existing = Follow::where('follower_id', $me->id)
+            ->where('following_id', $user->id)
+            ->first();
+
+        if (!$existing) {
+            Follow::create([
+                'follower_id'  => $me->id,
+                'following_id' => $user->id,
+                'status'       => 'pending',
+            ]);
+        }
+
+        return response()->json(['success' => true, 'status' => 'pending']);
+    }
+
+
+    // approved
+    public function approveRequest($followId)
+    {
+        $follow = Follow::findOrFail($followId);
+
+        if ($follow->following_id !== Auth::id()) abort(403);
+
+        Follow::where('follower_id', $follow->follower_id)
+            ->where('following_id', $follow->following_id)
+            ->update(['status' => 'accepted']);
+
+        return redirect()->route('profile.show', $follow->follower_id)
+            ->with('success', 'Approve');
+    }
+
+
+    // reject
+    public function rejectRequest($followId)
+    {
+        $follow = Follow::findOrFail($followId);
+        if ($follow->following_id !== Auth::id()) abort(403);
+
+        $follow->delete();
+
+        return back()->with('success', 'declined');
     }
 }
