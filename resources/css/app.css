@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+
+    /* Global styles for dark mode */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply dark:text-gray-100;
+    }
+
+    p {
+        @apply dark:text-gray-300;
+    }
+
+    /* Dark mode for tables */
+    table {
+        @apply dark:bg-gray-800;
+    }
+
+    th {
+        @apply dark:bg-gray-700 dark:text-gray-200;
+    }
+
+    td {
+        @apply dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700;
+    }
+
+    /* Dark mode for links */
+    a:not([class*="bg-"]):not([class*="btn"]) {
+        @apply dark:text-blue-400 dark:hover:text-blue-300;
+    }
+}

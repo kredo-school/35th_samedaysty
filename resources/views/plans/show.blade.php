@@ -149,9 +149,8 @@
                         <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
                             <h2 class="text-lg font-bold mb-4">Interested</h2>
                             <ul class="divide-y max-h-60 overflow-y-auto">
-                                @foreach($plan->reactions()->where('type', 'interested')->with('user')->get() as
-                                $reaction)
-                                <li class="py-2">{{ $reaction->user->name }}</li>
+                                @foreach($plan->reactions()->where('type', 'interested')->with('user')->get() as $reaction)
+                                    <li class="py-2">{{ $reaction->user->name }}</li>
                                 @endforeach
                             </ul>
 
@@ -263,7 +262,10 @@
                     <h4 class="text-xl text-sky-500 font-bold mx-auto">participants chat</h4>
                     <div class="flex space-x-2 ml-4">
                         <span class="py-1 text-gray-400">{{ $plan->user->name }},</span>
-                        @forelse($plan->participations->where('status', 'accepted') as $participation)
+                        @php
+                        $acceptedParticipations = $plan->participations->where('status', 'accepted');
+                        @endphp
+                        @forelse($acceptedParticipations as $participation)
                         <span class="py-1 text-gray-400">{{ $participation->user->name }},</span>
                         @empty
                         <p>no other participants yet</p>
