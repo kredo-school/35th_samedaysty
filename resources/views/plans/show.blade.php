@@ -94,14 +94,31 @@
                     }"
                     class="flex gap-4"
                 >
-
+                <!-- like button -->
                     <button
                         type="button"
                         @click="
-                            liked = !liked;
-                            const icon = $el.querySelector('i');
-                            icon.classList.add('scale-125');
-                            setTimeout(() => icon.classList.remove('scale-125'), 200);
+                            fetch('{{ route('reaction.store', $plan->id) }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                },
+                                body: JSON.stringify({ plan_id: {{ $plan->id }}, type: 'like' })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.status === 'added') {
+                                    liked = true;
+                                } else if (data.status === 'removed') {
+                                    liked = false;
+                                }
+
+                                const icon = $el.querySelector('i');
+                                icon.classList.add('scale-125');
+                                setTimeout(() => icon.classList.remove('scale-125'), 200);
+                            })
+                            .catch(err => console.error(err))
                         "
                         class="flex items-center gap-2 transition transform duration-300 hover:scale-110"
                     >
@@ -115,14 +132,31 @@
                     <button @click="openLike = true" class="text-md text-gray-600" type="button">
                         {{ $plan->reactions()->where('type', 'like')->count() }}
                     </button>
-
+                    <!-- interested button -->
                     <button 
                         type="button"
                         @click="
-                            interested = !interested;
-                            const icon = $el.querySelector('i');
-                            icon.classList.add('scale-125');
-                            setTimeout(() => icon.classList.remove('scale-125'), 200);
+                            fetch('{{ route('reaction.store', $plan->id) }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                },
+                                body: JSON.stringify({ plan_id: {{ $plan->id }}, type: 'interested' })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.status === 'added') {
+                                    interested = true;
+                                } else if (data.status === 'removed') {
+                                    interested = false;
+                                }
+
+                                const icon = $el.querySelector('i');
+                                icon.classList.add('scale-125');
+                                setTimeout(() => icon.classList.remove('scale-125'), 200);
+                            })
+                            .catch(err => console.error(err));
                         "
                         class="flex items-center gap-2 transition transform duration-300 hover:scale-110"
                     >
@@ -132,6 +166,7 @@
                         ></i>
                         <span class="text-xl font-medium">interested</span>
                     </button>
+
                     <!-- modal button -->
                     <button @click="openInterested = true" class="text-md text-gray-600" type="button">
                         {{ $plan->reactions()->where('type', 'interested')->count() }}
