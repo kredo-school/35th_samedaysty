@@ -85,31 +85,57 @@
 
             <!-- like/interested buttons -->
             <div class="flex justify-end space-x-5 py-2 items-center">
-                <div x-data="{ openLike: false, openInterested: false }">
-                    <form action="{{ route('reaction.store', $plan->id) }}" method="POST" class="flex gap-4">
-                        @csrf
-                        <input type="hidden" name="plan_id" value="{{ $plan->id }}">
-                        <button type="submit" name="type" value="like">
-                            <i
-                                class="fa-{{ $plan->isReacted('like') ? 'solid' : 'regular' }} fa-heart text-red-500 text-3xl">
-                            </i>
-                            <span class="text-2xl ms-1">like</span>
-                        </button>
-                        <!-- modal button -->
-                        <button @click="openLike = true" class="text-md text-gray-600" type="button">
-                            {{ $plan->reactions()->where('type', 'like')->count() }}
-                        </button>
+                <div x-data="{
+                    openLike: false,
+                    openInterested: false,
 
-                        <button type="submit" name="type" value="interested">
-                            <i
-                                class="fa-{{ $plan->isReacted('interested') ? 'solid' : 'regular' }} fa-flag text-green-500 text-3xl"></i>
-                            <span class="text-2xl ms-1">interested</span>
-                        </button>
-                        <!-- modal button -->
-                        <button @click="openInterested = true" class="text-md text-gray-600" type="button">
-                            {{ $plan->reactions()->where('type', 'interested')->count() }}
-                        </button>
-                    </form>
+                    liked: {{ $plan->isReacted('like') ? 'true' : 'false' }},
+                    interested: {{ $plan->isReacted('interested') ? 'true' : 'false' }}
+                    }"
+                    class="flex gap-4"
+                >
+
+                    <button
+                        type="button"
+                        @click="
+                            liked = !liked;
+                            const icon = $el.querySelector('i');
+                            icon.classList.add('scale-125');
+                            setTimeout(() => icon.classList.remove('scale-125'), 200);
+                        "
+                        class="flex items-center gap-2 transition transform duration-300 hover:scale-110"
+                    >
+                        <i
+                            :class="liked ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart text-red-500'"
+                            class="text-3xl transition-transform duration-300"
+                        ></i>
+                        <span class="text-xl font-medium">like</span>
+                    </button>
+                    <!-- modal button -->
+                    <button @click="openLike = true" class="text-md text-gray-600" type="button">
+                        {{ $plan->reactions()->where('type', 'like')->count() }}
+                    </button>
+
+                    <button 
+                        type="button"
+                        @click="
+                            interested = !interested;
+                            const icon = $el.querySelector('i');
+                            icon.classList.add('scale-125');
+                            setTimeout(() => icon.classList.remove('scale-125'), 200);
+                        "
+                        class="flex items-center gap-2 transition transform duration-300 hover:scale-110"
+                    >
+                        <i
+                            :class="interested ? 'fa-solid fa-flag text-green-500' : 'fa-regular fa-flag text-green-500'" 
+                            class="text-3xl transition-all duration-300"
+                        ></i>
+                        <span class="text-xl font-medium">interested</span>
+                    </button>
+                    <!-- modal button -->
+                    <button @click="openInterested = true" class="text-md text-gray-600" type="button">
+                        {{ $plan->reactions()->where('type', 'interested')->count() }}
+                    </button>
 
                     <!-- Like Modal -->
                     <div x-show="openLike" x-transition x-cloak 
