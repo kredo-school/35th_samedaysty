@@ -17,43 +17,43 @@
 
             <!-- Settings Dropdown -->
             @auth
-            <div class="hidden md:flex md:items-center md:space-x-2 lg:space-x-4">
+            <div class="hidden md:flex md:items-center md:space-x-1 lg:space-x-3">
                 <!-- Navigation Links -->
-                <div class="hidden md:flex md:-my-px space-x-2 lg:space-x-4">
+                <div class="hidden md:flex md:-my-px space-x-1 lg:space-x-3">
                     @auth
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-home text-lg" title="Home"></i>
-                            <span class="hidden lg:inline">{{ __('Home') }}</span>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-home text-base md:text-lg"></i>
+                            <span class="text-xs md:text-sm">{{ __('Home') }}</span>
                         </div>
                     </x-nav-link>
                     <x-nav-link :href="route('plan.search')" :active="request()->routeIs('plan.search')">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-search text-lg" title="Search"></i>
-                            <span class="hidden lg:inline">{{ __('Search') }}</span>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-search text-base md:text-lg"></i>
+                            <span class="text-xs md:text-sm">{{ __('Search') }}</span>
                         </div>
                     </x-nav-link>
                     <x-nav-link :href="route('plan.create')" :active="request()->routeIs('plan.create')">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-plus-circle text-lg" title="Create"></i>
-                            <span class="hidden lg:inline">{{ __('Create') }}</span>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-plus-circle text-base md:text-lg"></i>
+                            <span class="text-xs md:text-sm">{{ __('Create') }}</span>
                         </div>
                     </x-nav-link>
                     <x-nav-link :href="route('chat.index')" :active="request()->routeIs('chat.*')">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-comments text-lg" title="Chat"></i>
-                            <span class="hidden lg:inline">{{ __('Chat') }}</span>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-comments text-base md:text-lg"></i>
+                            <span class="text-xs md:text-sm">{{ __('Chat') }}</span>
                         </div>
                     </x-nav-link>
                     <x-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-1">
                             <div class="relative">
-                                <i class="fas fa-bell text-lg" title="Notifications"></i>
+                                <i class="fas fa-bell text-base md:text-lg"></i>
                                 <!-- Notification badge -->
                                 <span id="notification-badge"
                                     class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
                             </div>
-                            <span class="hidden lg:inline">{{ __('Notifications') }}</span>
+                            <span class="text-xs md:text-sm">{{ __('Notify') }}</span>
                         </div>
                     </x-nav-link>
                     @endauth
@@ -62,10 +62,9 @@
                 @if (auth()->user()->isAdmin())
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" @click.away="open = false"
-                        class="inline-flex items-center px-2 py-2 border border-transparent text-xs lg:text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                        <span class="hidden lg:inline">{{ __('Admin Panel') }}</span>
-                        <span class="lg:hidden">{{ __('Admin') }}</span>
-                        <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        class="inline-flex items-center px-2 py-1 border border-transparent text-xs md:text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 whitespace-nowrap">
+                        {{ __('Admin') }}
+                        <svg class="ml-1 h-3 w-3 md:h-4 md:w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                             fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -105,11 +104,11 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center px-2 py-2 border border-transparent text-sm lg:text-base leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div class="truncate max-w-[100px] lg:max-w-none">{{ Auth::user()->name }}</div>
+                            class="inline-flex items-center px-2 py-1 border border-transparent text-xs md:text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            <div class="truncate max-w-[80px] md:max-w-[120px]">{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                <svg class="fill-current h-3 w-3 md:h-4 md:w-4" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
