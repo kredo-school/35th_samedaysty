@@ -53,7 +53,7 @@
                 </a>
             </x-primary-button>
         </div>
-        
+
     </div>
 
     <div class="w-full bg-white mt-24">
@@ -104,6 +104,7 @@
             </div>
         </div>
     </div>
+
     <div class="w-full bg-white mt-16">
         <!-- what can website -- title -->
         <x-title>
@@ -111,21 +112,40 @@
         </x-title>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-16 text-lg font-bold text-gray-700">
-            <!-- 2line in pC、1line use the phone -->
-            <div class="border-4 border-sky-700 rounded overflow-hidden p-6 flex flex-col items-start">
-                <h3 class="text-xl mb-2"><span class="text-3xl mb-2"><i class="fa-solid fa-magnifying-glass"></i>Find</span> the trip you want to go on !</h3>
-                <p class="text-gray-500">Don't want to plan? Just hop on a trip that's already ready to go. Search your
-                    travel destinations, dates, or your fun- sharing account !Discover available trips and request to
-                    join the ones you like !</p>
+            <!-- Box 1 -->
+            <div class="flex flex-col items-start">
+                <!-- above the box -->
+                <h3 class="text-2xl font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-magnifying-glass text-3xl mr-2"></i>
+                    Find the trip you want to go on !
+                </h3>
+                <!-- inside the box -->
+                <div class="border-4 border-sky-700 rounded overflow-hidden p-6 w-full">
+                    <p class="text-gray-500">
+                        Don't want to plan? Just hop on a trip that's already ready to go.
+                        Search your travel destinations, dates, or your fun-sharing account!
+                        Discover available trips and request to join the ones you like!
+                    </p>
+                </div>
             </div>
-            <div class="border-4 border-sky-700 rounded overflow-hidden p-6 flex flex-col items-start">
-                <h3 class="text-xl mb-2"><span class="text-3xl mb-2"><i class="fa-solid fa-hammer"></i>Create</span> and Share Your Trip Plan !</h3>
-                <p class="text-gray-500">Got a trip in mind? See who's excited to join you on the road. Turn your travel
-                    idea into a real journey by posting your plan.
-                    Invite others and start your adventure together !</p>
+
+            <!-- Box 2 -->
+            <div class="flex flex-col items-start">
+                <h3 class="text-2xl font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-hammer text-3xl mr-2"></i>
+                    Create and Share Your Trip Plan !
+                </h3>
+                <div class="border-4 border-sky-700 rounded overflow-hidden p-6 w-full">
+                    <p class="text-gray-500">
+                        Got a trip in mind? See who's excited to join you on the road.
+                        Turn your travel idea into a real journey by posting your plan.
+                        Invite others and start your adventure together!
+                    </p>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="w-full bg-white mt-16">
         <!-- how to find -- title -->
         <x-title>
