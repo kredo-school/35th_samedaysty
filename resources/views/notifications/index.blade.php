@@ -27,8 +27,52 @@
                         @foreach($notifications as $notification)
                         <li
                             class="py-4 {{ $notification->read ? 'bg-gray-50' : 'bg-blue-50' }} rounded-lg mb-2 p-3 shadow-sm">
-                            <div class="flex justify-between items-center">
-                                <div class="flex-1">
+                            <div class="flex items-start space-x-3">
+                                <!-- User Avatar -->
+                                @php
+                                $data = $notification->data ?? [];
+                                $actorId = null;
+                                $actorAvatar = null;
+                                $actorName = null;
+
+                                // Determine actor based on notification type
+                                if (isset($data['follower_id'])) {
+                                $actorId = $data['follower_id'];
+                                } elseif (isset($data['liker_id'])) {
+                                $actorId = $data['liker_id'];
+                                } elseif (isset($data['interested_user_id'])) {
+                                $actorId = $data['interested_user_id'];
+                                } elseif (isset($data['requester_id'])) {
+                                $actorId = $data['requester_id'];
+                                } elseif (isset($data['sender_id'])) {
+                                $actorId = $data['sender_id'];
+                                } elseif (isset($data['commenter_id'])) {
+                                $actorId = $data['commenter_id'];
+                                }
+
+                                // Get actor details
+                                if ($actorId) {
+                                $actor = \App\Models\User::find($actorId);
+                                if ($actor) {
+                                $actorAvatar = $actor->avatar;
+                                $actorName = $actor->name;
+                                }
+                                }
+                                @endphp
+
+                                <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                                    @if($actorAvatar)
+                                    <img src="{{ asset('storage/' . $actorAvatar) }}" alt="{{ $actorName ?? 'User' }}"
+                                        class="w-full h-full object-cover">
+                                    @else
+                                    <div
+                                        class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                        <i class="fas fa-bell text-white text-lg"></i>
+                                    </div>
+                                    @endif
+                                </div>
+
+                                <div class="flex-1 min-w-0">
                                     <p class="text-sm font-medium text-gray-900">{{ $notification->title }}</p>
                                     <p class="text-sm text-gray-600">{{ $notification->message }}</p>
                                     <p class="text-xs text-gray-500 mt-1">{{ $notification->created_at->diffForHumans()
@@ -80,20 +124,24 @@
                                         </a>
                                     </div>
                                     @endif
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    @unless($notification->read)
-                                    <button
-                                        class="mark-as-read-btn px-3 py-1 text-sm bg-green-500 text-white rounded-md hover:bg-green-600"
-                                        data-id="{{ $notification->id }}">
-                                        Mark as Read
-                                    </button>
-                                    @endunless
-                                    <button
-                                        class="delete-notification-btn px-3 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-600"
-                                        data-id="{{ $notification->id }}">
-                                        Delete
-                                    </button>
+
+                                    <!-- Action Buttons -->
+                                    <div class="flex items-center space-x-2 mt-3">
+                                        @unless($notification->read)
+                                        <button
+                                            class="mark-as-read-btn px-3 py-1 text-xs bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+                                            data-id="{{ $notification->id }}">
+                                            <i class="fas fa-check mr-1"></i>
+                                            Mark as Read
+                                        </button>
+                                        @endunless
+                                        <button
+                                            class="delete-notification-btn px-3 py-1 text-xs bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                                            data-id="{{ $notification->id }}">
+                                            <i class="fas fa-trash mr-1"></i>
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </li>

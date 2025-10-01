@@ -12,8 +12,18 @@
 
             <!-- Avatar + Name -->
             <div class="flex items-center justify-start space-x-2 mb-16">
-                <img src="{{ auth()->user()->avatar_url ?? '/images/default-avatar.png' }}" alt="Avatar"
-                    class="w-10 h-10 rounded-full">
+                <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                    @if(auth()->user()->avatar)
+                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Avatar"
+                        class="w-full h-full object-cover">
+                    @else
+                    <div
+                        class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                        <span class="text-white text-lg font-bold">{{ strtoupper(substr(auth()->user()->name, 0, 1))
+                            }}</span>
+                    </div>
+                    @endif
+                </div>
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
                     <span class="ml-2 font-bold text-gray-800">
                         @auth
