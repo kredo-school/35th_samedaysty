@@ -1,7 +1,7 @@
 @props(['countryId' => null])
 
 <div x-data="calendar({ countryId: {{ $countryId ? $countryId : 'null' }} })" x-init="init()"
-    class="w-full min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 sm:p-6 lg:p-8">
+    class="w-full bg-gradient-to-br from-slate-50 to-blue-50 p-4 sm:p-6 lg:p-8 rounded-2xl relative z-0">
     <!-- Header -->
     <div
         class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-4 sm:p-6 mb-4 sm:mb-6 lg:mb-8 border border-white/20">

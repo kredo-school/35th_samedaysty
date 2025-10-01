@@ -110,11 +110,12 @@ class ProfileController extends Controller
 
         /**user information update */
         $user->fill($validated);
-        $request->user()->save();
+        $user->save();
 
         /**mail address has changed */
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+            $user->save();
         }
         return Redirect::route('profile.show')->with('status', 'profile-updated');
     }
@@ -141,7 +142,8 @@ class ProfileController extends Controller
 
         foreach (['item1', 'item2', 'item3'] as $index => $itemKey) {
             $gadget = $user->gadgets()->skip($index)->first();
-            if (!$gadget && empty($validated[$itemKey])) continue; //skip if empty
+            if (!$gadget && empty($validated[$itemKey]))
+                continue; //skip if empty
             $data = [
                 'item_name' => $validated[$itemKey] ?? $gadget->item_name ?? '',
                 'memo' => $validated[$itemKey . '_description'] ?? $gadget->memo ?? '',
