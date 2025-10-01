@@ -27,10 +27,16 @@ class ReactionController extends Controller
         if ($existing) {
             if ($type !== 'join_request') {
                 $existing->delete();
-                return back();
+                return response()->json([
+                    'status' => 'removed',
+                    'type' => $type,
+                ]);
             }
 
-            return back()->with('info', 'you have already sent a request');
+            return response()->json([
+                'status'=> 'exists',
+                'message'=> 'you have already sent a request',
+            ], 400);
         }
 
         $reaction = Reaction::create([
@@ -56,6 +62,9 @@ class ReactionController extends Controller
                 break;
         }
 
-        return back();
+        return response()->json([
+            'status' => 'added',
+            'type' => '$type',
+        ]);
     }
 }
