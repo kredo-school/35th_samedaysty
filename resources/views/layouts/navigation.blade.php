@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 relative h-24">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 sticky top-0 h-24 z-50 shadow-sm">
     <!-- Gradient border bottom -->
     <div
         class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-sky-500 via-purple-500 to-orange-500 shadow-sm">
