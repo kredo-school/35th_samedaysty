@@ -101,7 +101,10 @@
                     openInterested: false,
 
                     liked: {{ $plan->isReacted('like') ? 'true' : 'false' }},
-                    interested: {{ $plan->isReacted('interested') ? 'true' : 'false' }}
+                    interested: {{ $plan->isReacted('interested') ? 'true' : 'false' }},
+
+                    likeCount: {{ $plan->reactions()->where('type', 'like')->count() }},
+                    interestedCount: {{ $plan->reactions()->where('type', 'interested')->count() }},
                     }"
                     class="flex gap-4"
                 >
@@ -121,8 +124,10 @@
                             .then(data => {
                                 if (data.status === 'added') {
                                     liked = true;
+                                    likeCount++;
                                 } else if (data.status === 'removed') {
                                     liked = false;
+                                    likeCount--;
                                 }
 
                                 const icon = $el.querySelector('i');
@@ -140,8 +145,8 @@
                     </button>
                     <span class="text-xl font-medium">like</span>
                     <!-- modal button -->
-                    <button @click="openLike = true" class="text-md text-gray-600" type="button">
-                        {{ $plan->reactions()->where('type', 'like')->count() }}
+                    <button @click="openLike = true" class="text-md text-gray-600" type="button" x-text="likeCount">
+                        <!-- {{ $plan->reactions()->where('type', 'like')->count() }} -->
                     </button>
                     <!-- interested button -->
                     <button 
@@ -159,8 +164,10 @@
                             .then(data => {
                                 if (data.status === 'added') {
                                     interested = true;
+                                    interestedCount++;
                                 } else if (data.status === 'removed') {
                                     interested = false;
+                                    interestedCount--;
                                 }
 
                                 const icon = $el.querySelector('i');
@@ -179,8 +186,8 @@
                     <span class="text-xl font-medium">interested</span>
 
                     <!-- modal button -->
-                    <button @click="openInterested = true" class="text-md text-gray-600" type="button">
-                        {{ $plan->reactions()->where('type', 'interested')->count() }}
+                    <button @click="openInterested = true" class="text-md text-gray-600" type="button" x-text="interestedCount">
+                        <!-- {{ $plan->reactions()->where('type', 'interested')->count() }} -->
                     </button>
 
                     <!-- Like Modal -->
