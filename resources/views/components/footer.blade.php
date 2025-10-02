@@ -1,4 +1,4 @@
-<footer class="bg-sky-700 text-white py-10">
+<footer class="bg-sky-700 dark:bg-gray-900 text-white py-10">
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row sm:items-start sm:justify-between">
 
         <!-- Logo  -->
@@ -19,7 +19,7 @@
                     <li><a href="{{ route('dashboard') }}" class="text-white hover:text-orange-400 text-sm">{{
                             __('HOME') }}</a>
                     </li>
-                    <li><a href="#" class="text-white hover:text-orange-400 text-sm">{{ __('ABOUT') }}</a>
+                    <li><a href="#about" class="text-white hover:text-orange-400 text-sm">{{ __('ABOUT') }}</a>
                     </li>
                     <li><a href="{{ route('plan.search') }}" class="text-white hover:text-orange-400 text-sm">{{
                             __('Find other plans') }}</a></li>
@@ -48,7 +48,8 @@
             <div>
                 <h3 class="text-md font-semibold mb-4">Contact</h3>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-white hover:text-orange-400 text-sm">{{ __('Help and Support') }}</a>
+                    <li><a href="{{ route('support') }}" class="text-white hover:text-orange-400 text-sm">{{ __('Help
+                            and Support') }}</a>
                     </li>
                     <li><span>📍 Address: Tokyo, Japan</span></li>
                     <li><span>✉️ Email: info@example.com</span></li>
