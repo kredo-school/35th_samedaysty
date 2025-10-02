@@ -63,13 +63,32 @@ class NotificationController extends Controller
     /**
      * Mark specific notification as read
      */
-    public function markAsRead(Request $request, Notification $notification): JsonResponse
+    public function markAsRead(Request $request, $id): JsonResponse
     {
+        $notification = Notification::findOrFail($id);
+
+        \Log::info('Mark as read request', [
+            'notification_id' => $notification->id,
+            'user_id' => Auth::id(),
+            'notification_user_id' => $notification->user_id,
+            'current_read_status' => $notification->read
+        ]);
+
         if ($notification->user_id !== Auth::id()) {
+            \Log::warning('Unauthorized mark as read attempt', [
+                'notification_id' => $notification->id,
+                'user_id' => Auth::id(),
+                'notification_user_id' => $notification->user_id
+            ]);
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $notification->update(['read' => true]);
+        \Log::info('Notification marked as read successfully', [
+            'notification_id' => $notification->id,
+            'new_read_status' => $notification->fresh()->read
+        ]);
+
         return response()->json(['message' => 'Notification marked as read.']);
     }
 
@@ -79,15 +98,19 @@ class NotificationController extends Controller
     public function markAllAsRead(Request $request): JsonResponse
     {
         $user = $request->user();
-        $user->unreadNotifications()->update(['read' => true]);
+        Notification::where('user_id', $user->id)
+            ->where('read', false)
+            ->update(['read' => true]);
         return response()->json(['message' => 'All notifications marked as read.']);
     }
 
     /**
      * Delete notification
      */
-    public function destroy(Notification $notification): JsonResponse
+    public function destroy($id): JsonResponse
     {
+        $notification = Notification::findOrFail($id);
+
         if ($notification->user_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }

@@ -163,6 +163,12 @@
             document.querySelectorAll('.mark-as-read-btn').forEach(button => {
                 button.addEventListener('click', function () {
                     const notificationId = this.dataset.id;
+                    const button = this;
+
+                    // Disable button to prevent multiple clicks
+                    button.disabled = true;
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Processing...';
+
                     fetch(`/notifications/${notificationId}/read`, {
                         method: 'PATCH',
                         headers: {
@@ -170,13 +176,42 @@
                             'Content-Type': 'application/json',
                         },
                     })
-                        .then(response => response.json())
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
                         .then(data => {
+                            console.log('Mark as read response:', data);
                             if (data.message) {
-                                location.reload(); // Reload to update status
+                                // Update UI immediately without reload
+                                const notificationItem = button.closest('li');
+                                notificationItem.classList.remove('bg-blue-50');
+                                notificationItem.classList.add('bg-gray-50');
+                                button.remove(); // Remove the button since it's now read
+
+                                // Update unread count on this page
+                                const unreadCountElement = document.querySelector('h3');
+                                if (unreadCountElement) {
+                                    const currentCount = parseInt(unreadCountElement.textContent.match(/\d+/)[0]);
+                                    const newCount = Math.max(0, currentCount - 1);
+                                    unreadCountElement.innerHTML = unreadCountElement.innerHTML.replace(/\d+/, newCount);
+                                }
+
+                                // Update header notification badge
+                                if (typeof window.updateNotificationBadge === 'function') {
+                                    window.updateNotificationBadge();
+                                }
                             }
                         })
-                        .catch(error => console.error('Error:', error));
+                        .catch(error => {
+                            console.error('Error marking notification as read:', error);
+                            // Re-enable button on error
+                            button.disabled = false;
+                            button.innerHTML = '<i class="fas fa-check mr-1"></i>Mark as Read';
+                            alert('Failed to mark notification as read. Please try again.');
+                        });
                 });
             });
 
@@ -194,6 +229,12 @@
                             'Content-Type': 'application/json',
                         },
                     })
+                        .then(() => {
+                            // Update header notification badge before navigation
+                            if (typeof window.updateNotificationBadge === 'function') {
+                                window.updateNotificationBadge();
+                            }
+                        })
                         .catch(error => console.error('Error marking notification as read:', error));
 
                     // Navigate to the link
@@ -237,6 +278,10 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.message) {
+                            // Update header notification badge
+                            if (typeof window.updateNotificationBadge === 'function') {
+                                window.updateNotificationBadge();
+                            }
                             location.reload(); // Reload to update status
                         }
                     })
