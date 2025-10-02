@@ -126,8 +126,8 @@
                             :class="liked ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart text-red-500'"
                             class="text-3xl transition-transform duration-300"
                         ></i>
-                        <span class="text-xl font-medium">like</span>
                     </button>
+                    <span class="text-xl font-medium">like</span>
                     <!-- modal button -->
                     <button @click="openLike = true" class="text-md text-gray-600" type="button">
                         {{ $plan->reactions()->where('type', 'like')->count() }}
@@ -164,8 +164,8 @@
                             :class="interested ? 'fa-solid fa-flag text-green-500' : 'fa-regular fa-flag text-green-500'" 
                             class="text-3xl transition-all duration-300"
                         ></i>
-                        <span class="text-xl font-medium">interested</span>
                     </button>
+                    <span class="text-xl font-medium">interested</span>
 
                     <!-- modal button -->
                     <button @click="openInterested = true" class="text-md text-gray-600" type="button">
@@ -286,7 +286,6 @@
             </div>
             @endcan
 
-            
             <!-- stepper -->
             @if($plan->user->id !== Auth::id())
             <x-stepper :status="$status"></x-stepper>
