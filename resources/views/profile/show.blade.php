@@ -16,8 +16,9 @@
                     <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar"
                         class="w-full h-full rounded-full object-cover">
                     @else
-                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <i class="fa-solid fa-hippo text-gray-400 text-6xl"></i>
+                    <div
+                        class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                        <span class="text-white text-5xl font-bold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                     </div>
                     @endif
                 </div>

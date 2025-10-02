@@ -247,7 +247,8 @@
 
 <script>
     // 未読通知数を取得してバッジを更新
-    function updateNotificationBadge() {
+    // グローバル関数として定義
+    window.updateNotificationBadge = function () {
         fetch('/notifications/unread-count', {
             method: 'GET',
             headers: {
@@ -268,11 +269,15 @@
                 if (data.unread_count > 0) {
                     badge.textContent = data.unread_count;
                     badge.classList.remove('hidden');
-                    mobileBadge.textContent = data.unread_count;
-                    mobileBadge.classList.remove('hidden');
+                    if (mobileBadge) {
+                        mobileBadge.textContent = data.unread_count;
+                        mobileBadge.classList.remove('hidden');
+                    }
                 } else {
                     badge.classList.add('hidden');
-                    mobileBadge.classList.add('hidden');
+                    if (mobileBadge) {
+                        mobileBadge.classList.add('hidden');
+                    }
                 }
             })
             .catch(error => {
@@ -281,7 +286,9 @@
                 const badge = document.getElementById('notification-badge');
                 const mobileBadge = document.getElementById('notification-badge-mobile');
                 badge.classList.add('hidden');
-                mobileBadge.classList.add('hidden');
+                if (mobileBadge) {
+                    mobileBadge.classList.add('hidden');
+                }
             });
     }
 
