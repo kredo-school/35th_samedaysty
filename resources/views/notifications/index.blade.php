@@ -46,6 +46,12 @@
                                 $actorId = $data['sender_id'];
                                 } elseif (isset($data['commenter_id'])) {
                                 $actorId = $data['commenter_id'];
+                                } elseif (in_array($notification->type, ['join_accepted', 'join_rejected'])) {
+                                // For join acceptance/rejection, get the plan owner as the actor
+                                if (isset($data['plan_id'])) {
+                                $plan = \App\Models\TravelPlan::find($data['plan_id']);
+                                $actorId = $plan ? $plan->user_id : null;
+                                }
                                 }
 
                                 // Get actor details

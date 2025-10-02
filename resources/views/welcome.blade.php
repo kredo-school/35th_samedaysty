@@ -372,12 +372,13 @@
     </div>
 
     {{-- about us --}}
-    <section class="w-full bg-gray-50 mt-24 px-6 py-12">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">About Us</h2>
-        <p class="text-gray-600 leading-relaxed mb-2">We're travelers, just like you.</p>
-        <p class="text-gray-600 leading-relaxed mb-2">Sometimes we love planning every detail,<br>
+    <section id="about" class="w-full bg-gray-50 dark:bg-gray-800 mt-24 px-6 py-12">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">About Us</h2>
+        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-2">We're travelers, just like you.</p>
+        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-2">Sometimes we love planning every detail,<br>
             and sometimes we just want to hop on someone else's trip.</p>
-        <p class="text-gray-600 leading-relaxed">That's why we built this space—to make it easier to find buddies, share
+        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">That's why we built this space—to make it easier to
+            find buddies, share
             ideas, and enjoy the journey together.</p>
     </section>
 

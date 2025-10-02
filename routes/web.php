@@ -95,7 +95,7 @@ Route::middleware(['auth'])->prefix('chat')->name('chat.')->group(function () {
 // support page
 Route::get('/support', function () {
     return view('support');
-});
+})->name('support');
 
 // API routes for countries
 Route::get('/api/countries', [App\Http\Controllers\Api\CountryController::class, 'index'])->name('api.countries.index');
