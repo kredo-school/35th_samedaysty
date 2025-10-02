@@ -29,20 +29,23 @@
 
     <div class="w-full h-[45vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center px-4"
         style="background-image: url('/images/krabi_beach_2.png');">
-        <h1 class="text-3xl md:text-5xl font-bold leading-tight text-center">
+        <h1 class="text-3xl md:text-5xl font-bold leading-tight text-center text-white">
             Same Day, Same Destination, and Same Style
         </h1>
-        <p class="text-lg md:text-2xl mt-4 text-center">
+        <p class="text-lg md:text-2xl mt-4 text-center text-white">
             Join others' trip. This is where your shared journeys begin.
         </p>
     </div>
 
-    <div class="w-full bg-white text-center py-8 px-4">
-        <p class="text-[2.0vw] mb-2 text-gray-500">Share Moments, Big or Small — Your Way, Together.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500">From Coffee to Adventures — Connect & Enjoy.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500">Meet, Share, Explore — Your Journey, Your Way.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500">One App for Every Plan — From Full Journeys to Quick Meetups.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500">For just lunch, a quick activity, or part of the journey — it's all
+    <div class="w-full bg-white dark:bg-gray-800 text-center py-8 px-4">
+        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">Share Moments, Big or Small — Your Way, Together.
+        </p>
+        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">From Coffee to Adventures — Connect & Enjoy.</p>
+        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">Meet, Share, Explore — Your Journey, Your Way.</p>
+        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">One App for Every Plan — From Full Journeys to
+            Quick Meetups.</p>
+        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">For just lunch, a quick activity, or part of the
+            journey — it's all
             possible.</p>
 
         <!-- Right button -->
@@ -56,7 +59,7 @@
 
     </div>
 
-    <div class="w-full bg-white mt-24">
+    <div class="w-full bg-white dark:bg-gray-800 mt-24">
         <!-- feed back -- tittle -->
         <x-title>
             {{ __('Actual feed from participants') }}
@@ -105,13 +108,14 @@
         </div>
     </div>
 
-    <div class="w-full bg-white mt-16">
+    <div class="w-full bg-white dark:bg-gray-800 mt-16">
         <!-- what can website -- title -->
         <x-title>
             {{ __('What you can do this website?') }}
         </x-title>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-16 text-lg font-bold text-gray-700">
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-16 text-lg font-bold text-gray-700 dark:text-gray-300">
             <!-- Box 1 -->
             <div class="flex flex-col items-start">
                 <!-- above the box -->
@@ -146,7 +150,7 @@
         </div>
     </div>
 
-    <div class="w-full bg-white mt-16">
+    <div class="w-full bg-white dark:bg-gray-800 mt-16">
         <!-- how to find -- title -->
         <x-title>
             {{ __('How to find others plan') }}
@@ -191,7 +195,7 @@
     </div>
 
     {{-- to write Categories --}}
-    <div class="w-full bg-white mt-16">
+    <div class="w-full bg-white dark:bg-gray-800 mt-16">
         <x-title>
             {{ __('Travel style categories') }}
         </x-title>
@@ -291,7 +295,7 @@
         </section>
     </div>
 
-    <div class="w-full bg-white mt-16">
+    <div class="w-full bg-white dark:bg-gray-800 mt-16">
         <!-- how to screen shot -- tittle -->
         <x-title>
             {{ __('Find travel mate on same date, destination, and style') }}

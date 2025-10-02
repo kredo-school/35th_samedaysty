@@ -1,9 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Chat
-        </h2>
-    </x-slot>
+    <x-title>
+        Chat
+    </x-title>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -28,36 +26,42 @@
 
                                 <div id="conversations-list" class="space-y-2">
                                     @forelse($conversations as $conversation)
-                                        @php
-                                            $otherUser = $conversation->getOtherUser(auth()->id());
-                                        @endphp
-                                        <a href="{{ route('chat.conversation', $conversation->id) }}"
-                                            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                            <div
-                                                class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                                                <span
-                                                    class="text-gray-600 font-medium">{{ substr($otherUser->name, 0, 1) }}</span>
+                                    @php
+                                    $otherUser = $conversation->getOtherUser(auth()->id());
+                                    @endphp
+                                    <a href="{{ route('chat.conversation', $conversation->id) }}"
+                                        class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                                            @if($otherUser->avatar)
+                                            <img src="{{ asset('storage/' . $otherUser->avatar) }}"
+                                                alt="{{ $otherUser->name }}" class="w-full h-full object-cover">
+                                            @else
+                                            <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                                <span class="text-gray-600 font-medium">{{ substr($otherUser->name, 0,
+                                                    1) }}</span>
                                             </div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
-                                                    {{ $otherUser->name }}
-                                                </p>
-                                                @if ($conversation->last_message)
-                                                    <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
-                                                        {{ Str::limit($conversation->last_message, 30) }}
-                                                    </p>
-                                                @endif
-                                            </div>
-                                            @if ($conversation->last_message_at)
-                                                <span class="text-xs text-gray-400">
-                                                    {{ $conversation->last_message_at->diffForHumans() }}
-                                                </span>
                                             @endif
-                                        </a>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                                {{ $otherUser->name }}
+                                            </p>
+                                            @if ($conversation->last_message)
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                                                {{ Str::limit($conversation->last_message, 30) }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                        @if ($conversation->last_message_at)
+                                        <span class="text-xs text-gray-400">
+                                            {{ $conversation->last_message_at->diffForHumans() }}
+                                        </span>
+                                        @endif
+                                    </a>
                                     @empty
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm text-center py-4">
-                                            No conversations yet
-                                        </p>
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm text-center py-4">
+                                        No conversations yet
+                                    </p>
                                     @endforelse
                                 </div>
                             </div>
@@ -70,30 +74,36 @@
 
                                 <div class="space-y-2">
                                     @forelse($users as $user)
-                                        <div
-                                            class="flex items-center justify-between p-3 bg-white dark:bg-gray-600 rounded-lg">
-                                            <div class="flex items-center space-x-3">
-                                                <div
-                                                    class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                                                    <span
-                                                        class="text-gray-600 font-medium">{{ substr($user->name, 0, 1) }}</span>
+                                    <div
+                                        class="flex items-center justify-between p-3 bg-white dark:bg-gray-600 rounded-lg">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                                                @if($user->avatar)
+                                                <img src="{{ asset('storage/' . $user->avatar) }}"
+                                                    alt="{{ $user->name }}" class="w-full h-full object-cover">
+                                                @else
+                                                <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                                                    <span class="text-gray-600 font-medium">{{ substr($user->name, 0, 1)
+                                                        }}</span>
                                                 </div>
-                                                <div>
-                                                    <p class="font-medium text-gray-900 dark:text-white">
-                                                        {{ $user->name }}</p>
-                                                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                                                        {{ $user->email }}</p>
-                                                </div>
+                                                @endif
                                             </div>
-                                            <button onclick="startConversation('{{ $user->id }}')"
-                                                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition-colors">
-                                                Chat
-                                            </button>
+                                            <div>
+                                                <p class="font-medium text-gray-900 dark:text-white">
+                                                    {{ $user->name }}</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                    {{ $user->email }}</p>
+                                            </div>
                                         </div>
+                                        <button onclick="startConversation('{{ $user->id }}')"
+                                            class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition-colors">
+                                            Chat
+                                        </button>
+                                    </div>
                                     @empty
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm text-center py-4">
-                                            No users available
-                                        </p>
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm text-center py-4">
+                                        No users available
+                                    </p>
                                     @endforelse
                                 </div>
                             </div>
@@ -125,7 +135,7 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">Choose a user...</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                            <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -147,7 +157,7 @@
 
     <script>
         // Show new chat modal
-        document.getElementById('new-chat-btn').addEventListener('click', function() {
+        document.getElementById('new-chat-btn').addEventListener('click', function () {
             document.getElementById('new-chat-modal').classList.remove('hidden');
         });
 
@@ -159,15 +169,15 @@
         // Start conversation from user list
         function startConversation(userId) {
             fetch('/chat/start-conversation', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        user_id: userId
-                    })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    user_id: userId
                 })
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.redirect_url) {
@@ -192,7 +202,7 @@
         }
 
         // Close modal when clicking outside
-        document.getElementById('new-chat-modal').addEventListener('click', function(e) {
+        document.getElementById('new-chat-modal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeNewChatModal();
             }
