@@ -22,7 +22,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
+<body class="dark:bg-gray-900">
 
     @include('layouts.navigation')
 
@@ -37,15 +37,12 @@
         </p>
     </div>
 
-    <div class="w-full bg-white dark:bg-gray-800 text-center py-8 px-4">
-        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">Share Moments, Big or Small — Your Way, Together.
-        </p>
-        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">From Coffee to Adventures — Connect & Enjoy.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">Meet, Share, Explore — Your Journey, Your Way.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">One App for Every Plan — From Full Journeys to
-            Quick Meetups.</p>
-        <p class="text-[2.0vw] mb-2 text-gray-500 dark:text-gray-300">For just lunch, a quick activity, or part of the
-            journey — it's all
+    <div class="w-full text-[clamp(14px,2vw,24px)] mb-2 text-gray-500 dark:text-white text-center py-8 px-4">
+        <p class="text-[2.0vw] mb-2">Share Moments, Big or Small — Your Way, Together.</p>
+        <p class="text-[2.0vw] mb-2">From Coffee to Adventures — Connect & Enjoy.</p>
+        <p class="text-[2.0vw] mb-2">Meet, Share, Explore — Your Journey, Your Way.</p>
+        <p class="text-[2.0vw] mb-2">One App for Every Plan — From Full Journeys to Quick Meetups.</p>
+        <p class="text-[2.0vw] mb-2">For just lunch, a quick activity, or part of the journey — it's all
             possible.</p>
 
         <!-- Right button -->
@@ -59,7 +56,7 @@
 
     </div>
 
-    <div class="w-full bg-white dark:bg-gray-800 mt-24">
+    <div class="w-full dark:text-white mt-24">
         <!-- feed back -- tittle -->
         <x-title>
             {{ __('Actual feed from participants') }}
@@ -75,7 +72,7 @@
                 </div>
                 <!-- body -->
                 <div class="px-4 py-4 flex-1 text-gray-700">"This trip was amazing! I met so many new people."</div>
-                <img src="/images/1st_find_other's_plan.png" alt="trip photo"
+                <img src="/images/1st_find_others_plan.png" alt="trip photo"
                     class="w-full h-40 object-contain rounded-b-lg">
                 <!-- footer -->
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">2 days ago</div>
@@ -89,7 +86,7 @@
                 </div>
                 <div class="px-4 py-4 flex-1 text-gray-700">"I loved sharing my experience and seeing others' plans."
                 </div>
-                <img src="/images/2nd_find_other's_plan 4.png" alt="trip photo"
+                <img src="/images/2nd_find_others_plan 4.png" alt="trip photo"
                     class="w-full h-40 object-contain rounded-b-lg">
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">3 days ago</div>
             </div>
@@ -101,14 +98,14 @@
                     <span class="font-bold text-gray-800">Participant C</span>
                 </div>
                 <div class="px-4 py-4 flex-1 text-gray-700">"Such a convenient app for coordinating group trips!"</div>
-                <img src="/images/3rd_find_other's_plan 9.png" alt="trip photo"
+                <img src="/images/3rd_find_others_plan 9.png" alt="trip photo"
                     class="w-full h-40 object-contain rounded-b-lg">
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">1 week ago</div>
             </div>
         </div>
     </div>
 
-    <div class="w-full bg-white dark:bg-gray-800 mt-16">
+    <div class="w-full mt-16">
         <!-- what can website -- title -->
         <x-title>
             {{ __('What you can do this website?') }}
@@ -125,7 +122,7 @@
                 </h3>
                 <!-- inside the box -->
                 <div class="border-4 border-sky-700 rounded overflow-hidden p-6 w-full">
-                    <p class="text-gray-500">
+                    <p>
                         Don't want to plan? Just hop on a trip that's already ready to go.
                         Search your travel destinations, dates, or your fun-sharing account!
                         Discover available trips and request to join the ones you like!
@@ -140,7 +137,7 @@
                     Create and Share Your Trip Plan !
                 </h3>
                 <div class="border-4 border-sky-700 rounded overflow-hidden p-6 w-full">
-                    <p class="text-gray-500">
+                    <p>
                         Got a trip in mind? See who's excited to join you on the road.
                         Turn your travel idea into a real journey by posting your plan.
                         Invite others and start your adventure together!
@@ -150,19 +147,19 @@
         </div>
     </div>
 
-    <div class="w-full bg-white dark:bg-gray-800 mt-16">
+    <div class="w-full mt-16">
         <!-- how to find -- title -->
         <x-title>
             {{ __('How to find others plan') }}
         </x-title>
-        <section class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700 dark:text-gray-300">
             <!-- card1 -->
             <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
                     <span
                         class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">1</span>
                 </h3>
-                <p class="text-2xl font-bold text-gray-700 mb-4">Find the trip you want to go on by CALENDER or
+                <p class="text-2xl font-bold mb-4">Find the trip you want to go on by CALENDER or
                     DESTINATION.</p>
                 <img src="/images/1st_find_icon.png" alt="find icon"
                     class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
@@ -174,7 +171,7 @@
                     <span
                         class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">2</span>
                 </h3>
-                <p class="text-2xl font-bold text-gray-700 mb-4">If you find a trip you LOVE, let's do something action!
+                <p class="text-2xl font-bold mb-4">If you find a trip you LOVE, let's do something action!
                 </p>
                 <img src="/images/2nd_find_icon.png" alt="find icon"
                     class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
@@ -186,7 +183,7 @@
                     <span
                         class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">3</span>
                 </h3>
-                <p class="text-2xl font-bold text-gray-700 mb-4">Start chatting with your travel mate about your shared
+                <p class="text-2xl font-bold mb-4">Start chatting with your travel mate about your shared
                     travel!</p>
                 <img src="/images/3rd_find_icon.png" alt="find icon"
                     class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
@@ -195,7 +192,7 @@
     </div>
 
     {{-- to write Categories --}}
-    <div class="w-full bg-white dark:bg-gray-800 mt-16">
+    <div class="w-full mt-16">
         <x-title>
             {{ __('Travel style categories') }}
         </x-title>
@@ -295,7 +292,7 @@
         </section>
     </div>
 
-    <div class="w-full bg-white dark:bg-gray-800 mt-16">
+    <div class="w-full dark:text-white mt-16">
         <!-- how to screen shot -- tittle -->
         <x-title>
             {{ __('Find travel mate on same date, destination, and style') }}
@@ -372,19 +369,18 @@
     </div>
 
     {{-- about us --}}
-    <section id="about" class="w-full bg-gray-50 dark:bg-gray-800 mt-24 px-6 py-12">
-        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">About Us</h2>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-2">We're travelers, just like you.</p>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-2">Sometimes we love planning every detail,<br>
+    <section id="about" class="w-full bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-white mt-24 px-6 py-12">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-400 mb-4">About Us</h2>
+        <p class="text-gray-600 dark:text-white leading-relaxed mb-2">We're travelers, just like you.</p>
+        <p class="text-gray-600 dark:text-white leading-relaxed mb-2">Sometimes we love planning every detail,<br>
             and sometimes we just want to hop on someone else's trip.</p>
-        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">That's why we built this space—to make it easier to
-            find buddies, share
+        <p class="text-gray-600 dark:text-white leading-relaxed">That's why we built this space—to make it easier to find buddies, share
             ideas, and enjoy the journey together.</p>
     </section>
 
     <section class="max-w-4xl mx-auto my-4 p-4">
         <!-- big square -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-8 text-gray-700 dark:text-white">
 
             <!-- member 1 -->
             <div class="w-full border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
@@ -511,7 +507,7 @@
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Favorite Food:</p>
-                    <p><i class="fa-solid fa-shrimp mr-2"></i>Shrimp & Shine Muscat Grapes & Onigirisen OTSU</p>
+                    <p><i class="fa-solid fa-shrimp mr-2"></i>Shrimp & Muscat & Xiao long bao</p>
                 </div>
                 <div class="items-baseline">
                     <p class="underline decoration-orange-300 decoration-2 mr-2">Favorite Country:</p>
