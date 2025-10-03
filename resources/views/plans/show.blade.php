@@ -326,16 +326,16 @@
             @canany(['view_own', 'participate'], $plan)
             <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
                 <div class="flex items-center">
-                    <h4 class="text-xl text-sky-500 font-bold mx-auto">participants chat</h4>
-                    <div class="flex space-x-2 ml-4">
-                        <span class="py-1 text-gray-400">{{ $plan->user->name }},</span>
+                    <h4 class="text-xl text-sky-500 font-bold ms-2 me-auto">participants chat</h4>
+                    <div class="flex space-x-1 ml-4">
+                        <a href="{{ route('profile.show', $plan->user->id)}}" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-orange-500 rounded-full mt-1">{{ $plan->user->name }}</a>
                         @php
-                        $acceptedParticipations = $plan->participations->where('status', 'accepted');
+                            $acceptedParticipations = $plan->participations->where('status', 'accepted');
                         @endphp
                         @forelse($acceptedParticipations as $participation)
-                        <span class="py-1 text-gray-400">{{ $participation->user->name }},</span>
+                            <a href="{{ route('profile.show', $participation->user->id)}}" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-sky-600 rounded-full mt-1">{{ $participation->user->name }}</a>
                         @empty
-                        <p>no other participants yet</p>
+                            <p>no other participants yet</p>
                         @endforelse
                     </div>
                 </div>
