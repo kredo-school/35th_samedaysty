@@ -51,11 +51,13 @@
 
                             <i class="{{ $style->fontawesome_icon }} text-xl flex-shrink-0"></i>
 
-                            <h3 class="font-semibold text-sm truncate">{{ ucfirst($style->style_name) }}</h3>
+                            <h3 class="font-semibold text-sm whitespace-normal break-words flex-1">
+                                {{ ucfirst($style->style_name) }}
+                            </h3>
                         </div>
 
                         <!-- LowerRow ：Description -->
-                        <p class="text-xs text-gray-600 mt-2 truncate">
+                        <p class="text-xs text-gray-600 mt-2 line-clamp-2">
                             {{ $style->description ?? 'No description yet' }}
                         </p>
                     </label>
