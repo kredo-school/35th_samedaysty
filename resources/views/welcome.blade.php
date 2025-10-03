@@ -38,11 +38,11 @@
     </div>
 
     <div class="w-full text-[clamp(14px,2vw,24px)] mb-2 text-gray-500 dark:text-white text-center py-8 px-4">
-        <p class="text-[2.0vw] mb-2">Share Moments, Big or Small — Your Way, Together.</p>
-        <p class="text-[2.0vw] mb-2">From Coffee to Adventures — Connect & Enjoy.</p>
-        <p class="text-[2.0vw] mb-2">Meet, Share, Explore — Your Journey, Your Way.</p>
-        <p class="text-[2.0vw] mb-2">One App for Every Plan — From Full Journeys to Quick Meetups.</p>
-        <p class="text-[2.0vw] mb-2">For just lunch, a quick activity, or part of the journey — it's all
+        <p class="mb-2">Share Moments, Big or Small — Your Way, Together.</p>
+        <p class="mb-2">From Coffee to Adventures — Connect & Enjoy.</p>
+        <p class="mb-2">Meet, Share, Explore — Your Journey, Your Way.</p>
+        <p class="mb-2">One App for Every Plan — From Full Journeys to Quick Meetups.</p>
+        <p class="mb-2">For just lunch, a quick activity, or part of the journey — it's all
             possible.</p>
 
         <!-- Right button -->
@@ -152,7 +152,8 @@
         <x-title>
             {{ __('How to find others plan') }}
         </x-title>
-        <section class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700 dark:text-gray-300">
+        <section
+            class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700 dark:text-gray-300">
             <!-- card1 -->
             <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
@@ -199,94 +200,94 @@
         <section class="max-w-6xl mx-auto px-4 py-20">
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4  rounded-lg border-4 border-sky-700 shadow text-center">
                     <i class="fa-solid fa-spa text-3xl mb-2 text-[#F5BABB]"></i>
                     <h3 class="font-semibold">Relaxation</h3>
-                    <p class="text-sm text-gray-600">Hot springs, spas, beach resorts</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Hot springs, spas, beach resorts</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-person-hiking text-3xl mb-2 text-[#FFC900]"></i>
                     <h3 class="font-semibold">Adventure</h3>
-                    <p class="text-sm text-gray-600">Hiking, diving, surfing</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Hiking, diving, surfing</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-mountain text-3xl mb-2 text-[#239BA7]"></i>
                     <h3 class="font-semibold">Nature</h3>
-                    <p class="text-sm text-gray-600">World Heritage, parks, scenic drives</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">World Heritage, parks, scenic drives</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-landmark text-3xl mb-2 text-[#BB6653]"></i>
                     <h3 class="font-semibold">Cultural</h3>
-                    <p class="text-sm text-gray-600">Temples, castles, museums</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Temples, castles, museums</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-utensils text-3xl mb-2 text-[#FF8040]"></i>
                     <h3 class="font-semibold">Foodie</h3>
-                    <p class="text-sm text-gray-600">Local cuisine & Michelin restaurants</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Local cuisine, Michelin restaurants</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-bag-shopping text-3xl mb-2 text-[#B9375D]"></i>
                     <h3 class="font-semibold">Shopping</h3>
-                    <p class="text-sm text-gray-600">Cities, outlets, duty-free</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Cities, outlets, duty-free</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-microphone text-3xl mb-2 text-[#00809D]"></i>
                     <h3 class="font-semibold">Fan Travel</h3>
-                    <p class="text-sm text-gray-600">Anime & idol pilgrimage</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Anime, idol pilgrimage</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-tractor text-3xl mb-2 text-[#386641]"></i>
                     <h3 class="font-semibold">Rural</h3>
-                    <p class="text-sm text-gray-600">Farming & countryside stays</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Farming, countryside stays</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-crown text-3xl mb-2 text-[#D3AF37]"></i>
                     <h3 class="font-semibold">Luxury</h3>
-                    <p class="text-sm text-gray-600">High-end resorts & villas</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">High-end resorts, villas</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-wallet text-3xl mb-2 text-[#A2AF9B]"></i>
                     <h3 class="font-semibold">Budget</h3>
-                    <p class="text-sm text-gray-600">Guesthouses, capsule hotels</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Guesthouses, capsule hotels</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-leaf text-3xl mb-2 text-[#08CB00]"></i>
                     <h3 class="font-semibold">Sustainable</h3>
-                    <p class="text-sm text-gray-600">Eco-friendly & local support</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Eco-friendly, local support</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-laptop-house text-3xl mb-2 text-[#4D2D8C]"></i>
                     <h3 class="font-semibold">Workation</h3>
-                    <p class="text-sm text-gray-600">Work & travel combined</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Work & travel combined</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-map text-3xl mb-2 text-[#E43636]"></i>
                     <h3 class="font-semibold">Spontaneous</h3>
-                    <p class="text-sm text-gray-600">Go with the flow</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Go with the flow</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-plane-departure text-3xl mb-2 text-[#3396D3]"></i>
                     <h3 class="font-semibold">Travel</h3>
-                    <p class="text-sm text-gray-600">Any journey you like</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Any journey you like</p>
                 </div>
 
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow text-center">
+                <div class="flex flex-col items-center p-4 border-4 border-sky-700 rounded-lg shadow text-center">
                     <i class="fa-solid fa-camera-retro text-3xl mb-2 text-[#0D1164]"></i>
                     <h3 class="font-semibold">Scenic</h3>
-                    <p class="text-sm text-gray-600">Beautiful drives & views</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-200">Beautiful drives, views</p>
                 </div>
             </div>
         </section>
@@ -301,38 +302,137 @@
     <section class="w-full mx-auto px-4 py-8 ">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- 1 -->
-            <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+            <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Calender page</h1>
                 <img src="/images/screenshot.calender.png" alt="screenshot1" class="w-full h-auto">
                 <div class="p-4">
-                    <p>・ Choose your travel dates and see who else is going at the same time.</p>
+                    <p>・ Pick the dates you want to travel on the calendar, and a modal will pop up showing you a quick
+                        preview of the plan.</p>
+                    <p>・ If you click the modal, you'll jump to the full details page.</p>
+                    <p>・ You can also search by country using the tabs at the top of the page.</p>
                 </div>
             </div>
 
             <!-- 2 -->
-            <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+            <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Plan detail page</h1>
                 <img src="/images/screenshot.plandetail.png" alt="screenshot2" class="w-full h-auto">
                 <div class="p-4">
-                    <p>・ Share your destination and travel style so others can find a good match.</p>
+                    <p>・ On the detail page, you can check out the full schedule, descriptions, and all the little
+                        details of the trip. You'll also see who's already joined.</p>
+                    <p>・ If you like the plan, there are a few ways to show it:</p>
+                    <div class="group w-12 p-2 transition relative dark:text-white">
+                        <!-- ❤️ -->
+                        <i class="fa-solid fa-heart heart absolute top-4 right-4 text-2xl text-red-500 dark:text-red-200"></i>
+                    </div>
+
+                    <style>
+                        @keyframes heartbeat {
+
+                            0%,
+                            100% {
+                                transform: scale(1);
+                            }
+
+                            25% {
+                                transform: scale(1.3);
+                            }
+
+                            50% {
+                                transform: scale(0.9);
+                            }
+
+                            75% {
+                                transform: scale(1.2);
+                            }
+                        }
+
+                        .group:hover .heart {
+                            animation: heartbeat 0.8s ease-in-out infinite;
+                            color: #e965ca;
+                            /* ホバー中は赤く */
+                        }
+                    </style> 
+                    <p class="dark:text-white">____ Like→ kind of like “favorite,” it shows strong interest.</p>
+
+                    <div class="group w-12 p-2 transition relative dark:text-gray-400">
+                        <!-- 🚩 -->
+                        <i class="fa-solid fa-flag flag absolute top-4 right-4 text-2xl text-green-500 dark:text-green-200"></i>
+                    </div>
+
+                    <style class="dark:text-white">
+                        @keyframes waveFlag {
+                            0% {
+                                transform: rotate(0deg) skewX(0deg);
+                            }
+
+                            25% {
+                                transform: rotate(3deg) skewX(3deg);
+                            }
+
+                            50% {
+                                transform: rotate(0deg) skewX(0deg);
+                            }
+
+                            75% {
+                                transform: rotate(-3deg) skewX(-3deg);
+                            }
+
+                            100% {
+                                transform: rotate(0deg) skewX(0deg);
+                            }
+                        }
+
+                        .group:hover .flag {
+                            animation: waveFlag 0.6s ease-in-out infinite;
+                            transform-origin: left center;
+                            color: #e5d81b;
+                            /* ポール側を固定する感じ */
+                            /* ホバー中は赤く */
+                        }
+                    </style>
+                    <p>____Interested → more casual, like “sounds fun” or “worth keeping an eye on.”</p>
+                    <p>・ And when you're ready, you can hit the Join Request button to apply to join the trip.</p>
+
+
+                    <p>・ On the detail page, you can check out the full schedule, descriptions, and all the little
+                        details of the trip.
+                        You'll also see how many people have joined so fa.
+                        If you like the plan, there are a few ways to show it:</p>
+
+
+
+
                 </div>
             </div>
 
             <!-- 3 -->
-            <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+            <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Profile page</h1>
                 <img src="/images/profilepage.jpeg" alt="screenshot3" class="w-full h-auto">
                 <div class="p-4">
-                    <p>・ Introduce yourself and highlight your interests to connect with like-minded travelers.</p>
+                    <p>・ Your profile is where you can share your interests, favorite travel spots, and memories so
+                        other users can connect with you.</p>
+                    <p>・ You've got four tabs to check out your plans:</p>
+                    <p><i class="fa-solid fa-clipboard-check text-sky-500"></i> → plans you've made</p>
+                    <p><i class="fa-solid fa-handshake-angle text-yellow-500"></i> → plans you've joined</p>
+                    <p><i class="fa-solid fa-flag text-green-500"></i> → plans you marked as “Interested”</p>
+                    <p><i class="fa-solid fa-heart text-red-500"></i> → plans you liked</p>
+                    <p>・ Below that, there's a calendar to manage your own schedule.</p>
+                    <p>・ At the bottom, you'll find a section to showcase your favorite items, with links to where you can
+                        buy them.</p>
                 </div>
             </div>
 
             <!-- 4 -->
-            <div class="bg-white border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+            <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Chat page</h1>
                 <img src="/images/screenshot.chat.png" alt="screenshot4" class="w-full h-auto">
                 <div class="p-4">
-                    <p>・ Start chatting to finalize plans and get to know your travel mates.</p>
+                    <p>・ On the chat page, you can talk with other people about your travel plans.</p>
+                    <p>・ Share messages, images, and links to discuss details, ask questions, or plan together.</p>
+                    <p>・ Share messages, images, and links to discuss details, ask questions, or plan together.</p>
+                    <p>・ It's the perfect place to coordinate trips and connect with fellow travelers.</p>
                 </div>
             </div>
         </div>
@@ -374,7 +474,8 @@
         <p class="text-gray-600 dark:text-white leading-relaxed mb-2">We're travelers, just like you.</p>
         <p class="text-gray-600 dark:text-white leading-relaxed mb-2">Sometimes we love planning every detail,<br>
             and sometimes we just want to hop on someone else's trip.</p>
-        <p class="text-gray-600 dark:text-white leading-relaxed">That's why we built this space—to make it easier to find buddies, share
+        <p class="text-gray-600 dark:text-white leading-relaxed">That's why we built this space—to make it easier to
+            find buddies, share
             ideas, and enjoy the journey together.</p>
     </section>
 
@@ -424,7 +525,7 @@
             <div
                 class="w-full border-8 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start whitespace-normal break-words">
                 <div class="flex items-center mb-2">
-                    <img src="/images/aboutus_nanamin.jpeg" alt="Member 2" class="w-30 h-28 mr-3">
+                    <img src="/images/aboutus_jojohayato.png" alt="Member 2" class="w-30 h-28 mr-3">
                     <h3 class="text-xl font-semibold">Hayato</h3>
                 </div>
                 <div class="items-baseline">
