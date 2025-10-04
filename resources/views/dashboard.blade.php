@@ -4,7 +4,7 @@
     </x-title>
     <div class="flex items-center justify-end">
         <!-- buttons for each plan -->
-        <div class="flex text-sm mt-auto mb-1 text-gray-500">
+        <div class="flex text-lg mb-1 text-gray-500 my-2">
             <button onclick="document.getElementById('travel-plansModal').showModal()" class="px-4 hover:text-gray-800">
                 <i class="fa-solid fa-clipboard-check text-teal-500 me-1"></i>created&nbsp;{{ Auth::user()->travelPlans()->count() }}
             </button>
