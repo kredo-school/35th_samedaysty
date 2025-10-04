@@ -30,28 +30,33 @@
             @endcan
         </div>
 
+        <!-- Map section -->
+        <div class="w-full mb-6">
+            <x-map :country="$plan->country" :plan-title="$plan->title" />
+        </div>
+
         <!-- plan details -->
         <div class="pt-3 flex items-center">
             @canany(['view_own', 'participate'], $plan)
-                <a href="{{ route('profile.show', $plan->user->id)}}" class="flex-shrink-0">
-                    <div class="w-10 h-10 rounded-full overflow-hidden">
-                        @if($plan->user->avatar)
-                        <img src="{{ asset('storage/' . $plan->user->avatar) }}" alt="avatar"
-                            class="w-full h-full object-cover">
-                        @else
-                        <div
-                            class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                            <span class="text-white text-lg font-bold">{{ strtoupper(substr($plan->user->name, 0, 1))
-                                }}</span>
-                        </div>
-                        @endif
+            <a href="{{ route('profile.show', $plan->user->id)}}" class="flex-shrink-0">
+                <div class="w-10 h-10 rounded-full overflow-hidden">
+                    @if($plan->user->avatar)
+                    <img src="{{ asset('storage/' . $plan->user->avatar) }}" alt="avatar"
+                        class="w-full h-full object-cover">
+                    @else
+                    <div
+                        class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                        <span class="text-white text-lg font-bold">{{ strtoupper(substr($plan->user->name, 0, 1))
+                            }}</span>
                     </div>
-                </a>
-                <h4 class="text-xl ps-2">{{ $plan->user->name }}</h4>
+                    @endif
+                </div>
+            </a>
+            <h4 class="text-xl ps-2">{{ $plan->user->name }}</h4>
             @else
-                <img src="/images/kinoko_mori.png" alt="" class="w-10 h-10 rounded-full overflow-hidden">
-                <h4 class="text-xl ps-2">Plan Owner</h4>
-                <p class="text-sm text-gray-400 ms-2">only participants can see owner's profile</p>
+            <img src="/images/kinoko_mori.png" alt="" class="w-10 h-10 rounded-full overflow-hidden">
+            <h4 class="text-xl ps-2">Plan Owner</h4>
+            <p class="text-sm text-gray-400 ms-2">only participants can see owner's profile</p>
             @endcanany
             <h4 class="text-xl ms-auto px-2">{{ $plan->country->name }}</h4>
             <i class="fi fi-{{ $plan->country->code }} text-3xl"></i>
@@ -112,13 +117,9 @@
 
                     likeCount: {{ $plan->reactions()->where('type', 'like')->count() }},
                     interestedCount: {{ $plan->reactions()->where('type', 'interested')->count() }},
-                    }"
-                    class="flex gap-4"
-                >
-                <!-- like button -->
-                    <button
-                        type="button"
-                        @click="
+                    }" class="flex gap-4">
+                    <!-- like button -->
+                    <button type="button" @click="
                             fetch('{{ route('reaction.store', $plan->id) }}', {
                                 method: 'POST',
                                 headers: {
@@ -142,13 +143,9 @@
                                 setTimeout(() => icon.classList.remove('scale-125'), 200);
                             })
                             .catch(err => console.error(err))
-                        "
-                        class="flex items-center gap-2 transition transform duration-300 hover:scale-110"
-                    >
-                        <i
-                            :class="liked ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart text-red-500'"
-                            class="text-3xl transition-transform duration-300"
-                        ></i>
+                        " class="flex items-center gap-2 transition transform duration-300 hover:scale-110">
+                        <i :class="liked ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart text-red-500'"
+                            class="text-3xl transition-transform duration-300"></i>
                     </button>
                     <span class="text-xl font-medium">like</span>
                     <!-- modal button -->
@@ -156,9 +153,7 @@
                         <!-- {{ $plan->reactions()->where('type', 'like')->count() }} -->
                     </button>
                     <!-- interested button -->
-                    <button 
-                        type="button"
-                        @click="
+                    <button type="button" @click="
                             fetch('{{ route('reaction.store', $plan->id) }}', {
                                 method: 'POST',
                                 headers: {
@@ -182,18 +177,15 @@
                                 setTimeout(() => icon.classList.remove('scale-125'), 200);
                             })
                             .catch(err => console.error(err));
-                        "
-                        class="flex items-center gap-2 transition transform duration-300 hover:scale-110"
-                    >
-                        <i
-                            :class="interested ? 'fa-solid fa-flag text-green-500' : 'fa-regular fa-flag text-green-500'" 
-                            class="text-3xl transition-all duration-300"
-                        ></i>
+                        " class="flex items-center gap-2 transition transform duration-300 hover:scale-110">
+                        <i :class="interested ? 'fa-solid fa-flag text-green-500' : 'fa-regular fa-flag text-green-500'"
+                            class="text-3xl transition-all duration-300"></i>
                     </button>
                     <span class="text-xl font-medium">interested</span>
 
                     <!-- modal button -->
-                    <button @click="openInterested = true" class="text-md text-gray-600" type="button" x-text="interestedCount">
+                    <button @click="openInterested = true" class="text-md text-gray-600" type="button"
+                        x-text="interestedCount">
                         <!-- {{ $plan->reactions()->where('type', 'interested')->count() }} -->
                     </button>
 
@@ -225,7 +217,7 @@
                             <h2 class="text-lg font-bold mb-4">Interested</h2>
                             <ul class="divide-y max-h-60 overflow-y-auto">
                                 @foreach($plan->reactions()->where('type', 'interested')->with('user')->get() as $reaction)
-                                    <li class="py-2">{{ $reaction->user->name }}</li>
+                                <li class="py-2">{{ $reaction->user->name }}</li>
                                 @endforeach
                             </ul>
 
@@ -287,8 +279,7 @@
                             </a>
                             <div class="flex flex-col">
                                 <span class="font-semibold">{{ $pending->user->name }}</span>
-                                <span class="text-sm text-gray-500">{{ $pending->created_at->diffForHumans()
-                                    }}</span>
+                                <span class="text-sm text-gray-500">{{ $pending->created_at->diffForHumans() }}</span>
                             </div>
                         </div>
 
@@ -335,14 +326,18 @@
                 <div class="flex items-center">
                     <h4 class="text-xl text-sky-500 font-bold ms-2 me-auto">participants chat</h4>
                     <div class="flex space-x-1 ml-4">
-                        <a href="{{ route('profile.show', $plan->user->id)}}" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-orange-500 rounded-full mt-1">{{ $plan->user->name }}</a>
+                        <a href="{{ route('profile.show', $plan->user->id)}}"
+                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-orange-500 rounded-full mt-1">{{
+                            $plan->user->name }}</a>
                         @php
-                            $acceptedParticipations = $plan->participations->where('status', 'accepted');
+                        $acceptedParticipations = $plan->participations->where('status', 'accepted');
                         @endphp
                         @forelse($acceptedParticipations as $participation)
-                            <a href="{{ route('profile.show', $participation->user->id)}}" class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-sky-600 rounded-full mt-1">{{ $participation->user->name }}</a>
+                        <a href="{{ route('profile.show', $participation->user->id)}}"
+                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-sky-600 rounded-full mt-1">{{
+                            $participation->user->name }}</a>
                         @empty
-                            <p>no other participants yet</p>
+                        <p>no other participants yet</p>
                         @endforelse
                     </div>
                 </div>
