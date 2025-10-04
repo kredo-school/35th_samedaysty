@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/{id?}', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/toggle-status', [ProfileController::class, 'toggleStatus'])
+        ->name('profile.toggleStatus')->middleware('auth');
     Route::patch('/profile/update-recommended-form', [ProfileController::class, 'updateGadget'])
         ->name('profile.updateGadget');
     Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');

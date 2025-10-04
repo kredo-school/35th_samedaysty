@@ -150,6 +150,18 @@ class User extends Authenticatable
             ->where('status', 'pending')
             ->exists();
     }
+    /*** Check if the user is followed by another user */
+    public function isFollowedBy(User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return Follow::where('follower_id', $user->id)
+            ->where('following_id', $this->id)
+            ->where('status', 'accepted')
+            ->exists();
+    }
     /**  relation */
     public function followingRequests()
     {
@@ -161,7 +173,14 @@ class User extends Authenticatable
         return $this->hasMany(Follow::class, 'following_id')
             ->where('status', 'pending');
     }
-
+    public function isPublic(): bool
+    {
+        return $this->status === 'public';
+    }
+    public function isPrivate(): bool
+    {
+        return $this->status === 'private';
+    }
     public function travelPlans(): HasMany
     {
         return $this->hasMany(TravelPlan::class);
@@ -219,5 +238,4 @@ class User extends Authenticatable
     {
         return $this->unreadNotifications()->count();
     }
-
 }

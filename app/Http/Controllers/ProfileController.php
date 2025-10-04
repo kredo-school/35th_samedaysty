@@ -107,11 +107,9 @@ class ProfileController extends Controller
             $path = $request->file('avatar')->store('avatars', 'public');
             $validated['avatar'] = $path;
         }
-
         /**user information update */
         $user->fill($validated);
         $user->save();
-
         /**mail address has changed */
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -162,6 +160,16 @@ class ProfileController extends Controller
             }
         }
         return redirect()->route('profile.show')->with('status', 'Gadgets updated successfully');
+    }
+    /** Delete the user's account.*/
+    public function toggleStatus()
+    {
+        $user = auth()->user();
+        // switch public ⇔ private
+        $user->status = $user->status === 'public' ? 'private' : 'public';
+        $user->save();
+
+        return redirect()->back()->with('success', 'Your profile is now ' . $user->status);
     }
     /** Delete the user's account.*/
     public function destroy(Request $request): RedirectResponse
