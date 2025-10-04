@@ -2,7 +2,31 @@
     <x-title name="header">
         {{ __('Home') }}
     </x-title>
+    <div class="flex items-center justify-end">
+        <!-- buttons for each plan -->
+        <div class="flex text-sm mt-auto mb-1 text-gray-500">
+            <button onclick="document.getElementById('travel-plansModal').showModal()" class="px-4 hover:text-gray-800">
+                <i class="fa-solid fa-clipboard-check text-teal-500 me-1"></i>created&nbsp;{{ Auth::user()->travelPlans()->count() }}
+            </button>
+            <button onclick="document.getElementById('joined-plansModal').showModal()" class="px-4 hover:text-gray-800">
+                <i class="fa-solid fa-handshake text-yellow-500 me-1"></i>joined&nbsp;{{ Auth::user()->joinedPlans()->count() }}
+            </button>
+            <button onclick="document.getElementById('interested-plansModal').showModal()" class="px-4 hover:text-gray-800">
+                <i class="fa-solid fa-flag text-green-500 me-1"></i>interested&nbsp;{{ Auth::user()->interestedPlans()->count() }}
+            </button>
+            <button onclick="document.getElementById('liked-plansModal').showModal()" class="px-4 hover:text-gray-800">
+                <i class="fa-solid fa-heart text-red-500 me-1"></i>liked&nbsp;{{ Auth::user()->likedPlans()->count() }}
+            </button>
+        </div>
 
+        <!-- modals -->
+        <x-plan-modal title="Travel Plans" :plans="Auth::user()->travelPlans" />
+        <x-plan-modal title="Joined Plans" :plans="Auth::user()->joinedPlans" />
+        <x-plan-modal title="Interested Plans" :plans="Auth::user()->interestedPlans" />
+        <x-plan-modal title="Liked Plans" :plans="Auth::user()->likedPlans" />
+    </div>
+
+    <div class="flex"></div>
     <!--add user icon,created,joined,interested,liked!!!!!!!!!!!!!!!!!!!!! -->
 
 
