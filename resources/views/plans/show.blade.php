@@ -32,21 +32,27 @@
 
         <!-- plan details -->
         <div class="pt-3 flex items-center">
-            <a href="{{ route('profile.show', $plan->user->id)}}" class="flex-shrink-0">
-                <div class="w-10 h-10 rounded-full overflow-hidden">
-                    @if($plan->user->avatar)
-                    <img src="{{ asset('storage/' . $plan->user->avatar) }}" alt="avatar"
-                        class="w-full h-full object-cover">
-                    @else
-                    <div
-                        class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                        <span class="text-white text-lg font-bold">{{ strtoupper(substr($plan->user->name, 0, 1))
-                            }}</span>
+            @canany(['view_own', 'participate'], $plan)
+                <a href="{{ route('profile.show', $plan->user->id)}}" class="flex-shrink-0">
+                    <div class="w-10 h-10 rounded-full overflow-hidden">
+                        @if($plan->user->avatar)
+                        <img src="{{ asset('storage/' . $plan->user->avatar) }}" alt="avatar"
+                            class="w-full h-full object-cover">
+                        @else
+                        <div
+                            class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                            <span class="text-white text-lg font-bold">{{ strtoupper(substr($plan->user->name, 0, 1))
+                                }}</span>
+                        </div>
+                        @endif
                     </div>
-                    @endif
-                </div>
-            </a>
-            <h4 class="text-xl ps-2">{{ $plan->user->name }}</h4>
+                </a>
+                <h4 class="text-xl ps-2">{{ $plan->user->name }}</h4>
+            @else
+                <img src="/images/kinoko_mori.png" alt="" class="w-10 h-10 rounded-full overflow-hidden">
+                <h4 class="text-xl ps-2">Plan Owner</h4>
+                <p class="text-sm text-gray-400 ms-2">only participants can see owner's profile</p>
+            @endcanany
             <h4 class="text-xl ms-auto px-2">{{ $plan->country->name }}</h4>
             <i class="fi fi-{{ $plan->country->code }} text-3xl"></i>
         </div>
