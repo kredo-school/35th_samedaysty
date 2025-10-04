@@ -64,7 +64,7 @@
 
         <div class="px-8 pt-4">
             <!-- plan style -->
-            <div class="flex pt-5 items-center font-bold">
+            <div class="text-gray-500 dark:text-gray-200 flex pt-5 items-center font-bold">
                 <h4 class="text-xl py-1">Style&nbsp;:</h4>
                 <ul class="flex flex-wrap gap-2">
                     @forelse($plan->planStyles as $planStyle)
@@ -73,25 +73,25 @@
                         {{ $planStyle->travelStyle->display_name }}
                     </li>
                     @empty
-                    <li class="text-gray-500 italic">No styles selected</li>
+                    <li class="italic">No styles selected</li>
                     @endforelse
                 </ul>
             </div>
 
             <!-- plan name -->
-            <div class="flex pt-5 items-center font-bold">
+            <div class="text-gray-500 dark:text-gray-200 flex pt-5 items-center font-bold">
                 <h4 class="text-xl">Plan&nbsp;:</h4>
                 <p class="text-xl ms-2">{{$plan->title}}</p>
             </div>
 
             <!-- description -->
-            <div class="flex pt-5 items-start">
+            <div class="text-gray-500 dark:text-gray-200 flex pt-5 items-start">
                 <h4 class="text-xl font-bold">description&nbsp;:</h4>
                 <p class="text-base ms-2">{{ $plan->description }}</p>
             </div>
 
             <!-- date -->
-            <div class="flex pt-5 items-center">
+            <div class="text-gray-500 dark:text-gray-200 flex pt-5 items-center">
                 <h4 class="text-xl font-bold">date&nbsp;:</h4>
                 <p class="text-base ms-2">{{ $plan->start_date }}</p>
                 <p class="text-base mx-2">-</p>
@@ -99,7 +99,7 @@
             </div>
 
             <!-- max participants -->
-            <div class="flex pt-1 items-center">
+            <div class="text-gray-500 dark:text-gray-200 flex pt-1 items-center">
                 <h4 class="text-xl font-bold">Max&nbsp;:</h4>
                 <p class="text-base ms-2">{{ $plan->participants()->count() }}</p>
                 <p class="text-base ms-2">/&nbsp;{{ $plan->max_participants }}</p>
@@ -107,7 +107,7 @@
             </div>
 
             <!-- like/interested buttons -->
-            <div class="flex justify-end space-x-5 py-2 items-center">
+            <div class="text-gray-500 dark:text-gray-200 flex justify-end space-x-5 py-2 items-center">
                 <div x-data="{
                     openLike: false,
                     openInterested: false,
@@ -256,7 +256,7 @@
             <!-- approve join request -->
             @can('view_own', $plan)
             <div class="flex justify-end">
-                <div class="bg-gray-200 w-1/2 shadow-md rounded-lg p-2">
+                <div class="bg-gray-200  dark:bg-gray-700 w-1/2 shadow-md rounded-lg p-2">
                     <h2 class="text-xl font-semibold mb-4 text-center">join requests</h2>
                     @forelse($plan->pendingParticipations as $pending)
                     <!-- icon/name/time + buttons -->
@@ -347,7 +347,7 @@
                 <div class="flex justify-end items-start gap-2 p-3">
                     <div class="flex items-end justify-end gap-1">
                         <!-- time/content -->
-                        <span class="text-xs text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
+                        <span class="text-xs  dark:bg-gray-700 text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
                         <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm break-words">
                             {{ $participant_chat->body }}
                         </div>
@@ -404,8 +404,8 @@
             @endcanany
 
             <!-- comment -->
-            <div class="border border-black box-border rounded-md my-5 overflow-y-auto">
-                <h4 class="text-xl font-bold ms-3">comments</h4>
+            <div class="border-4 border-orange-500 box-border rounded-md my-5 overflow-y-auto">
+                <h4 class="text-xl text-orange-500 font-bold ms-3">comments</h4>
                 @foreach($plan->comments as $comment)
                 <div class="flex items-center space-x-3 p-4">
                     <!-- icon -->
