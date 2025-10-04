@@ -55,22 +55,33 @@
                         {{ $user->bio ?? 'No introduction yet.' }}
                     </p>
                 </div>
-
+                <!--only see own user-->
                 <div class="flex space-x-4 mt-4">
                     @if(Auth::id() === $user->id)
                     <!--only see own user-->
                     <a href="{{ route('profile.edit') }}"
-                        class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
+                        class="w-32 px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white">
                         Edit profile
                     </a>
                     <a href="#"
-                        class="px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition">
+                        class="w-32 px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                         Share profile
                     </a>
-                    <x-primary-button>
-                        Change your status
-                    </x-primary-button>
+                    @if(Auth::id() === $user->id)
+                    <div class="flex items-center space-x-3 font-ubuntu">
+                        <form action="{{ route('profile.toggleStatus') }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="w-32 px-4 py-2 text-white bg-orange-500 rounded-md border-2 border-transparent hover:bg-white hover:text-orange-500 hover:border-orange-500 transition inline-flex items-center justify-center text-sm font-semibold font-ubuntu focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                {{ $user->status === 'public' ? 'Switch to Private' : 'Switch to Public' }}
+                            </button>
+                        </form>
 
+                        <span class="w-32 px-4 py-2 rounded-md border-2 inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu  {{ $user->status === 'public' ? 'bg-lime-500 text-white' : 'bg-pink-400 text-white' }}">
+                            Status: {{ ucfirst($user->status) }}
+                        </span>
+                    </div>
+                    @endif
                     <!--pending list-->
                     @if(Auth::id() === $user->id)
                     <x-secondary-button onclick="document.getElementById('pendingModal').showModal()">
@@ -81,16 +92,13 @@
                     <!--pending list Modal-->
                     <dialog id="pendingModal" class="rounded-lg p-6 w-3/4 max-w-md">
                         <h2 class="text-lg font-bold mb-4">Follow Requests</h2>
-
                         <div class="space-y-4 max-h-80 overflow-y-auto">
                             @forelse($user->followerRequests as $request)
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <img src="{{ $request->follower->avatar 
-                                ? asset('storage/' . $request->follower->avatar) 
-                                : asset('images/default-avatar.png') }}" class="w-10 h-10 rounded-full object-cover">
+                                    <img src="{{ $request->follower->avatar ? asset('storage/' . $request->follower->avatar) : asset('images/default-avatar.png') }}" class="w-10 h-10 rounded-full object-cover">
                                     <a href="{{ route('profile.show', $request->follower->id) }}"
-                                        class="text-blue-600 hover:underline">
+                                        class="text-blue-600 focus:outline-none focus:ring-0">
                                         {{ $request->follower->name }}
                                     </a>
                                 </div>
@@ -166,245 +174,27 @@
         <!--Travel plans-->
         <h1 class="text-2xl p-5">Travel Plans</h1>
         <div class="px-4">
-            <div class="min-h-auto bg-cover bg-center shadow p-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-                    <!-- 1. Created Plans -->
-                    <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
-                        <h2 class="text-lg font-bold mb-2"><i
-                                class="fa-solid fa-clipboard-check text-teal-500 text-2xl mr-2"></i>
-                            <span class="text-orange-500">CREATED </span>
-                            <span class="text-sky-700">Plans</span>
-                        </h2>
-                        <div class="space-y-4">
-                            @forelse($travelPlans->take(2) as $plan)
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">{{ $plan->country->name
-                                    ?? 'Unknown Country' }}</h3>
-                                <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan <a href="{{ route('plan.show', $plan->id) }}"
-                                        class="text-sky-600 hover:underline">
-                                        {{ $plan->title }}
-                                    </a>
-                                </span>
-                            </div>
-                            @empty
-                            <p class="text-gray-500 text-sm">No travel plans yet.</p>
-                            @endforelse
-                        </div>
-                        @if($travelPlans->count() > 2)
-                        <div class="mt-3">
-                            <x-primary-button type="button" onclick="document.getElementById('plansModal').showModal()">
-                                Show all plans
-                            </x-primary-button>
-                        </div>
-                        @endif
-                    </div>
-                    <!-- Modal for Created Plans -->
-                    <dialog id="plansModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
-                        <h2 class="text-lg font-bold mb-4">All Created Plans</h2>
-                        <div class="space-y-4 max-h-96 overflow-y-auto"> @foreach($travelPlans as $plan) <div
-                                class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1"> {{ $plan->country->name
-                                    ?? 'Unknown Country' }} </h3> <span
-                                    class="text-gray-600 dark:text-gray-500 text-sm"> Plan <a
-                                        href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
-                                        {{ $plan->title }} </a> </span>
-                            </div> @endforeach </div>
-                        <form method="dialog" class="mt-4 text-right"> <button
-                                class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"> Close
-                            </button> </form>
-                    </dialog>
-
-                    <!-- 2. Joined Plans -->
-                    <!--  Joined Plans -->
-                    <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
-                        <h2 class="text-lg font-bold mb-2">
-                            <i class="fa-solid fa-handshake text-yellow-500 text-2xl mr-2"></i>
-                            <span class="text-sky-700">JOINED </span>
-                            <span class="text-orange-500">Plans</span>
-                        </h2>
-
-                        <div class="space-y-4">
-                            @forelse($joinedPlan as $plan)
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
-                                    {{ $plan->country->name ?? 'Unknown Country' }}
-                                </h3>
-                                <span class="text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan:
-                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
-                                        {{ $plan->title }}
-                                    </a>
-                                </span>
-                            </div>
-                            @empty
-                            <p class="text-gray-500 text-sm">No joined plans yet.</p>
-                            @endforelse
-                        </div>
-
-                        @if($remainingJoinedPlans->count() > 0)
-                        <div class="mt-3">
-                            <x-primary-button type="button"
-                                onclick="document.getElementById('joinedModal').showModal()">
-                                Show all joined plans
-                            </x-primary-button>
-                        </div>
-                        @endif
-                    </div>
-
-                    <!-- Modal for remaining Joined Plans -->
-                    <dialog id="joinedModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
-                        <h2 class="text-lg font-bold mb-4">All Joined Plans</h2>
-                        <div class="space-y-4 max-h-96 overflow-y-auto">
-                            @foreach($remainingJoinedPlans as $plan)
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
-                                    {{ $plan->country->name ?? 'Unknown Country' }}
-                                </h3>
-                                <span class="text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan:
-                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
-                                        {{ $plan->title }}
-                                    </a>
-                                </span>
-                            </div>
-                            @endforeach
-                        </div>
-                        <form method="dialog" class="mt-4 text-right">
-                            <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
-                                Close
-                            </button>
-                        </form>
-                    </dialog>
-
-
-                    <!-- 3. Interested Plans -->
-                    <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
-                        <h2 class="text-lg font-bold mb-2">
-                            <i class="fa-solid fa-flag text-green-500 text-2xl mr-2"></i>
-                            <span class="text-orange-500">INTERESTED </span>
-                            <span class="text-sky-700">Plans</span>
-                        </h2>
-
-                        <div class="space-y-4">
-                            @forelse($latestInterestedPlans as $plan)
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
-                                    {{ $plan->country->name ?? 'Unknown Country' }}
-                                </h3>
-                                <span class="text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan:
-                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
-                                        {{ $plan->title }}
-                                    </a>
-                                </span>
-                            </div>
-                            @empty
-                            <p class="text-gray-500 text-sm">No interested plans yet.</p>
-                            @endforelse
-                        </div>
-
-                        @if($remainingInterestedPlans->count() > 0)
-                        <div class="mt-3">
-                            <x-primary-button type="button"
-                                onclick="document.getElementById('interestedModal').showModal()">
-                                Show all plans
-                            </x-primary-button>
-                        </div>
-                        @endif
-                    </div>
-                    <!-- Modal for remaining Interested plans -->
-                    <dialog id="interestedModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
-                        <h2 class="text-lg font-bold mb-4">All Interested Plans</h2>
-                        <div class="space-y-4 max-h-96 overflow-y-auto">
-                            @foreach($remainingInterestedPlans as $plan)
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
-                                    {{ $plan->country->name ?? 'Unknown Country' }}
-                                </h3>
-                                <span class="text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan:
-                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
-                                        {{ $plan->title }}
-                                    </a>
-                                </span>
-                            </div>
-                            @endforeach
-                        </div>
-                        <form method="dialog" class="mt-4 text-right">
-                            <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
-                                Close
-                            </button>
-                        </form>
-                    </dialog>
-
-                    <!-- 4. Liked Plans -->
-                    <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border">
-                        <h2 class="text-lg font-bold mb-2"><i class="fa-solid fa-heart text-red-500 text-2xl mr-2"></i>
-                            <span class="text-orange-500">LIKED </span>
-                            <span class="text-sky-700">Plans</span>
-                        </h2>
-
-                        <div class="space-y-4">
-                            @forelse($latestLikedPlans as $plan)
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">{{ $plan->country->name
-                                    ?? 'Unknown Country' }}</h3>
-                                <span class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-500 text-sm">
-                                    <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
-                                        {{ $plan->title }}
-                                    </a>
-                                </span>
-                            </div>
-                            @empty
-                            <p class="text-gray-500 text-sm">No liked plans yet.</p>
-                            @endforelse
-                        </div>
-                        @if($remainingLikedPlans->count() > 0)
-                        <div class="mt-3">
-                            <x-primary-button type="button" onclick="document.getElementById('likedModal').showModal()">
-                                Show all plans
-                            </x-primary-button>
-                        </div>
-                        @endif
-                    </div>
-                    <!-- Modal for remaining liked plans -->
-                    <dialog id="likedModal" class="rounded-lg p-6 w-3/4 max-w-2xl">
-                        <h2 class="text-lg font-bold mb-4">All Liked Plans</h2>
-                        <div class="space-y-4 max-h-96 overflow-y-auto">
-                            @foreach($remainingLikedPlans as $plan)
-                            <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                                <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">
-                                    {{ $plan->country->name ?? 'Unknown Country' }}
-                                </h3>
-                                <span class="text-gray-600 dark:text-gray-500 text-sm">
-                                    Plan: <a href="{{ route('plan.show', $plan->id) }}"
-                                        class="text-sky-600 hover:underline">
-                                        {{ $plan->title }}
-                                    </a>
-                                </span>
-                            </div>
-                            @endforeach
-                        </div>
-                        <form method="dialog" class="mt-4 text-right">
-                            <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
-                                Close
-                            </button>
-                        </form>
-                    </dialog>
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!--login user-->
+                @if(Auth::id() === $user->id)
+                <x-plan-box title="Created Plan" :plans="$travelPlans" />
+                <x-plan-box title="Joined Plan" :plans="$joinedPlan" />
+                <x-plan-box title="Interested Plan" :plans="$latestInterestedPlans" />
+                <x-plan-box title="Liked Plans" :plans="$latestLikedPlans" />
+                <!--follow user status:public-->
+                @elseif($user->status === 'public' && Auth::user()->isFollowing($user))
+                <x-plan-box title="Interested Plans" :plans="$interestedPlans" />
+                <x-plan-box title="Liked Plans" :plans="$likedPlans" />
+                <!-- unfollower and status:private -->
+                @else
+                @if($user->status === 'private')
+                    <p class="text-gray-500">These travel plans are under lock and key. Even followers don't get the spare key.</p>
+                    @elseif(!$user->followers->contains(Auth::id()))
+                        <p class="text-gray-500">Follow this user and see what they're up to! (Some secrets may stay hidden)</p>
+                    @endif
+                @endif
             </div>
         </div>
-        {{-- @foreach ($plansByCountry as $country => $plans)
-        <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">{{ $country }}</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm">
-                @foreach ($plans as $plan)
-                <li>{{ $plan->description }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endforeach --}}
 
         <!--add calender -->
         <h1 class="text-2xl p-5">Schedule</h1>
@@ -458,7 +248,9 @@
                 <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">Close</button>
             </form>
         </dialog>
-
+        <p class="text-center text-gray-500 p-5">
+            Only followers can view travel plans.
+        </p>
 
         <!-- ajax part -->
         <script>
@@ -467,12 +259,12 @@
                     `/unfollow/${userId}`;
 
                 fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    }
-                })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
+                    })
                     .then(res => res.json())
                     .then(data => {
                         console.log(data);
@@ -501,11 +293,11 @@
                 modalContent.innerHTML = 'Loading...';
 
                 fetch(url, {
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                })
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        }
+                    })
                     .then(res => {
                         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                         return res.json();
