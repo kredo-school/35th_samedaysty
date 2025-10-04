@@ -96,8 +96,9 @@
             <!-- max participants -->
             <div class="flex pt-1 items-center">
                 <h4 class="text-xl font-bold">Max&nbsp;:</h4>
-                <p class="text-base ms-2">{{ $plan->max_participants }}</p>
-                <p class="text-base ms-1">people</p>
+                <p class="text-base ms-2">{{ $plan->participants()->count() }}</p>
+                <p class="text-base ms-2">/&nbsp;{{ $plan->max_participants }}</p>
+                <p class="text-base ms-2">people</p>
             </div>
 
             <!-- like/interested buttons -->
