@@ -323,7 +323,8 @@
                     <p>・ If you like the plan, there are a few ways to show it:</p>
                     <div class="group w-12 p-2 transition relative dark:text-white">
                         <!-- ❤️ -->
-                        <i class="fa-solid fa-heart heart absolute top-4 right-4 text-2xl text-red-500 dark:text-red-200"></i>
+                        <i
+                            class="fa-solid fa-heart heart absolute top-4 right-4 text-2xl text-red-500 dark:text-red-200"></i>
                     </div>
 
                     <style>
@@ -350,14 +351,15 @@
                         .group:hover .heart {
                             animation: heartbeat 0.8s ease-in-out infinite;
                             color: #e965ca;
-                            /* ホバー中は赤く */
+                            /* Hover red */
                         }
-                    </style> 
+                    </style>
                     <p class="dark:text-white">____ Like→ kind of like “favorite,” it shows strong interest.</p>
 
                     <div class="group w-12 p-2 transition relative dark:text-gray-400">
                         <!-- 🚩 -->
-                        <i class="fa-solid fa-flag flag absolute top-4 right-4 text-2xl text-green-500 dark:text-green-200"></i>
+                        <i
+                            class="fa-solid fa-flag flag absolute top-4 right-4 text-2xl text-green-500 dark:text-green-200"></i>
                     </div>
 
                     <style class="dark:text-white">
@@ -387,22 +389,12 @@
                             animation: waveFlag 0.6s ease-in-out infinite;
                             transform-origin: left center;
                             color: #e5d81b;
-                            /* ポール側を固定する感じ */
-                            /* ホバー中は赤く */
+                            /* Fix the pole side */
+                            /* hover red */
                         }
                     </style>
                     <p>____Interested → more casual, like “sounds fun” or “worth keeping an eye on.”</p>
                     <p>・ And when you're ready, you can hit the Join Request button to apply to join the trip.</p>
-
-
-                    <p>・ On the detail page, you can check out the full schedule, descriptions, and all the little
-                        details of the trip.
-                        You'll also see how many people have joined so fa.
-                        If you like the plan, there are a few ways to show it:</p>
-
-
-
-
                 </div>
             </div>
 
@@ -419,7 +411,8 @@
                     <p><i class="fa-solid fa-flag text-green-500"></i> → plans you marked as “Interested”</p>
                     <p><i class="fa-solid fa-heart text-red-500"></i> → plans you liked</p>
                     <p>・ Below that, there's a calendar to manage your own schedule.</p>
-                    <p>・ At the bottom, you'll find a section to showcase your favorite items, with links to where you can
+                    <p>・ At the bottom, you'll find a section to showcase your favorite items, with links to where you
+                        can
                         buy them.</p>
                 </div>
             </div>
@@ -430,7 +423,6 @@
                 <img src="/images/screenshot.chat.png" alt="screenshot4" class="w-full h-auto">
                 <div class="p-4">
                     <p>・ On the chat page, you can talk with other people about your travel plans.</p>
-                    <p>・ Share messages, images, and links to discuss details, ask questions, or plan together.</p>
                     <p>・ Share messages, images, and links to discuss details, ask questions, or plan together.</p>
                     <p>・ It's the perfect place to coordinate trips and connect with fellow travelers.</p>
                 </div>

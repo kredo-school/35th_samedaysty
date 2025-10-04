@@ -7,11 +7,11 @@
         </x-slot>
 
         <form action="{{ route('plan.store') }}" method="POST"
-            class="p-6 px-12 max-w-7xl mx-auto bg-white rounded-lg mt-6">
+            class="p-6 px-12 max-w-7xl mx-auto rounded-lg mt-6">
             @csrf
 
             <!-- Avatar + Name -->
-            <div class="flex items-center justify-start space-x-2 mb-16">
+            <div class="dark:text-gray-200 flex items-center justify-start space-x-2 mb-16">
                 <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                     @if(auth()->user()->avatar)
                     <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Avatar"
@@ -25,7 +25,7 @@
                     @endif
                 </div>
                 <h1 class="text-2xl md:text-3xl lg:text-4xl text-center">
-                    <span class="ml-2 font-bold text-gray-800">
+                    <span class="ml-2 font-bold text-gray-800 dark:text-gray-200">
                         @auth
                         {{ auth()->user()->name }}
                         @endauth
@@ -35,14 +35,14 @@
 
             <!-- Travel Style -->
             <div class="mb-6">
-                <h2 class="font-semibold mb-4">Travel Style</h2>
+                <h2 class="dark:text-gray-200 font-semibold mb-4">Travel Style</h2>
 
                 <!-- 5rows -->
                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach($travel_styles as $style)
                     <!-- card 1 -->
                     <label
-                        class="border rounded-lg p-3 cursor-pointer hover:bg-gray-50 flex flex-col justify-between h-18">
+                        class="dark:text-gray-200 border rounded-lg p-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 flex flex-col justify-between h-18">
 
                         <!-- UpperRow ：checkbox ＋Logo ＋Name -->
                         <div class="flex items-center space-x-2">
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <!-- Title  Country -->
-            <div class="flex mb-6 space-x-4">
+            <div class="flex mb-6 space-x-4 dark:text-gray-200">
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">Title</label>
                     <input type="text" name="title" value="{{ old('title') }}"
@@ -86,7 +86,7 @@
             </div>
 
             <!-- Description -->
-            <div class="mb-6">
+            <div class="mb-6 dark:text-gray-200">
                 <label class="block mb-1 font-semibold text-sm">Description</label>
                 <textarea name="description" rows="4"
                     class="w-full border rounded-lg p-2 @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
@@ -96,7 +96,7 @@
             </div>
 
             <!-- Plan Date -->
-            <div class="flex mb-6 space-x-4">
+            <div class="flex mb-6 dark:text-gray-200 space-x-4">
                 <div class="flex-1">
                     <label class="block mb-1 font-semibold text-sm">From</label>
                     <input type="date" name="start_date" class="w-full border rounded-lg p-2">
@@ -109,7 +109,7 @@
             </div>
 
             <!-- Max Participants -->
-            <div class="mb-6">
+            <div class="mb-6 dark:text-gray-200">
                 <label class="block mb-1 font-semibold text-sm">Max Participants</label>
                 <input type="number" name="max_participants" value="{{ old('max_participants') }}"
                     class="w-full border rounded-lg p-2 @error('max_participants') border-red-500 @enderror">
