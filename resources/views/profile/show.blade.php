@@ -13,7 +13,7 @@
                 <div
                     class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500 overflow-hidden">
                     @if($user->avatar)
-                    <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar"
+                    <img src="{{ $user->avatar }}" alt="Avatar"
                         class="w-full h-full rounded-full object-cover">
                     @else
                     <div
@@ -25,7 +25,29 @@
             </div>
             <!--user info-->
             <div class="flex-1 min-w-0 flex-col">
-                <h3 class="text-lg  sm:text-2xl md:text-3xl font-bold">{{ $user->name }}</h3>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg  sm:text-2xl md:text-3xl font-bold">{{ $user->name }}</h3>
+                    <div x-data="{ open: false }" class="relative inline-block">
+                        <span
+                            @mouseenter="open = true"
+                            @mouseleave="open = false"
+                            class="px-3 py-1 rounded-md border-2 inline-flex items-center text-sm font-semibold tracking-widest font-ubuntu {{ $user->status === 'public' ? 'bg-lime-500 text-white' : 'bg-pink-400 text-white' }}">
+                            @if($user->status === 'public')
+                            <i class="fa-solid fa-lock-open mr-1"></i> Public
+                            @else
+                            <i class="fa-solid fa-lock mr-1"></i> Private
+                            @endif
+                        </span>
+                        <!-- tooltip -->
+                        <div x-show="open"
+                            x-transition
+                            class="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-gray-500 text-white text-xs rounded px-3 py-2 shadow-lg z-10 whitespace-normal max-w-xs text-center">
+                            {{ $user->status === 'public' 
+                            ? 'Followers can see interested,liked,gadgets' 
+                            : 'Only showing name + intro' }}
+                        </div>
+                    </div>
+                </div>
                 <!--count-->
                 <div class="mt-4 flex space-x-6">
                     <div class="flex items-center space-x-3">
@@ -76,10 +98,6 @@
                                 {{ $user->status === 'public' ? 'Switch to Private' : 'Switch to Public' }}
                             </button>
                         </form>
-
-                        <span class="w-32 px-4 py-2 rounded-md border-2 inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu  {{ $user->status === 'public' ? 'bg-lime-500 text-white' : 'bg-pink-400 text-white' }}">
-                            Status: {{ ucfirst($user->status) }}
-                        </span>
                     </div>
                     @endif
                     <!--pending list-->
@@ -96,7 +114,7 @@
                             @forelse($user->followerRequests as $request)
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <img src="{{ $request->follower->avatar ? asset('storage/' . $request->follower->avatar) : asset('images/default-avatar.png') }}" class="w-10 h-10 rounded-full object-cover">
+                                    <img src="{{ $request->follower->avatar ?  : asset('images/default-avatar.png') }}" class="w-10 h-10 rounded-full object-cover">
                                     <a href="{{ route('profile.show', $request->follower->id) }}"
                                         class="text-blue-600 focus:outline-none focus:ring-0">
                                         {{ $request->follower->name }}
@@ -174,7 +192,7 @@
         <!--Travel plans-->
         <h1 class="text-2xl p-5">Travel Plans</h1>
         <div class="px-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                 <!--login user-->
                 @if(Auth::id() === $user->id)
                 <x-plan-box title="Created Plan" :plans="$travelPlans" />
@@ -188,17 +206,19 @@
                 <!-- unfollower and status:private -->
                 @else
                 @if($user->status === 'private')
-                    <p class="text-gray-500">These travel plans are under lock and key. Even followers don't get the spare key.</p>
-                    @elseif(!$user->followers->contains(Auth::id()))
-                        <p class="text-gray-500">Follow this user and see what they're up to! (Some secrets may stay hidden)</p>
-                    @endif
+                <p class="text-gray-500">These travel plans are under lock and key. Even followers don't get the spare key.</p>
+                @elseif(!$user->followers->contains(Auth::id()))
+                <p class="text-gray-500">Follow this user and see what they're up to! (Some secrets may stay hidden)</p>
+                @endif
                 @endif
             </div>
         </div>
 
         <!--add calender -->
-        <h1 class="text-2xl p-5">Schedule</h1>
+        <h1 class="text-2xl p-5">Created & Joined Plans</h1>
         <div class="w-full">
+            <div class="mb-6">
+            </div>
         </div>
 
         <!--show gadgets -->
@@ -208,13 +228,21 @@
             <div class="flex flex-col lg:flex-row lg:items-center gap-4 max-w-full overflow-hidden">
 
                 <!-- gadgets image -->
+                @php
+                $defaults = ['images/bareta-1.png','images/bareta-2.png','images/bareta-3.png'];
+                @endphp
                 <div class="flex-none w-32 h-32">
-                    @if($gadget->photo_url && file_exists(storage_path('app/public/' . $gadget->photo_url)))
-                    <img src="{{ asset('storage/' . $gadget->photo_url) }}" alt="{{ $gadget->item_name }}"
+                    @if($gadget->photo_url)
+                    @if(Str::startsWith($gadget->photo_url, 'data:image'))
+                    <img src="{{ $gadget->photo_url }}" alt="Gadget"
                         class="w-32 h-32 rounded-lg object-cover border">
                     @else
-                    <img src="{{ asset('images/airplane.png') }}" alt="Sample"
+                    <img src="{{ asset($gadget->photo_url) }}" alt="Gadget"
                         class="w-32 h-32 rounded-lg object-cover border">
+                    @endif
+                    <!--not save images-->
+                    @else
+                    <img src="{{ asset($defaults[array_rand($defaults)]) }}" class="w-32 h-32 rounded-lg object-cover border">
                     @endif
                 </div>
 
@@ -248,9 +276,6 @@
                 <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">Close</button>
             </form>
         </dialog>
-        <p class="text-center text-gray-500 p-5">
-            Only followers can view travel plans.
-        </p>
 
         <!-- ajax part -->
         <script>
@@ -309,7 +334,7 @@
                         }
 
                         modalContent.innerHTML = users.map(user => {
-                            const avatarUrl = user.avatar ? `/storage/${user.avatar}` : '/images/default-avatar.png';
+                            const avatarUrl = user.avatar ? user.avatar : '/images/default-avatar.png';
                             return `
                         <div class="flex items-center space-x-3">
                             <img src="${avatarUrl}" class="w-10 h-10 rounded-full object-cover">

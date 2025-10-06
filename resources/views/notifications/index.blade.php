@@ -66,7 +66,7 @@
 
                                 <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                                     @if($actorAvatar)
-                                    <img src="{{ asset('storage/' . $actorAvatar) }}" alt="{{ $actorName ?? 'User' }}"
+                                    <img src="{{ $actorAvatar }}" alt="{{ $actorName ?? 'User' }}"
                                         class="w-full h-full object-cover">
                                     @else
                                     <div

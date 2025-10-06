@@ -16,7 +16,7 @@
             <div class="flex items-center justify-start space-x-2 mb-16">
                 <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                     @if($plan->user->avatar)
-                    <img src="{{ asset('storage/' . $plan->user->avatar) }}" alt="Avatar"
+                    <img src="{{ $plan->user->avatar }}" alt="Avatar"
                         class="w-full h-full object-cover">
                     @else
                     <div

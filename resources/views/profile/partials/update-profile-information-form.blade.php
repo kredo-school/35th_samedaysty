@@ -7,62 +7,55 @@
             {{ __("Update your account's profile.") }}
         </p>
     </div>
-
     <div class="flex flex-col md:flex-row md:space-x-6 items-center">
-
     </div>
 
     <!--approve by mail-->
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
-
-    <!--name+email-->
+    <!-- profile update form -->
     <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="flex-1 space-y-6">
         @csrf
         @method('patch')
-        <!-- avatar -->
-        <div x-data="{ preview: null,error:''}">
+
+        <!--avatar-->
+        <div x-data="{ preview: '{{ $user->avatar }}',error:''}">
             <label for="avatar" class="block text-sm font-medium text-gray-700"></label>
             <input id="avatar" type="file" name="avatar"
                 class="mt-1 w-full border border-gray-300 rounded p-2 hidden"
                 x-ref="avatarInput"
                 @change="
-            const file = $event.target.files[0];
-            if (file) {
-                if (file.size > 2 * 1024 * 1024) {
-                    error = 'The selected image is too large. Maximum size is 2MB.';
-                    preview = null;
-                    $event.target.value = '';
+                const file = $event.target.files[0];
+                if (file) {
+                    const validTypes = ['image/jpeg','image/png','image/gif'];
+                    if (!validTypes.includes(file.type)) {
+                        error = 'Please select one of the following formats: jpg, png, gif';
+                        preview = '{{ $user->avatar }}';
+                        $event.target.value = '';
+                    } else if (file.size > 2 * 1024 * 1024) {
+                        error = 'The selected image is too large. Maximum size is 2MB.';
+                        preview = '{{ $user->avatar }}';
+                        $event.target.value = '';
+                    } else {
+                        error = '';
+                        preview = URL.createObjectURL(file);
+                    }
                 } else {
+                    preview = '{{ $user->avatar }}';
                     error = '';
-                    preview = URL.createObjectURL(file);
                 }
-            } else {
-                preview = null;
-                error = '';
-            }
-        ">
+            ">
+            <!-- preview -->
+            <img :src="preview" alt="Avatar" class="mt-2 w-20 h-20 rounded-full object-cover">
+            <!-- client-side error -->
+            <p class="text-red-500 text-sm mt-1" x-text="error" x-show="error"></p>
+            <!-- server-side error -->
+            <x-input-error class="mt-1 text-red-500" :messages="$errors->get('avatar')" />
             <!--show button-->
             <x-primary-button type="button" @click="$refs.avatarInput.click()">
                 Select Image
             </x-primary-button>
-
-            <!--error message-->
-            <p class="text-red-500 text-sm mt-1" x-text="error" x-show="error"></p>
-            <!--preview -->
-            <template x-if="preview">
-                <img :src="preview" alt="Preview"
-                    class="mt-2 w-20 h-20 rounded-full object-cover">
-            </template>
-
-            <!-- there is no image -->
-            @if ($user->avatar)
-            <img src="{{ asset('storage/' . $user->avatar) }}"
-                alt="Avatar"
-                class="mt-2 w-20 h-20 rounded-full object-cover"
-                x-show="!preview">
-            @endif
         </div>
 
         <!--name-->
@@ -76,7 +69,6 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-1" :messages="$errors->get('email')" />
-
             <!--bio-->
             <div class="mt-6" x-data="{ charCount: 0, max: 500 }" x-init="charCount = $refs.intro.value.length">
                 <x-input-label for="bio" :value="__('Introduction')" />
@@ -109,15 +101,15 @@
             @endif
         </div>
 
-        <div class="flex items-center gap-4 ">
-            <x-secondary-button type="submit">{{ __('Save') }}</x-secondary-button>
+        <div class="flex justify-center items-center gap-4 ">
+            <x-secondary-button type="submit" class="text-xl px-6 py-2">{{ __('Save') }}</x-secondary-button>
             @if (session('status') === 'profile-updated')
             <p
                 x-data="{ show: true }"
                 x-show="show"
                 x-transition
                 x-init="setTimeout(() => show = false, 2000)"
-                class="text-sm text-gray-600 dark:text-gray-400">{{ __('Saved.') }}</p>
+                class="text-sm text-gray-600 dark:text-gray-400 ">{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>

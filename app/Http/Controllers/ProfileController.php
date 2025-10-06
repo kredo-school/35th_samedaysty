@@ -54,6 +54,18 @@ class ProfileController extends Controller
         $joinedPlan = $allJoined->take(2);
         $remainingJoinedPlans = $allJoined->skip(2)->values();
 
+        $defaults = [
+            'images/bareta-1.png',
+            'images/bareta-2.png',
+            'images/bareta-3.png',
+        ];
+
+        foreach ($gadgets as $gadget) {
+            if (empty($gadget->photo_url)) {
+                $gadget->photo_url = $defaults[array_rand($defaults)];
+            }
+        }
+
         return view('profile.show', compact(
             'user',
             'gadgets',
@@ -101,11 +113,11 @@ class ProfileController extends Controller
 
         /*avatar has changed*/
         if ($request->hasFile('avatar')) {
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-            $path = $request->file('avatar')->store('avatars', 'public');
-            $validated['avatar'] = $path;
+            $file = $request->file('avatar');
+            $type = $file->extension();
+            $data = base64_encode(file_get_contents($file));
+
+            $validated['avatar'] = "data:image/{$type};base64,{$data}";
         }
         /**user information update */
         $user->fill($validated);
@@ -126,15 +138,15 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'item1' => 'nullable|string|max:255',
             'item1_description' => 'nullable|string|max:500',
-            'item1_photo' => 'nullable|image|max:2048',
+            'item1_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'item1_url' => 'nullable|url|max:255',
             'item2' => 'nullable|string|max:255',
             'item2_description' => 'nullable|string|max:500',
-            'item2_photo' => 'nullable|image|max:2048',
+            'item2_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'item2_url' => 'nullable|url|max:255',
             'item3' => 'nullable|string|max:255',
             'item3_description' => 'nullable|string|max:500',
-            'item3_photo' => 'nullable|image|max:2048',
+            'item3_photo' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'item3_url' => 'nullable|url|max:255'
         ]);
 
@@ -148,10 +160,10 @@ class ProfileController extends Controller
                 'shop_url' => $validated[$itemKey . '_url'] ?? $gadget->shop_url ?? '',
             ];
             if ($request->hasFile($itemKey . '_photo')) {
-                if ($gadget && $gadget->photo_url) {
-                    Storage::disk('public')->delete($gadget->photo_url);
-                }
-                $data['photo_url'] = $request->file($itemKey . '_photo')->store('gadgets', 'public');
+                $file = $request->file($itemKey . '_photo');
+                $type = $file->extension(); // jpg / png / gif
+                $data64 = base64_encode(file_get_contents($file));
+                $data['photo_url'] = "data:image/{$type};base64,{$data64}";
             }
             if ($gadget) {
                 $gadget->update($data);
@@ -161,10 +173,25 @@ class ProfileController extends Controller
         }
         return redirect()->route('profile.show')->with('status', 'Gadgets updated successfully');
     }
+    /** Delete gadgets.*/
+    public function destroyGadget($id)
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        $gadget = $user->gadgets()->findOrFail($id);
+        $gadget->delete();
+
+        return redirect()->route('profile.edit')
+            ->with('status', 'Gadget deleted successfully');
+    }
+
+
     /** Delete the user's account.*/
     public function toggleStatus()
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         // switch public ⇔ private
         $user->status = $user->status === 'public' ? 'private' : 'public';
         $user->save();

@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
         ->name('profile.toggleStatus')->middleware('auth');
     Route::patch('/profile/update-recommended-form', [ProfileController::class, 'updateGadget'])
         ->name('profile.updateGadget');
+    Route::delete('/profile/gadget/{gadget}', [ProfileController::class, 'destroyGadget'])
+        ->name('profile.gadget.destroy');
     Route::post('/profile/update-avatar', [ProfileController::class, 'updateAvatar'])->name('profile.updateAvatar');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
@@ -63,6 +65,8 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
     Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
     Route::delete('/{id}/delete', [PlanController::class, 'destroy'])->name('delete');
+    Route::get('/joined/my', [PlanController::class, 'joinedPlans'])->name('joined.my');
+    Route::get('/my/all', [PlanController::class, 'myPlans'])->name('my.all');
 });
 
 // reactions
