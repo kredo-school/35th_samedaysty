@@ -181,9 +181,37 @@
                     </div>
 
                     @endif
-                    <a href="" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+                    <button 
+                        onclick="startConversation({{ $user->id }})"
+                        class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition"
+                    >
                         Chat
-                    </a>
+                    </button>
+
+                    <script>
+                    function startConversation(userId) {
+                        fetch('{{ route('chat.start-conversation') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ user_id: userId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.redirect_url) {
+                                window.location.href = data.redirect_url;
+                            } else {
+                                alert(data.error || 'error');
+                            }
+                        })
+                        .catch(() => alert('connection error'));
+                    }
+                    </script>
+                    <!-- <a href="" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
+                        Chat
+                    </a> -->
                     @endif
                 </div>
             </div>
