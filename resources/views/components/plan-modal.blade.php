@@ -13,7 +13,7 @@
     <div class="space-y-4 max-h-96 overflow-y-auto">
         @forelse($plans as $plan)
             <div class="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg">
-                <div class="flex items-center gap-x-2">
+                <div class="flex items-center gap-x-2 mb-2">
                     <i class="fi fi-{{ $plan->country->code }} text-2xl"></i>
                     <h3 class="font-semibold text-gray-800 dark:text-gray-200">
                         {{ $plan->country->name ?? 'Unknown Country' }}
@@ -26,7 +26,7 @@
                         <p class="text-base">{{ $plan->end_date }}</p>
                     </div>
                 </div>
-                <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline">
+                <a href="{{ route('plan.show', $plan->id) }}" class="text-sky-600 hover:underline ms-3">
                     {{ $plan->title }}
                 </a>
             </div>
