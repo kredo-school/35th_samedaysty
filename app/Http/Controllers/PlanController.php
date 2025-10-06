@@ -179,4 +179,35 @@ class PlanController extends Controller
         return redirect()->route('plan.search')
             ->with('success', 'Plan deleted successfully!');
     }
+    public function myPlans()
+    {
+        $userId = auth()->id();
+
+        // login user joined
+        $joined = \App\Models\TravelPlan::whereHas('participations', function ($q) use ($userId) {
+            $q->where('user_id', $userId)
+                ->where('status', 'accepted');
+        })->with('country')->get();
+
+        // login user created
+        $created = \App\Models\TravelPlan::where('user_id', $userId)
+            ->with('country')->get();
+
+        $plans = $joined->merge($created)->unique('id');
+
+        return response()->json($plans->map(function ($plan) use ($userId) {
+            return [
+                'id' => $plan->id,
+                'title' => $plan->title,
+                'start' => $plan->start_date,
+                'end' => $plan->end_date,
+                'country' => $plan->country->name ?? '',
+                'country_code' => $plan->country->code ?? '',
+                'participants' => $plan->participants()->count(),
+                'max_participants' => $plan->max_participants,
+                'description' => $plan->description,
+                'is_owner' => $plan->user_id === $userId, // 👈 これで正しく判定できる
+            ];
+        }));
+    }
 }

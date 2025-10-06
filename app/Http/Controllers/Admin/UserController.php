@@ -55,25 +55,19 @@ class UserController extends Controller
             ->with('success', 'User created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    /*** Display the specified resource.*/
     public function show(User $user): View
     {
         return view('admin.users.show', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    /*** Show the form for editing the specified resource. */
     public function edit(User $user): View
     {
         return view('admin.users.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    /*** Update the specified resource in storage.*/
     public function update(Request $request, User $user): RedirectResponse
     {
         $request->validate([
@@ -94,9 +88,7 @@ class UserController extends Controller
             ->with('success', 'User updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    /*** Remove the specified resource from storage. */
     public function destroy(User $user): RedirectResponse
     {
         // Prevent admin from deleting themselves
@@ -111,9 +103,7 @@ class UserController extends Controller
             ->with('success', 'User deleted successfully.');
     }
 
-    /**
-     * Reset user password
-     */
+    /*** Reset user password */
     public function resetPassword(Request $request): RedirectResponse
     {
         $request->validate([

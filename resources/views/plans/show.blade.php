@@ -41,7 +41,7 @@
             <a href="{{ route('profile.show', $plan->user->id)}}" class="flex-shrink-0">
                 <div class="w-10 h-10 rounded-full overflow-hidden">
                     @if($plan->user->avatar)
-                    <img src="{{ asset('storage/' . $plan->user->avatar) }}" alt="avatar"
+                    <img src="{{ $plan->user->avatar }}" alt="avatar"
                         class="w-full h-full object-cover">
                     @else
                     <div
@@ -266,7 +266,7 @@
                             <a href="{{ route('profile.show', $pending->user->id) }}" class="flex-shrink-0">
                                 <div class="w-10 h-10 rounded-full overflow-hidden">
                                     @if($pending->user->avatar)
-                                    <img src="{{ asset('storage/' . $pending->user->avatar) }}" alt="avatar"
+                                    <img src="{{ $pending->user->avatar }}" alt="avatar"
                                         class="w-full h-full object-cover">
                                     @else
                                     <div
@@ -360,7 +360,7 @@
                     <a href="{{ route('profile.show', $participant_chat->user->id) }}" class="flex-shrink-0">
                         <div class="w-10 h-10 rounded-full overflow-hidden">
                             @if($participant_chat->user->avatar)
-                            <img src="{{ asset('storage/' . $participant_chat->user->avatar) }}" alt="avatar"
+                            <img src="{{ $participant_chat->user->avatar }}" alt="avatar"
                                 class="w-full h-full object-cover">
                             @else
                             <div
@@ -412,7 +412,7 @@
                     <a href="{{ route('profile.show', $comment->user->id) }}" class="flex-shrink-0">
                         <div class="w-10 h-10 rounded-full overflow-hidden">
                             @if($comment->user->avatar)
-                            <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="avatar"
+                            <img src="{{ $comment->user->avatar }}" alt="avatar"
                                 class="w-full h-full object-cover">
                             @else
                             <div

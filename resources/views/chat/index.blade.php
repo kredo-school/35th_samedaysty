@@ -33,7 +33,7 @@
                                         class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                                         <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                                             @if($otherUser->avatar)
-                                            <img src="{{ asset('storage/' . $otherUser->avatar) }}"
+                                            <img src="{{ $otherUser->avatar }}"
                                                 alt="{{ $otherUser->name }}" class="w-full h-full object-cover">
                                             @else
                                             <div class="w-full h-full bg-gray-300 flex items-center justify-center">
@@ -79,7 +79,7 @@
                                         <div class="flex items-center space-x-3">
                                             <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                                                 @if($user->avatar)
-                                                <img src="{{ asset('storage/' . $user->avatar) }}"
+                                                <img src="{{ $user->avatar }}"
                                                     alt="{{ $user->name }}" class="w-full h-full object-cover">
                                                 @else
                                                 <div class="w-full h-full bg-gray-300 flex items-center justify-center">
