@@ -14,7 +14,7 @@
             <div class="dark:text-gray-200 flex items-center justify-start space-x-2 mb-16">
                 <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                     @if(auth()->user()->avatar)
-                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Avatar"
+                    <img src="{{ auth()->user()->avatar }}" alt="Avatar"
                         class="w-full h-full object-cover">
                     @else
                     <div
