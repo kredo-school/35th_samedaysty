@@ -36,9 +36,8 @@
                                             <img src="{{ $otherUser->avatar }}"
                                                 alt="{{ $otherUser->name }}" class="w-full h-full object-cover">
                                             @else
-                                            <div class="w-full h-full bg-gray-300 flex items-center justify-center">
-                                                <span class="text-gray-600 font-medium">{{ substr($otherUser->name, 0,
-                                                    1) }}</span>
+                                            <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                                <span class="text-white text-lg font-bold">{{ strtoupper(substr($otherUser->name, 0, 1)) }}</span>
                                             </div>
                                             @endif
                                         </div>
@@ -82,17 +81,14 @@
                                                 <img src="{{ $user->avatar }}"
                                                     alt="{{ $user->name }}" class="w-full h-full object-cover">
                                                 @else
-                                                <div class="w-full h-full bg-gray-300 flex items-center justify-center">
-                                                    <span class="text-gray-600 font-medium">{{ substr($user->name, 0, 1)
-                                                        }}</span>
+                                                <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                                    <span class="text-white text-lg font-bold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                                 </div>
                                                 @endif
                                             </div>
                                             <div>
                                                 <p class="font-medium text-gray-900 dark:text-white">
                                                     {{ $user->name }}</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">
-                                                    {{ $user->email }}</p>
                                             </div>
                                         </div>
                                         <button onclick="startConversation('{{ $user->id }}')"
@@ -135,7 +131,7 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">Choose a user...</option>
                             @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
                     </div>
