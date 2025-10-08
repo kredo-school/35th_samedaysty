@@ -24,9 +24,10 @@
                 @endif
 
             </h2>
-            <p class="text-xs text-gray-400">
+            <p class="hidden text-xs text-gray-400">
                 {{ $title }}: {{ $total ?? $plans->count() }} plans found
             </p>
+
 
             <!-- plan list -->
             <div class="space-y-4">
