@@ -7,14 +7,20 @@
                     <i class="fas fa-arrow-left text-xl"></i>
                 </a>
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                        <span class="text-gray-600 font-medium">{{ substr($otherUser->name, 0, 1) }}</span>
+                    <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                        @if($otherUser->avatar)
+                        <img src="{{ $otherUser->avatar }}"
+                            alt="{{ $otherUser->name }}" class="w-full h-full object-cover">
+                        @else
+                        <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                            <span class="text-white text-lg font-bold">{{ strtoupper(substr($otherUser->name, 0, 1)) }}</span>
+                        </div>
+                        @endif
                     </div>
                     <div>
                         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200">
                             {{ $otherUser->name }}
                         </h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ $otherUser->email }}</p>
                     </div>
                 </div>
             </div>
@@ -35,10 +41,15 @@
                                     <div
                                         class="flex items-end space-x-2 {{ $message->sender_id === auth()->id() ? 'flex-row-reverse space-x-reverse' : '' }}">
                                         @if ($message->sender_id !== auth()->id())
-                                            <div
-                                                class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                                                <span
-                                                    class="text-gray-600 text-sm font-medium">{{ substr($message->sender->name, 0, 1) }}</span>
+                                            <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                                                @if($message->sender->avatar)
+                                                <img src="{{ $message->sender->avatar }}"
+                                                    alt="{{ $message->sender->name }}" class="w-full h-full object-cover">
+                                                @else
+                                                <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                                    <span class="text-white text-sm font-bold">{{ strtoupper(substr($message->sender->name, 0, 1)) }}</span>
+                                                </div>
+                                                @endif
                                             </div>
                                         @endif
 
@@ -189,8 +200,14 @@
                 <div class="max-w-xs lg:max-w-md">
                     <div class="flex items-end space-x-2 ${isOwnMessage ? 'flex-row-reverse space-x-reverse' : ''}">
                         ${!isOwnMessage ? `
-                                                                <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                                                                    <span class="text-gray-600 text-sm font-medium">${message.sender_name ? message.sender_name.charAt(0) : 'U'}</span>
+                                                                <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                                                                    ${message.sender_avatar ? `
+                                                                        <img src="${message.sender_avatar}" alt="${message.sender_name}" class="w-full h-full object-cover">
+                                                                    ` : `
+                                                                        <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                                                            <span class="text-white text-sm font-bold">${message.sender_name ? message.sender_name.charAt(0).toUpperCase() : 'U'}</span>
+                                                                        </div>
+                                                                    `}
                                                                 </div>
                                                             ` : ''}
                         
