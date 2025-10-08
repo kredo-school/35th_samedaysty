@@ -47,13 +47,25 @@
                 }
             ">
             <!-- preview -->
-            <img :src="preview" alt="Avatar" class="mt-2 w-20 h-20 rounded-full object-cover">
+            <div class="mt-2 w-20 h-20 rounded-full overflow-hidden flex items-center justify-center border border-gray-300">
+                <template x-if="preview">
+                    <img :src="preview" alt="Avatar" class="w-full h-full object-cover">
+                </template>
+
+                <!-- default avatar: initial -->
+                <template x-if="!preview">
+                    <div class="w-full h-full bg-gradient-to-br from-indigo-400 to-purple-500 
+                        flex items-center justify-center text-white text-2xl font-bold">
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    </div>
+                </template>
+            </div>
             <!-- client-side error -->
             <p class="text-red-500 text-sm mt-1" x-text="error" x-show="error"></p>
             <!-- server-side error -->
             <x-input-error class="mt-1 text-red-500" :messages="$errors->get('avatar')" />
             <!--show button-->
-            <x-primary-button type="button" @click="$refs.avatarInput.click()">
+            <x-primary-button type="button" @click="$refs.avatarInput.click()" class="mt-2">
                 Select Image
             </x-primary-button>
         </div>

@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
 
 // plans
 Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
+    Route::get('/joined/my', [PlanController::class, 'joinedPlans'])->name('joined.my');
+    Route::get('/my/all', [PlanController::class, 'myPlans'])->name('my.all');
     Route::get('/{id}/detail', [PlanController::class, 'detail'])->name('show');
     Route::get('/search', [PlanController::class, 'search'])->name('search');
     Route::get('/create', [PlanController::class, 'create'])->name('create');
@@ -65,8 +67,6 @@ Route::middleware(['auth'])->prefix('plan')->name('plan.')->group(function () {
     Route::get('/{id}/edit', [PlanController::class, 'edit'])->name('edit');
     Route::put('/{id}/update', [PlanController::class, 'update'])->name('update');
     Route::delete('/{id}/delete', [PlanController::class, 'destroy'])->name('delete');
-    Route::get('/joined/my', [PlanController::class, 'joinedPlans'])->name('joined.my');
-    Route::get('/my/all', [PlanController::class, 'myPlans'])->name('my.all');
 });
 
 // reactions
