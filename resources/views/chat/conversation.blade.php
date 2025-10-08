@@ -7,7 +7,7 @@
                     <i class="fas fa-arrow-left text-xl"></i>
                 </a>
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                    <a href="{{ route('profile.show', $otherUser->id) }}" class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                         @if($otherUser->avatar)
                         <img src="{{ $otherUser->avatar }}"
                             alt="{{ $otherUser->name }}" class="w-full h-full object-cover">
@@ -16,11 +16,13 @@
                             <span class="text-white text-lg font-bold">{{ strtoupper(substr($otherUser->name, 0, 1)) }}</span>
                         </div>
                         @endif
-                    </div>
+                    </a>
                     <div>
-                        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200">
-                            {{ $otherUser->name }}
-                        </h2>
+                        <a href="{{ route('profile.show', $otherUser->id) }}" class="hover:underline">
+                            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200">
+                                {{ $otherUser->name }}
+                            </h2>
+                        </a>
                     </div>
                 </div>
             </div>
