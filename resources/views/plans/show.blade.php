@@ -231,23 +231,27 @@
 
                 <!-- join button -->
                 @cannot('view_own', $plan)
-                <form action="{{ route('participations.store') }}" method="post">
-                    @csrf
                     <input type="hidden" name="travel_plan_id" value="{{ $plan->id }}">
-                    @switch($status)
-                    @case('pending')
-                    <x-secondary-button type="submit" disabled class="ms-4">REQUESTED</x-secondary-button>
-                    @break
-                    @case('accepted')
+                @switch($status)
+                @case('pending')
+                    <form action="{{ route('participations.destroy', $participation) }}" method="POST" onsubmit="return confirm('Cancel your join request?')">
+                    @csrf
+                    @method('DELETE')
+                        <x-secondary-button type="submit" class="ms-4">REQUESTED</x-secondary-button>
+                    </form>
+                @break
+                @case('accepted')
                     <x-secondary-button type="submit" disabled class="ms-4">JOINED</x-secondary-button>
-                    @break
-                    @case('declined')
+                @break
+                @case('declined')
                     <x-secondary-button type="submit" disabled class="ms-4">DECLINED</x-secondary-button>
-                    @break
-                    @default
-                    <x-secondary-button type="submit" class="ms-4">JOIN</x-secondary-button>
-                    @endswitch
-                </form>
+                @break
+                @default
+                    <form action="{{ route('participations.store') }}" method="post">
+                        @csrf
+                        <x-secondary-button type="submit" class="ms-4">JOIN</x-secondary-button>
+                    </form>
+                @endswitch
                 @endcan
             </div>
 
