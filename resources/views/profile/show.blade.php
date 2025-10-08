@@ -8,7 +8,7 @@
             </x-title>
         </div>
         <!--avatar -->
-        <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8 px-4">
+        <div class="flex flex-col md:flex-row items-start md:items-center space-y-1 md:space-y-1 md:space-x-8 px-4">
             <div class="flex-none w-36">
                 <div
                     class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500 overflow-hidden">
@@ -73,6 +73,7 @@
                         </button>
                     </div>
                     @if(Auth::id() === $user->id)
+
                     <!--  Pending Requests -->
                     <button onclick="showPendingModal()"
                         class="text-gray-500 space-x-3">
@@ -124,20 +125,17 @@
                 <!--introduction-->
                 <div class="mt-6">
                     <h2 class="text-xl text-gray-500">introduction</h2>
-                    <p class="text-sm text-gray-500 mt-3 leading-relaxed break-words whitespace-pre-line">
+                    <p class="text-sm text-gray-500 mt-0 leading-normal break-words whitespace-pre-line">
                         {{ $user->bio ?? 'No introduction yet.' }}
                     </p>
                 </div>
+
                 <!--only see own user-->
                 <div class="flex space-x-4 mt-4">
                     @if(Auth::id() === $user->id)
                     <a href="{{ route('profile.edit') }}"
                         class="w-32 px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white">
                         Edit profile
-                    </a>
-                    <a href="#"
-                        class="w-32 px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Share profile
                     </a>
                     @if(Auth::id() === $user->id)
                     <div class="flex items-center space-x-3 font-ubuntu">
@@ -182,8 +180,7 @@
                     </div>
 
                     @endif
-                    <a href="{{ route('chat.conversation' , $user->id) }}" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">
-                        Chat
+                    <a href="{{ route('chat.conversation' , $user->id) }}" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transition">Chat
                     </a>
                     @endif
                 </div>
@@ -198,12 +195,19 @@
                 @if(Auth::id() === $user->id)
                 <x-plan-box title="Created Plan" :plans="$travelPlans" />
                 <x-plan-box title="Joined Plan" :plans="$joinedPlan" />
-                <x-plan-box title="Interested Plan" :plans="$latestInterestedPlans" />
-                <x-plan-box title="Liked Plans" :plans="$latestLikedPlans" />
+                <x-plan-box title="Interested Plans"
+                    :plans="$latestInterestedPlans"
+                    :total="$totalInterestedCount"
+                    :all="$interestedPlans" />
+                <x-plan-box title="Liked Plans"
+                    :plans="$latestLikedPlans"
+                    :total="$totalLikedCount"
+                    :all="$likedPlans" />
+
                 <!--follow user status:public-->
                 @elseif($user->status === 'public' && Auth::user()->isFollowing($user))
                 <x-plan-box title="Interested Plans" :plans="$interestedPlans" />
-                <x-plan-box title="Liked Plans" :plans="$likedPlans" />
+                <x-plan-box title="Liked Plans" :plans="$latestLikedPlans" :total="$totalLikedCount" />
                 <!-- unfollower and status:private -->
                 @else
                 @if($user->status === 'private')
@@ -216,12 +220,15 @@
         </div>
 
         <!--add calender -->
+        @if(Auth::id() === $user->id)
+        <!--　add calendar -->
         <h1 class="text-2xl p-5">Created & Joined Plans</h1>
         <div class="w-full">
             <div class="mb-6">
                 <x-calendar endpoint="/plan/my/all" />
             </div>
         </div>
+        @endif
 
         <!--show gadgets -->
         <h1 class="text-2xl p-5">3 essentials for my travel <span class="text-orange-500">style</span></h1>
