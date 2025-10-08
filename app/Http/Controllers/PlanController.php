@@ -29,6 +29,7 @@ class PlanController extends Controller
         return view('plans.show')->with('plan', $plan)
             ->with('all_styles', $all_styles)
             ->with('join_requests', $plan->joinRequests)
+            ->with('participation', $participation)
             ->with('status', $status);
     }
 

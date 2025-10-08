@@ -5,6 +5,9 @@
     <div class="flex items-center justify-end">
         <!-- buttons for each plan -->
         <div class="flex text-lg mb-1 text-gray-500 my-2">
+            <button onclick="document.getElementById('requested-plansModal').showModal()" class="px-4 hover:text-gray-800">
+                <i class="fa-solid fa-person-praying text-indigo-500 me-1"></i>requested&nbsp;{{ Auth::user()->requestedPlans()->count() }}
+            </button>
             <button onclick="document.getElementById('travel-plansModal').showModal()" class="px-4 hover:text-gray-800">
                 <i class="fa-solid fa-clipboard-check text-teal-500 me-1"></i>created&nbsp;{{ Auth::user()->travelPlans()->count() }}
             </button>
@@ -20,6 +23,7 @@
         </div>
 
         <!-- modals -->
+        <x-plan-modal title="Requested Plans" :plans="Auth::user()->requestedPlans" />
         <x-plan-modal title="Travel Plans" :plans="Auth::user()->travelPlans" />
         <x-plan-modal title="Joined Plans" :plans="Auth::user()->joinedPlans" />
         <x-plan-modal title="Interested Plans" :plans="Auth::user()->interestedPlans" />

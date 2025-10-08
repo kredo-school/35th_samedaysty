@@ -84,4 +84,17 @@ class ParticipationController extends Controller
 
         return back()->with('success', "Participation {$request->status} successfully!");
     }
+
+    public function destroy(Participation $participation)
+{
+    // can delete only own one
+    if ($participation->user_id !== auth()->id()) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    $participation->delete();
+
+    return back()->with('success', 'Join request cancelled.');
+}
+
 }

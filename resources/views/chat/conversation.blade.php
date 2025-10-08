@@ -7,14 +7,22 @@
                     <i class="fas fa-arrow-left text-xl"></i>
                 </a>
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                        <span class="text-gray-600 font-medium">{{ substr($otherUser->name, 0, 1) }}</span>
-                    </div>
+                    <a href="{{ route('profile.show', $otherUser->id) }}" class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                        @if($otherUser->avatar)
+                        <img src="{{ $otherUser->avatar }}"
+                            alt="{{ $otherUser->name }}" class="w-full h-full object-cover">
+                        @else
+                        <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                            <span class="text-white text-lg font-bold">{{ strtoupper(substr($otherUser->name, 0, 1)) }}</span>
+                        </div>
+                        @endif
+                    </a>
                     <div>
-                        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200">
-                            {{ $otherUser->name }}
-                        </h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ $otherUser->email }}</p>
+                        <a href="{{ route('profile.show', $otherUser->id) }}" class="hover:underline">
+                            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200">
+                                {{ $otherUser->name }}
+                            </h2>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -35,10 +43,15 @@
                                     <div
                                         class="flex items-end space-x-2 {{ $message->sender_id === auth()->id() ? 'flex-row-reverse space-x-reverse' : '' }}">
                                         @if ($message->sender_id !== auth()->id())
-                                            <div
-                                                class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                                                <span
-                                                    class="text-gray-600 text-sm font-medium">{{ substr($message->sender->name, 0, 1) }}</span>
+                                            <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                                                @if($message->sender->avatar)
+                                                <img src="{{ $message->sender->avatar }}"
+                                                    alt="{{ $message->sender->name }}" class="w-full h-full object-cover">
+                                                @else
+                                                <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                                    <span class="text-white text-sm font-bold">{{ strtoupper(substr($message->sender->name, 0, 1)) }}</span>
+                                                </div>
+                                                @endif
                                             </div>
                                         @endif
 
@@ -58,15 +71,15 @@
 
                     <!-- Message Input -->
                     <div class="border-t border-gray-200 dark:border-gray-700 p-4">
-                        <form id="message-form" class="flex space-x-4">
+                        <form id="message-form" class="flex space-x-4 items-end">
                             <input type="hidden" id="conversation-id" value="{{ $conversation->id }}">
                             <div class="flex-1">
-                                <input type="text" id="message-input" placeholder="Type your message..."
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                    maxlength="1000">
+                                <textarea id="message-input" placeholder="Type your message... (Shift+Enter for new line)" rows="1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white resize-none overflow-hidden"
+                                    maxlength="1000"></textarea>
                             </div>
                             <button type="submit"
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </form>
@@ -152,6 +165,10 @@
                         // Add message to UI
                         addMessageToUI(data.message, true);
                         messageInput.value = '';
+                        
+                        // Reset textarea height
+                        messageInput.style.height = 'auto';
+                        
                         scrollToBottom();
 
                         // Update last message ID to prevent duplicate in polling
@@ -189,8 +206,14 @@
                 <div class="max-w-xs lg:max-w-md">
                     <div class="flex items-end space-x-2 ${isOwnMessage ? 'flex-row-reverse space-x-reverse' : ''}">
                         ${!isOwnMessage ? `
-                                                                <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                                                                    <span class="text-gray-600 text-sm font-medium">${message.sender_name ? message.sender_name.charAt(0) : 'U'}</span>
+                                                                <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                                                                    ${message.sender_avatar ? `
+                                                                        <img src="${message.sender_avatar}" alt="${message.sender_name}" class="w-full h-full object-cover">
+                                                                    ` : `
+                                                                        <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                                                            <span class="text-white text-sm font-bold">${message.sender_name ? message.sender_name.charAt(0).toUpperCase() : 'U'}</span>
+                                                                        </div>
+                                                                    `}
                                                                 </div>
                                                             ` : ''}
                         
@@ -208,24 +231,26 @@
             messagesContainer.appendChild(messageDiv);
         }
 
-        // Auto-resize textarea (if using textarea instead of input)
-        if (messageInput.tagName === 'TEXTAREA') {
-            messageInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-            });
-        }
+        // Auto-resize textarea
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
 
         // Focus on message input when page loads
         messageInput.focus();
 
-        // Prevent Enter key from submitting multiple times
+        // Handle Enter and Shift+Enter keys
         messageInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                if (!isSubmitting) {
-                    messageForm.dispatchEvent(new Event('submit'));
+            if (e.key === 'Enter') {
+                if (!e.shiftKey) {
+                    // Enter without Shift: send message
+                    e.preventDefault();
+                    if (!isSubmitting) {
+                        messageForm.dispatchEvent(new Event('submit'));
+                    }
                 }
+                // Shift+Enter: allow default behavior (new line)
             }
         });
 

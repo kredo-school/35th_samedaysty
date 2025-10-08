@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/participations', [ParticipationController::class, 'store'])->name('participations.store');
     Route::patch('/participations/{participation}/update/', [ParticipationController::class, 'update'])->name('participations.update');
+    Route::delete('/participations/{participation}', [ParticipationController::class, 'destroy'])
+    ->name('participations.destroy');
 });
 
 

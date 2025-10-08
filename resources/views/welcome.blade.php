@@ -68,10 +68,12 @@
                 <!-- head（avatar＋name） -->
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
                     <i class="fa-solid fa-user"></i>
-                    <span class="font-bold text-gray-800">Participant A</span>
+                    <span class="font-bold text-gray-800"> Ayaka (26, Tokyo)</span>
                 </div>
                 <!-- body -->
-                <div class="px-4 py-4 flex-1 text-gray-700">"This trip was amazing! I met so many new people."</div>
+                <div class="px-4 py-4 flex-1 text-gray-700">"I joined a trip organized by someone I'd never met — and it turned out amazing!
+                    Everyone shared the same travel vibe, and we instantly clicked.
+                    “Same Day, Same Style” really says it all!"</div>
                 <img src="/images/1st_find_others_plan.png" alt="trip photo"
                     class="w-full h-40 object-contain rounded-b-lg">
                 <!-- footer -->
@@ -82,9 +84,11 @@
             <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
                     <i class="fa-solid fa-user"></i>
-                    <span class="font-bold text-gray-800">Participant B</span>
+                    <span class="font-bold text-gray-800"> Liam (29, Kyoto)</span>
                 </div>
-                <div class="px-4 py-4 flex-1 text-gray-700">"I loved sharing my experience and seeing others' plans."
+                <div class="px-4 py-4 flex-1 text-gray-700">"SameDaysty makes it easy to connect with real travelers.
+                    We shared the same travel style, so the vibe was perfect.
+                    Sharing photos after the trip was the best part!"
                 </div>
                 <img src="/images/2nd_find_others_plan 4.png" alt="trip photo"
                     class="w-full h-40 object-contain rounded-b-lg">
@@ -95,9 +99,11 @@
             <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
                 <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
                     <i class="fa-solid fa-user"></i>
-                    <span class="font-bold text-gray-800">Participant C</span>
+                    <span class="font-bold text-gray-800"> Kenta (32, Osaka)</span>
                 </div>
-                <div class="px-4 py-4 flex-1 text-gray-700">"Such a convenient app for coordinating group trips!"</div>
+                <div class="px-4 py-4 flex-1 text-gray-700">"I love how easy it is to find travel buddies who match my schedule.
+                    Joined a plan I'd never have thought of myself, and it was such a fun surprise.
+                    Next time, I might create my own plan!"</div>
                 <img src="/images/3rd_find_others_plan 9.png" alt="trip photo"
                     class="w-full h-40 object-contain rounded-b-lg">
                 <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">1 week ago</div>
