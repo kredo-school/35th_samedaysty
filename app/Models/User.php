@@ -190,6 +190,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reaction::class);
     }
+    /**  to get only pending plan on profile page */
+    public function requestedPlans()
+    {
+        return $this->belongsToMany(TravelPlan::class, 'participations')
+            ->wherePivot('status', 'pending')
+            ->withTimestamps();
+    }
+
     /**  to get only interested plan on profile page */
     public function interestedPlans()
     {
