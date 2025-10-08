@@ -322,10 +322,10 @@
 
             <!-- participants chat -->
             @canany(['view_own', 'participate'], $plan)
-            <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto">
-                <div class="flex items-center">
+            <div class="border-4 border-sky-300 box-border rounded-md mt-3 overflow-y-auto max-h-80">
+                <div class="flex items-center sticky top-0">
                     <h4 class="text-xl text-sky-500 font-bold ms-2 me-auto">participants chat</h4>
-                    <div class="flex space-x-1 ml-4">
+                    <div class="flex space-x-1 ml-4 me-1">
                         <a href="{{ route('profile.show', $plan->user->id)}}"
                             class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-orange-500 rounded-full mt-1">{{
                             $plan->user->name }}</a>
@@ -349,7 +349,7 @@
                         <!-- time/content -->
                         <span class="text-xs  dark:bg-gray-700 text-gray-500">{{ $participant_chat->created_at->diffForHumans() }}</span>
                         <div class="bg-orange-500 text-white rounded-2xl rounded-tr-none p-3 text-sm break-words">
-                            {{ $participant_chat->body }}
+                            {!! nl2br(e($participant_chat->body)) !!}
                         </div>
                     </div>
                 </div>
@@ -390,12 +390,15 @@
                 <p class="text-gray-500 p-4">no message yet</p>
                 @endforelse
 
-                <div class="border-t border-gray-300 p-3 flex gap-2">
+                <div class="border-t border-gray-300 p-3 flex gap-2 sticky bottom-0 bg-white">
                     <form action="{{ route('participant_chat.store', $plan->id) }}" method="post"
                         class="w-full flex gap-2">
                         @csrf
-                        <input type="text" name="participant_chat_body{{ $plan->id }}" id="" placeholder="message..."
-                            class="flex-1 min-w-0 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2">
+                        <textarea name="participant_chat_body{{ $plan->id }}" 
+                        placeholder="message..."
+                        rows="1"
+                        class="flex-1 min-w-0 border border-gray-300 rounded-2xl px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-orange-400"
+                        oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea>
                         <!-- <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full flex-shrink-0">send</button> -->
                         <button type="submit" class="flex-shrink-0"><img src="\images\send-message.png" alt=""></button>
                     </form>
@@ -403,9 +406,24 @@
             </div>
             @endcanany
 
+            <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('textarea[name^="participant_chat_body"]').forEach(textarea => {
+                    textarea.addEventListener('keydown', e => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            e.target.closest('form').submit();
+                        }
+                    });
+                });
+            });
+            </script>
+
             <!-- comment -->
-            <div class="border-4 border-orange-500 box-border rounded-md my-5 overflow-y-auto">
-                <h4 class="text-xl text-orange-500 font-bold ms-3">comments</h4>
+            <div class="border-4 border-orange-500 box-border rounded-md my-5 overflow-y-auto max-h-80">
+                <div class="sticky top-0 border-b-1">
+                    <h4 class="text-xl text-orange-500 font-bold ms-3">comments</h4>
+                </div>
                 @foreach($plan->comments as $comment)
                 <div class="flex items-center space-x-3 p-4">
                     <!-- icon -->
@@ -439,7 +457,7 @@
                 </div>
                 @endforeach
 
-                <div class="border-t border-gray-300 p-3 flex gap-2">
+                <div class="border-t border-gray-300 p-3 flex gap-2 sticky bottom-0 bg-white">
                     <form action="{{ route('comment.store', $plan->id) }}" method="post" class="w-full flex gap-2">
                         @csrf
                         <input type="text" name="comment_body{{ $plan->id }}" id="" placeholder="comment..."
