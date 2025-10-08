@@ -37,7 +37,6 @@
 
         <!-- plan details -->
         <div class="pt-3 flex items-center">
-            @canany(['view_own', 'participate'], $plan)
             <a href="{{ route('profile.show', $plan->user->id)}}" class="flex-shrink-0">
                 <div class="w-10 h-10 rounded-full overflow-hidden">
                     @if($plan->user->avatar)
@@ -53,11 +52,10 @@
                 </div>
             </a>
             <h4 class="text-xl ps-2">{{ $plan->user->name }}</h4>
-            @else
-            <img src="/images/kinoko_mori.png" alt="" class="w-10 h-10 rounded-full overflow-hidden">
+            <!-- if hide ownwer for safety -->
+            <!-- <img src="/images/kinoko_mori.png" alt="" class="w-10 h-10 rounded-full overflow-hidden">
             <h4 class="text-xl ps-2">Plan Owner</h4>
-            <p class="text-sm text-gray-400 ms-2">only participants can see owner's profile</p>
-            @endcanany
+            <p class="text-sm text-gray-400 ms-2">only participants can see owner's profile</p> -->
             <h4 class="text-xl ms-auto px-2">{{ $plan->country->name }}</h4>
             <i class="fi fi-{{ $plan->country->code }} text-3xl"></i>
         </div>
