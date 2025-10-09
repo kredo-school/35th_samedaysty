@@ -1,6 +1,6 @@
-@props(['countryId' => null])
+@props(['countryId' => null,'endpoint' => '/travel-plans'])
 
-<div x-data="calendar({ countryId: {{ $countryId ? $countryId : 'null' }} })" x-init="init()"
+<div x-data="calendar({ countryId: {{ $countryId ? $countryId : 'null' }},endpoint: '{{ $endpoint }}' })" x-init="init()"
     class="w-full bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 p-4 sm:p-6 lg:p-8 rounded-2xl relative z-0">
     <!-- Header -->
     <div
@@ -161,13 +161,17 @@
 
 <!-- Alpine.js Calendar Script -->
 <script>
-    function calendar({ countryId = null } = {}) {
+    function calendar({
+        countryId = null,
+        endpoint = '/travel-plans'
+    } = {}) {
         return {
             currentDate: new Date(),
             selectedDate: null,
             weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             events: [],
             countryId: countryId,
+            endpoint: endpoint,
 
             init() {
                 this.loadEvents();
@@ -179,7 +183,7 @@
                     params.append('country', this.countryId);
                 }
 
-                const url = '/travel-plans?' + params.toString();
+                const url = this.endpoint + (params.toString() ? '?' + params.toString() : '');
                 console.log('Loading events from:', url, 'countryId:', this.countryId);
 
                 fetch(url)
@@ -197,7 +201,8 @@
                                 country_code: String(plan.country_code || ''),
                                 participants: Number(plan.participants) || 0,
                                 max_participants: Number(plan.max_participants) || 0,
-                                description: String(plan.description || '')
+                                description: String(plan.description || ''),
+                                is_owner: plan.is_owner ?? false
                             }
                         }));
                         console.log('Events loaded:', this.events.length, 'events for country:', this.countryId);

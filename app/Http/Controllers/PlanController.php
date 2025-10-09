@@ -207,7 +207,7 @@ class PlanController extends Controller
                 'participants' => $plan->participants()->count(),
                 'max_participants' => $plan->max_participants,
                 'description' => $plan->description,
-                'is_owner' => $plan->user_id === $userId, // 👈 これで正しく判定できる
+                'is_owner' => $plan->user_id === $userId,
             ];
         }));
     }

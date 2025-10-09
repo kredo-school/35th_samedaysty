@@ -8,7 +8,7 @@
             </x-title>
         </div>
         <!--avatar -->
-        <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8 px-4">
+        <div class="flex flex-col md:flex-row items-start md:items-center space-y-1 md:space-y-1 md:space-x-8 px-4">
             <div class="flex-none w-36">
                 <div
                     class="w-36 h-36 rounded-full bg-white flex items-center justify-center border border-orange-500 overflow-hidden">
@@ -27,26 +27,30 @@
             <div class="flex-1 min-w-0 flex-col">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg  sm:text-2xl md:text-3xl font-bold">{{ $user->name }}</h3>
-                    <div x-data="{ open: false }" class="relative inline-block">
-                        <span
-                            @mouseenter="open = true"
-                            @mouseleave="open = false"
+                    <div class="relative inline-block">
+                        <button
+                            id="status-btn"
+                            data-tooltip-target="tooltip-status"
+                            data-tooltip-style="light"
+                            type="button"
                             class="px-3 py-1 rounded-md border-2 inline-flex items-center text-sm font-semibold tracking-widest font-ubuntu {{ $user->status === 'public' ? 'bg-lime-500 text-white' : 'bg-pink-400 text-white' }}">
                             @if($user->status === 'public')
                             <i class="fa-solid fa-lock-open mr-1"></i> Public
                             @else
                             <i class="fa-solid fa-lock mr-1"></i> Private
                             @endif
-                        </span>
-                        <!-- tooltip -->
-                        <div x-show="open"
-                            x-transition
-                            class="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-gray-500 text-white text-xs rounded px-3 py-2 shadow-lg z-10 whitespace-normal max-w-xs text-center">
-                            {{ $user->status === 'public' 
-                            ? 'Followers can see interested,liked,gadgets' 
-                            : 'Only showing name + intro' }}
+                        </button>
+
+                        <!-- Tooltip -->
+                        <div
+                            id="tooltip-status"
+                            role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow opacity-0 tooltip">
+                            {{ $user->status === 'public' ? 'Followers can see interested, liked, and gadgets' : 'Only showing name and introduction' }}
+                            <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                     </div>
+
                 </div>
                 <!--count-->
                 <div class="mt-4 flex space-x-6">
@@ -64,30 +68,74 @@
                     <div class="flex items-center space-x-3">
                         <span class="text-gray-500">Followers</span>
                         <button onclick="showFollowModal('{{ route('users.followers.json', $user->id) }}', 'Followers')"
-                            class="font-bold text-fuchsia-600 hover:underline">
+                            class="font-bold text-fuchsia-500 hover:underline">
                             <span id="followers-count-{{ $user->id }}">{{ $followersCount }}</span>
                         </button>
                     </div>
+                    @if(Auth::id() === $user->id)
+
+                    <!--  Pending Requests -->
+                    <button onclick="showPendingModal()"
+                        class="text-gray-500 space-x-3">
+                        Pending <span class="font-bold text-blue-500 hover:underline">{{ $user->followerRequests->count() }}</span>
+                    </button>
+                    @endif
                 </div>
+
+                <dialog id="pendingModal" class="rounded-lg p-6 w-3/4 max-w-md">
+                    <h2 class="text-lg font-bold mb-4">Follow Requests</h2>
+                    <div class="space-y-4 max-h-80 overflow-y-auto">
+                        @forelse($user->followerRequests as $request)
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <img src="{{ $request->follower->avatar ?: asset('images/default-avatar.png') }}"
+                                    class="w-10 h-10 rounded-full object-cover">
+                                <a href="{{ route('profile.show', $request->follower->id) }}"
+                                    class="text-blue-600 focus:outline-none focus:ring-0">
+                                    {{ $request->follower->name }}
+                                </a>
+                            </div>
+                            <div class="space-x-2">
+                                <form action="{{ route('follow.approve', $request->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button class="px-3 py-1 bg-sky-500 text-white rounded hover:bg-green-600">
+                                        Approve
+                                    </button>
+                                </form>
+                                <form action="{{ route('follow.reject', $request->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button class="px-3 py-1 bg-red-500 text-white rounded hover:bg-yellow-500">
+                                        Reject
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        @empty
+                        <p class="text-gray-500">No pending requests.</p>
+                        @endforelse
+                    </div>
+
+                    <form method="dialog" class="mt-4 text-right">
+                        <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+                            Close
+                        </button>
+                    </form>
+                </dialog>
 
                 <!--introduction-->
                 <div class="mt-6">
                     <h2 class="text-xl text-gray-500">introduction</h2>
-                    <p class="text-sm text-gray-500 mt-3 leading-relaxed break-words whitespace-pre-line">
+                    <p class="text-sm text-gray-500 mt-0 leading-normal break-words whitespace-pre-line">
                         {{ $user->bio ?? 'No introduction yet.' }}
                     </p>
                 </div>
+
                 <!--only see own user-->
                 <div class="flex space-x-4 mt-4">
                     @if(Auth::id() === $user->id)
-                    <!--only see own user-->
                     <a href="{{ route('profile.edit') }}"
                         class="w-32 px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white">
                         Edit profile
-                    </a>
-                    <a href="#"
-                        class="w-32 px-4 py-2 text-white bg-zinc-500 rounded-md border-2 border-transparent hover:bg-white hover:text-zinc-500 hover:border-zinc-500 hover:border-2 transition inline-flex items-center justify-center text-sm font-semibold tracking-widest font-ubuntu focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Share profile
                     </a>
                     @if(Auth::id() === $user->id)
                     <div class="flex items-center space-x-3 font-ubuntu">
@@ -100,54 +148,6 @@
                         </form>
                     </div>
                     @endif
-                    <!--pending list-->
-                    @if(Auth::id() === $user->id)
-                    <x-secondary-button onclick="document.getElementById('pendingModal').showModal()">
-                        Pending Requests ({{ $user->followerRequests->count() }})
-                    </x-secondary-button>
-                    @endif
-
-                    <!--pending list Modal-->
-                    <dialog id="pendingModal" class="rounded-lg p-6 w-3/4 max-w-md">
-                        <h2 class="text-lg font-bold mb-4">Follow Requests</h2>
-                        <div class="space-y-4 max-h-80 overflow-y-auto">
-                            @forelse($user->followerRequests as $request)
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-3">
-                                    <img src="{{ $request->follower->avatar ?  : asset('images/default-avatar.png') }}" class="w-10 h-10 rounded-full object-cover">
-                                    <a href="{{ route('profile.show', $request->follower->id) }}"
-                                        class="text-blue-600 focus:outline-none focus:ring-0">
-                                        {{ $request->follower->name }}
-                                    </a>
-                                </div>
-                                <div class="space-x-2">
-                                    <form action="{{ route('follow.approve', $request->id) }}" method="POST"
-                                        class="inline">
-                                        @csrf
-                                        <button class="px-3 py-1 bg-sky-500 text-white rounded hover:bg-green-600">
-                                            Approve
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('follow.reject', $request->id) }}" method="POST"
-                                        class="inline">
-                                        @csrf
-                                        <button class="px-3 py-1 bg-red-500 text-white rounded hover:bg-yellow-500">
-                                            Reject
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            @empty
-                            <p class="text-gray-500">No pending requests.</p>
-                            @endforelse
-                        </div>
-
-                        <form method="dialog" class="mt-4 text-right">
-                            <button class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
-                                Close
-                            </button>
-                        </form>
-                    </dialog>
 
                     @else
                     <!--other user-->
@@ -174,8 +174,7 @@
                         <!--not follow-->
                         <button id="follow-button-{{ $user->id }}"
                             class="px-4 py-2 rounded text-white bg-blue-500 hover:bg-blue-600"
-                            onclick="toggleFollow('{{ $user->id }}', 'follow')">
-                            Follow
+                            onclick="toggleFollow('{{ $user->id }}', 'follow')">Follow
                         </button>
                         @endif
                     </div>
@@ -225,12 +224,19 @@
                 @if(Auth::id() === $user->id)
                 <x-plan-box title="Created Plan" :plans="$travelPlans" />
                 <x-plan-box title="Joined Plan" :plans="$joinedPlan" />
-                <x-plan-box title="Interested Plan" :plans="$latestInterestedPlans" />
-                <x-plan-box title="Liked Plans" :plans="$latestLikedPlans" />
+                <x-plan-box title="Interested Plans"
+                    :plans="$latestInterestedPlans"
+                    :total="$totalInterestedCount"
+                    :all="$interestedPlans" />
+                <x-plan-box title="Liked Plans"
+                    :plans="$latestLikedPlans"
+                    :total="$totalLikedCount"
+                    :all="$likedPlans" />
+
                 <!--follow user status:public-->
                 @elseif($user->status === 'public' && Auth::user()->isFollowing($user))
                 <x-plan-box title="Interested Plans" :plans="$interestedPlans" />
-                <x-plan-box title="Liked Plans" :plans="$likedPlans" />
+                <x-plan-box title="Liked Plans" :plans="$latestLikedPlans" :total="$totalLikedCount" />
                 <!-- unfollower and status:private -->
                 @else
                 @if($user->status === 'private')
@@ -243,11 +249,15 @@
         </div>
 
         <!--add calender -->
+        @if(Auth::id() === $user->id)
+        <!--　add calendar -->
         <h1 class="text-2xl p-5">Created & Joined Plans</h1>
         <div class="w-full">
             <div class="mb-6">
+                <x-calendar endpoint="/plan/my/all" />
             </div>
         </div>
+        @endif
 
         <!--show gadgets -->
         <h1 class="text-2xl p-5">3 essentials for my travel <span class="text-orange-500">style</span></h1>
@@ -377,6 +387,11 @@
                     });
 
                 modal.showModal();
+            }
+
+            function showPendingModal() {
+                const modal = document.getElementById('pendingModal');
+                if (modal) modal.showModal();
             }
         </script>
 </x-app-layout>
