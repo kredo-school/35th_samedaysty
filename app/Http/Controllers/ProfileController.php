@@ -37,18 +37,22 @@ class ProfileController extends Controller
         $travelPlans = $user->travelPlans()->with('country')->latest()->get();
         // get interested plan 
         $interestedPlans = $user->interestedPlans()
+            ->with('country')
             ->orderBy('travel_plans.created_at', 'desc')
             ->get();
+
         $latestInterestedPlans = $interestedPlans->take(2);
         $remainingInterestedPlans = $interestedPlans->skip(2)->values();
+        $totalInterestedCount = $interestedPlans->count();
 
-        //get liked plan
+        // get liked plan
         $likedPlans = $user->likedPlans()
+            ->with('country')
             ->orderBy('travel_plans.created_at', 'desc')
             ->get();
-
         $latestLikedPlans = $likedPlans->take(2);
         $remainingLikedPlans = $likedPlans->skip(2)->values();
+        $totalLikedCount = $likedPlans->count();
 
         $allJoined = $user->joinedPlans()->with('country')->latest()->get();
         $joinedPlan = $allJoined->take(2);
@@ -77,8 +81,10 @@ class ProfileController extends Controller
             'interestedPlans',
             'latestInterestedPlans',
             'remainingInterestedPlans',
+            'totalInterestedCount',
             'likedPlans',
             'latestLikedPlans',
+            'totalLikedCount',
             'remainingLikedPlans',
             'joinedPlan',
             'remainingJoinedPlans'
