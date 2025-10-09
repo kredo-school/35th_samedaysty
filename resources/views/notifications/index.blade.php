@@ -163,6 +163,28 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Update notification badge when page loads (all notifications are now marked as read)
+            if (typeof window.updateNotificationBadge === 'function') {
+                window.updateNotificationBadge();
+            }
+
+            // Update unread count display on page to 0
+            const unreadCountElement = document.querySelector('h3');
+            if (unreadCountElement) {
+                unreadCountElement.innerHTML = unreadCountElement.innerHTML.replace(/Unread: \d+/, 'Unread: 0');
+            }
+
+            // Update all notification items to show as read (change background from blue to gray)
+            document.querySelectorAll('li.bg-blue-50').forEach(item => {
+                item.classList.remove('bg-blue-50');
+                item.classList.add('bg-gray-50');
+            });
+
+            // Remove all "Mark as Read" buttons since all are now read
+            document.querySelectorAll('.mark-as-read-btn').forEach(button => {
+                button.remove();
+            });
+
             // Mark as Read button
             document.querySelectorAll('.mark-as-read-btn').forEach(button => {
                 button.addEventListener('click', function () {
