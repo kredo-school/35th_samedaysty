@@ -32,6 +32,11 @@ class NotificationController extends Controller
             ]);
         }
 
+        // Mark all notifications as read when opening the notifications page
+        Notification::where('user_id', $user->id)
+            ->where('read', false)
+            ->update(['read' => true]);
+
         // Return view for regular requests
         return view('notifications.index', compact('notifications', 'unreadCount'));
     }
