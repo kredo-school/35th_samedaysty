@@ -20,6 +20,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- ここから -->
+
+    <!-- ✅ Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        /* Swiper本体の高さを明示（これ重要！） */
+        .swiper {
+            width: 100%;
+            height: 400px;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+    <!-- ここまで -->
+
 </head>
 
 <body class="dark:bg-gray-900">
@@ -56,6 +77,54 @@
 
     </div>
 
+
+    <!-- ここから -->
+    <!-- ✅ Swiper本体 -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="{{ asset('images/travel1.jpeg') }}" class="w-full h-full object-cover" alt="1">
+                <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white">
+                    <h2 class="text-3xl font-bold mb-2">Relax & Travel</h2>
+                    <p class="text-lg">Discover new destinations</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('images/travel2.jpeg') }}" class="w-full h-full object-cover" alt="Travel 2">
+                <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
+                    <h2 class="text-3xl font-bold mb-2">Adventure Awaits</h2>
+                    <p class="text-lg">Hike, surf, and explore freely</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('images/travel3.jpeg') }}" class="w-full h-full object-cover" alt="Travel 3">
+                <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
+                    <h2 class="text-3xl font-bold mb-2">Find Your Style</h2>
+                    <p class="text-lg">Travel your way</p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+
+    <!-- ✅ Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 3000 },
+            effect: "fade",
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        });
+    </script>
+
+    <!-- ここまで -->
+
+
+
     <div class="w-full dark:text-white mt-24">
         <!-- feed back -- tittle -->
         <x-title>
@@ -71,7 +140,8 @@
                     <span class="font-bold text-gray-800"> Ayaka (26, Tokyo)</span>
                 </div>
                 <!-- body -->
-                <div class="px-4 py-4 flex-1 text-gray-700">"I joined a trip organized by someone I'd never met — and it turned out amazing!
+                <div class="px-4 py-4 flex-1 text-gray-700">"I joined a trip organized by someone I'd never met — and it
+                    turned out amazing!
                     Everyone shared the same travel vibe, and we instantly clicked.
                     “Same Day, Same Style” really says it all!"</div>
                 <img src="/images/1st_find_others_plan.png" alt="trip photo"
@@ -101,7 +171,8 @@
                     <i class="fa-solid fa-user"></i>
                     <span class="font-bold text-gray-800"> Kenta (32, Osaka)</span>
                 </div>
-                <div class="px-4 py-4 flex-1 text-gray-700">"I love how easy it is to find travel buddies who match my schedule.
+                <div class="px-4 py-4 flex-1 text-gray-700">"I love how easy it is to find travel buddies who match my
+                    schedule.
                     Joined a plan I'd never have thought of myself, and it was such a fun surprise.
                     Next time, I might create my own plan!"</div>
                 <img src="/images/3rd_find_others_plan 9.png" alt="trip photo"
@@ -407,7 +478,7 @@
             <!-- 3 -->
             <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
                 <h1 class="text-xl font-semibold text-orange-500 mb-4">Profile page</h1>
-                <img src="/images/profilepage.jpeg" alt="screenshot3" class="w-full h-auto">
+                <img src="/images/profile.png" alt="screenshot3" class="w-full h-auto">
                 <div class="p-4">
                     <p>・ Your profile is where you can share your interests, favorite travel spots, and memories so
                         other users can connect with you.</p>
