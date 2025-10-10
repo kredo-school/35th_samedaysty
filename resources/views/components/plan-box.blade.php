@@ -42,11 +42,12 @@
                         <h3 class="font-semibold text-gray-800 dark:text-gray-200">
                             {{ $plan->country->name ?? 'Unknown Country' }}
                         </h3>
+                        <p class="text-gray-500 text-sm ms-auto">{{ $plan->start_date }} - {{ $plan->end_date }}</p>
                     </div>
                     <a href="{{ route('plan.show', $plan->id) }}"
-                        class="block text-sky-600 hover:underline text-base font-medium mt-1">
+                        class="block text-sky-600 hover:underline text-base font-medium mt-1 ms-2">
                         {{ $plan->title }}
-                    </a>
+                    </a>                    
                 </div>
                 @empty
                 <div class="flex items-center justify-center h-24 text-gray-500">
