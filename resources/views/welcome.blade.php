@@ -21,13 +21,11 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- ここから -->
-
     <!-- ✅ Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        /* Swiper本体の高さを明示（これ重要！） */
+        /* Swiper size */
         .swiper {
             width: 100%;
             height: 400px;
@@ -39,7 +37,6 @@
             object-fit: cover;
         }
     </style>
-    <!-- ここまで -->
 
 </head>
 
@@ -47,16 +44,54 @@
 
     @include('layouts.navigation')
 
-
-    <div class="w-full h-[45vh] bg-cover bg-center text-white flex flex-col items-center justify-center text-center px-4"
-        style="background-image: url('/images/krabi_beach_2.png');">
-        <h1 class="text-3xl md:text-5xl font-bold leading-tight text-center text-white">
-            Same Day, Same Destination, and Same Style
-        </h1>
-        <p class="text-lg md:text-2xl mt-4 text-center text-white">
-            Join others' trip. This is where your shared journeys begin.
-        </p>
+    <!-- ✅ Swiper main -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="{{ asset('images/krabi_beach_2.png') }}" class="w-full h-full object-cover" alt="1">
+                <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white">
+                    <h2 class="text-3xl font-bold mb-2">Same Day, Same Destination, and Same Style</h2>
+                    <p class="text-lg">“ Join others' trip. This is where your shared journeys begin.”</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('images/travel77.jpeg') }}" class="w-full h-full object-cover object-[50%_20%]" alt="Travel 2">
+                <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
+                    <h2 class="text-3xl font-bold mb-2">Same Day, </h2>
+                    <p class="text-lg">“Find others traveling the same day — and start your story together.”</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('images/travel6.jpeg') }}" class="w-full h-full object-cover" alt="Travel 2">
+                <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
+                    <h2 class="text-3xl font-bold mb-2">Same Destination, </h2>
+                    <p class="text-lg">“Meet travelers heading to the same destination and share the journey.”</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('images/travel159.jpeg') }}" class="w-full h-full object-cover" alt="Travel 3">
+                <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
+                    <h2 class="text-3xl font-bold mb-2">and Same Style</h2>
+                    <p class="text-lg">Your travel style says who you are — find those who feel the same.</p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
+
+    <!-- ✅ Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 6000 },
+            effect: "fade",
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        });
+    </script>
 
     <div class="w-full text-[clamp(14px,2vw,24px)] mb-2 text-gray-500 dark:text-white text-center py-8 px-4">
         <p class="mb-2">Share Moments, Big or Small — Your Way, Together.</p>
@@ -75,111 +110,6 @@
             </x-primary-button>
         </div>
 
-    </div>
-
-
-    <!-- ここから -->
-    <!-- ✅ Swiper本体 -->
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="{{ asset('images/travel1.jpeg') }}" class="w-full h-full object-cover" alt="1">
-                <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-white">
-                    <h2 class="text-3xl font-bold mb-2">Relax & Travel</h2>
-                    <p class="text-lg">Discover new destinations</p>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ asset('images/travel2.jpeg') }}" class="w-full h-full object-cover" alt="Travel 2">
-                <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
-                    <h2 class="text-3xl font-bold mb-2">Adventure Awaits</h2>
-                    <p class="text-lg">Hike, surf, and explore freely</p>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <img src="{{ asset('images/travel3.jpeg') }}" class="w-full h-full object-cover" alt="Travel 3">
-                <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
-                    <h2 class="text-3xl font-bold mb-2">Find Your Style</h2>
-                    <p class="text-lg">Travel your way</p>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-    </div>
-
-    <!-- ✅ Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: { delay: 3000 },
-            effect: "fade",
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-        });
-    </script>
-
-    <!-- ここまで -->
-
-
-
-    <div class="w-full dark:text-white mt-24">
-        <!-- feed back -- tittle -->
-        <x-title>
-            {{ __('Actual feed from participants') }}
-        </x-title>
-        <!-- make 3cards -->
-        <div class="flex gap-4 px-4 py-16">
-            <!-- card1 feed back -->
-            <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
-                <!-- head（avatar＋name） -->
-                <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
-                    <i class="fa-solid fa-user"></i>
-                    <span class="font-bold text-gray-800"> Ayaka (26, Tokyo)</span>
-                </div>
-                <!-- body -->
-                <div class="px-4 py-4 flex-1 text-gray-700">"I joined a trip organized by someone I'd never met — and it
-                    turned out amazing!
-                    Everyone shared the same travel vibe, and we instantly clicked.
-                    “Same Day, Same Style” really says it all!"</div>
-                <img src="/images/1st_find_others_plan.png" alt="trip photo"
-                    class="w-full h-40 object-contain rounded-b-lg">
-                <!-- footer -->
-                <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">2 days ago</div>
-            </div>
-
-            <!-- card2 feed back -->
-            <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
-                <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
-                    <i class="fa-solid fa-user"></i>
-                    <span class="font-bold text-gray-800"> Liam (29, Kyoto)</span>
-                </div>
-                <div class="px-4 py-4 flex-1 text-gray-700">"SameDaysty makes it easy to connect with real travelers.
-                    We shared the same travel style, so the vibe was perfect.
-                    Sharing photos after the trip was the best part!"
-                </div>
-                <img src="/images/2nd_find_others_plan 4.png" alt="trip photo"
-                    class="w-full h-40 object-contain rounded-b-lg">
-                <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">3 days ago</div>
-            </div>
-
-            <!-- card3 feedback -->
-            <div class="bg-gray-100 rounded-lg shadow-md w-1/3 flex flex-col">
-                <div class="px-4 py-2 border-b border-gray-300 flex items-center gap-2">
-                    <i class="fa-solid fa-user"></i>
-                    <span class="font-bold text-gray-800"> Kenta (32, Osaka)</span>
-                </div>
-                <div class="px-4 py-4 flex-1 text-gray-700">"I love how easy it is to find travel buddies who match my
-                    schedule.
-                    Joined a plan I'd never have thought of myself, and it was such a fun surprise.
-                    Next time, I might create my own plan!"</div>
-                <img src="/images/3rd_find_others_plan 9.png" alt="trip photo"
-                    class="w-full h-40 object-contain rounded-b-lg">
-                <div class="px-4 py-2 border-t border-gray-300 text-sm text-gray-500">1 week ago</div>
-            </div>
-        </div>
     </div>
 
     <div class="w-full mt-16">
@@ -431,7 +361,7 @@
                             /* Hover red */
                         }
                     </style>
-                    <p class="dark:text-white">____ Like→ kind of like “favorite,” it shows strong interest.</p>
+                    <p class="dark:text-white">____ Like→ "Give a like to the travel plans you love and keep them on your personal travel list!"</p>
 
                     <div class="group w-12 p-2 transition relative dark:text-gray-400">
                         <!-- 🚩 -->
@@ -470,7 +400,7 @@
                             /* hover red */
                         }
                     </style>
-                    <p>____Interested → more casual, like “sounds fun” or “worth keeping an eye on.”</p>
+                    <p>____Bookmark → the travel plans that catch your eye and check them out later at your own pace.”</p>
                     <p>・ And when you're ready, you can hit the Join Request button to apply to join the trip.</p>
                 </div>
             </div>
@@ -500,7 +430,6 @@
                 <img src="/images/screenshot.chat.png" alt="screenshot4" class="w-full h-auto">
                 <div class="p-4">
                     <p>・ On the chat page, you can talk with other people about your travel plans.</p>
-                    <p>・ Share messages, images, and links to discuss details, ask questions, or plan together.</p>
                     <p>・ It's the perfect place to coordinate trips and connect with fellow travelers.</p>
                 </div>
             </div>
