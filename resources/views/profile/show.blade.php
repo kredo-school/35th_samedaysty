@@ -248,17 +248,6 @@
             </div>
         </div>
 
-        <!--add calender -->
-        @if(Auth::id() === $user->id)
-        <!--　add calendar -->
-        <h1 class="text-2xl p-5">Created & Joined Plans</h1>
-        <div class="w-full">
-            <div class="mb-6">
-                <x-calendar endpoint="/plan/my/all" />
-            </div>
-        </div>
-        @endif
-
         <!--show gadgets -->
         <h1 class="text-2xl p-5">3 essentials for my travel <span class="text-orange-500">style</span></h1>
         <div class="p-4 space-y-4">
