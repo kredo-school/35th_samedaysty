@@ -1,0 +1,19 @@
+-Top page
+    -give the top bg image slide-feature, divide to 3 slides like Same day and description, Same Destination and description, Same style and description
+    -hide feed from participants
+    -fix descriptions for like and interested in plan detail explanation
+    -delete or fix second sentence in chat page explanation. we can't send any images
+
+-Dashboard
+    -change name of link to pending plans "requested" to "pending"
+
+-Profile page
+    -fix or hide a calender since it doesn't show proper own schedules
+    -move calendar to dashboard
+
+-Footer
+    -fix routes to Login, Register
+
+-All
+    -change feature's name "Interested" to "Bookmark" but only view frontend
+        -plan detail and profile part in top page, shortcut in dashboard, profile, show plan
