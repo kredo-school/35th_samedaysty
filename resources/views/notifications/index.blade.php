@@ -14,13 +14,6 @@
                     @if($notifications->isEmpty())
                     <p class="text-gray-600 dark:text-gray-400">You have no notifications.</p>
                     @else
-                    <div class="mb-4">
-                        <button id="mark-all-read-btn"
-                            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                            Mark All As Read
-                        </button>
-                    </div>
-
                     <ul class="divide-y divide-gray-200">
                         @foreach($notifications as $notification)
                         <li
@@ -290,28 +283,6 @@
                         })
                         .catch(error => console.error('Error:', error));
                 });
-            });
-
-            // Mark All As Read button
-            document.getElementById('mark-all-read-btn').addEventListener('click', function () {
-                fetch('/notifications/mark-all-read', {
-                    method: 'PATCH',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        'Content-Type': 'application/json',
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.message) {
-                            // Update header notification badge
-                            if (typeof window.updateNotificationBadge === 'function') {
-                                window.updateNotificationBadge();
-                            }
-                            location.reload(); // Reload to update status
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
             });
         });
     </script>
