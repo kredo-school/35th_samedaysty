@@ -104,7 +104,7 @@
                                     break;
                                     case 'chat_message':
                                     if (isset($data['conversation_id'])) {
-                                    $linkUrl = route('chat.index') . '?conversation=' . $data['conversation_id'];
+                                    $linkUrl = route('chat.conversation', $data['conversation_id']);
                                     $linkText = 'Open Chat';
                                     }
                                     break;

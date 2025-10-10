@@ -33,7 +33,6 @@
     <div class="flex"></div>
     <!--add user icon,created,joined,interested,liked!!!!!!!!!!!!!!!!!!!!! -->
 
-
     <div class="h-screen bg-cover bg-center shadow-lg" style="background-image: url('/images/airplane.png')">
         <div class="flex items-center justify-center h-full w-full p-10">
             <!-- Centering -->
@@ -68,4 +67,13 @@
             </div>
         </div>
     </div>
+<!--my create & joined plan-->
+    @if(Auth::check())
+        <h1 class="text-2xl p-5 mt-5">My Travel Calendar (Joined & Created) </h1>
+        <div class="w-full">
+            <div class="mb-6">
+                <x-calendar endpoint="/plan/my/all" />
+            </div>
+        </div>
+        @endif
 </x-app-layout>
