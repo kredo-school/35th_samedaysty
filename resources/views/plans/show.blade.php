@@ -212,7 +212,7 @@
                         class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center"
                         style="display: none; z-index: 9999;">
                         <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
-                            <h2 class="text-lg font-bold mb-4">Bookmark</h2>
+                            <h2 class="text-lg font-bold mb-4">Interested</h2>
                             <ul class="divide-y max-h-60 overflow-y-auto">
                                 @foreach($plan->reactions()->where('type', 'interested')->with('user')->get() as $reaction)
                                 <li class="py-2">{{ $reaction->user->name }}</li>

@@ -16,6 +16,9 @@
             <div>
                 <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                 <ul class="space-y-2">
+                    <li><a href="/" class="text-white hover:text-orange-400 text-sm">{{
+                            __('TOP') }}</a>
+                    </li>
                     <li><a href="{{ route('dashboard') }}" class="text-white hover:text-orange-400 text-sm">{{
                             __('HOME') }}</a>
                     </li>
@@ -32,11 +35,11 @@
             <div>
                 <h3 class="text-lg font-semibold mb-4">Account</h3>
                 <ul class="space-y-2">
-                    <li>
+                    <!-- <li>
                         <a href="{{ route('dashboard') }}" class="text-white hover:text-orange-400 text-sm">
                             {{ __('Dashboard') }}
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="{{ route('login') }}" class="text-white hover:text-orange-400 text-sm">
                             {{ __('Login') }}
