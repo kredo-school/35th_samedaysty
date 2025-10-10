@@ -150,7 +150,7 @@
                     <button @click="openLike = true" class="text-md text-gray-600" type="button" x-text="likeCount">
                         <!-- {{ $plan->reactions()->where('type', 'like')->count() }} -->
                     </button>
-                    <!-- interested button -->
+                    <!-- bookmark button save as interested-->
                     <button type="button" @click="
                             fetch('{{ route('reaction.store', $plan->id) }}', {
                                 method: 'POST',
@@ -179,7 +179,7 @@
                         <i :class="interested ? 'fa-solid fa-flag text-green-500' : 'fa-regular fa-flag text-green-500'"
                             class="text-3xl transition-all duration-300"></i>
                     </button>
-                    <span class="text-xl font-medium">interested</span>
+                    <span class="text-xl font-medium">bookmark</span>
 
                     <!-- modal button -->
                     <button @click="openInterested = true" class="text-md text-gray-600" type="button"
@@ -212,7 +212,7 @@
                         class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50"
                         style="display: none;">
                         <div class="bg-white rounded-lg shadow-lg w-1/3 p-6">
-                            <h2 class="text-lg font-bold mb-4">Interested</h2>
+                            <h2 class="text-lg font-bold mb-4">Bookmark</h2>
                             <ul class="divide-y max-h-60 overflow-y-auto">
                                 @foreach($plan->reactions()->where('type', 'interested')->with('user')->get() as $reaction)
                                 <li class="py-2">{{ $reaction->user->name }}</li>

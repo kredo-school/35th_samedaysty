@@ -1,10 +1,8 @@
 <x-app-layout>
     <div class="w-full px-30">
-        <x-slot name="header">
-            <x-title>
-                Create plans
-            </x-title>
-        </x-slot>
+        <x-title>
+            Create plans
+        </x-title>
 
         <form action="{{ route('plan.store') }}" method="POST"
             class="p-6 px-12 max-w-7xl mx-auto rounded-lg mt-6">
