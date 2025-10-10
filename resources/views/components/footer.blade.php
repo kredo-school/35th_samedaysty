@@ -32,14 +32,20 @@
             <div>
                 <h3 class="text-lg font-semibold mb-4">Account</h3>
                 <ul class="space-y-2">
-                    <li><a href="{{ route('dashboard') }}" class="text-white hover:text-orange-400 text-sm">{{
-                            __('Dashboard') }}</a>
+                    <li>
+                        <a href="{{ route('dashboard') }}" class="text-white hover:text-orange-400 text-sm">
+                            {{ __('Dashboard') }}
+                        </a>
                     </li>
-                    <li><a href="{{ route('login') }}" class="text-white hover:text-orange-400 text-sm">{{ __('Login')
-                            }}</a>
+                    <li>
+                        <a href="{{ route('login') }}" class="text-white hover:text-orange-400 text-sm">
+                            {{ __('Login') }}
+                        </a>
                     </li>
-                    <li><a href="{{ route('register') }}" class="text-white hover:text-orange-400 text-sm">{{
-                            __('Register') }}</a>
+                    <li>
+                        <a href="{{ route('register') }}" class="text-white hover:text-orange-400 text-sm">
+                            {{ __('Register') }}
+                        </a>
                     </li>
                 </ul>
             </div>
