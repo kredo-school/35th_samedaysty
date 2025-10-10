@@ -57,7 +57,7 @@
 
                                         <div
                                             class="bg-{{ $message->sender_id === auth()->id() ? 'blue' : 'gray' }}-100 dark:bg-{{ $message->sender_id === auth()->id() ? 'blue' : 'gray' }}-700 rounded-lg px-4 py-2">
-                                            <p class="text-sm text-gray-900 dark:text-gray-100">{{ $message->content }}
+                                            <p class="text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap">{!! nl2br(e($message->content)) !!}
                                             </p>
                                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                                 {{ $message->formatted_time }}
@@ -218,7 +218,7 @@
                                                             ` : ''}
                         
                         <div class="bg-${isOwnMessage ? 'blue' : 'gray'}-100 dark:bg-${isOwnMessage ? 'blue' : 'gray'}-700 rounded-lg px-4 py-2">
-                            <p class="text-sm text-gray-900 dark:text-gray-100">${message.content}</p>
+                            <p class="text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap">${message.content.replace(/\n/g, '<br>')}</p>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                 ${message.formatted_time || new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'})}
                             </p>
