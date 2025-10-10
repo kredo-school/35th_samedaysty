@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="swiper-slide">
-                <img src="{{ asset('images/travel77.png') }}" class="w-full h-full object-cover object-[50%_20%]" alt="Travel 2">
+                <img src="{{ asset('images/travel2.png') }}" class="w-full h-full object-cover object-[50%_20%]" alt="Travel 2">
                 <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
                     <h2 class="text-3xl font-bold mb-2">Same Day, </h2>
                     <p class="text-lg">“Find others traveling the same day — and start your story together.”</p>
