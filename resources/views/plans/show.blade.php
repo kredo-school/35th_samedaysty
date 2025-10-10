@@ -150,7 +150,7 @@
                     <button @click="openLike = true" class="text-md text-gray-600" type="button" x-text="likeCount">
                         <!-- {{ $plan->reactions()->where('type', 'like')->count() }} -->
                     </button>
-                    <!-- bookmark button save as interested-->
+                    <!-- interested button -->
                     <button type="button" @click="
                             fetch('{{ route('reaction.store', $plan->id) }}', {
                                 method: 'POST',
@@ -179,7 +179,7 @@
                         <i :class="interested ? 'fa-solid fa-flag text-green-500' : 'fa-regular fa-flag text-green-500'"
                             class="text-3xl transition-all duration-300"></i>
                     </button>
-                    <span class="text-xl font-medium">bookmark</span>
+                    <span class="text-xl font-medium">interested</span>
 
                     <!-- modal button -->
                     <button @click="openInterested = true" class="text-md text-gray-600" type="button"
@@ -330,7 +330,7 @@
                     <h4 class="text-xl text-sky-500 font-bold ms-2 me-auto">participants chat</h4>
                     <div class="flex space-x-1 ml-4 me-1">
                         <a href="{{ route('profile.show', $plan->user->id)}}"
-                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-orange-500 rounded-full mt-1">{{
+                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-indigo-500 rounded-full mt-1">{{
                             $plan->user->name }}</a>
                         @php
                         $acceptedParticipations = $plan->participations->where('status', 'accepted');
@@ -340,7 +340,7 @@
                             class="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-sky-600 rounded-full mt-1">{{
                             $participation->user->name }}</a>
                         @empty
-                        <p>no other participants yet</p>
+                        <p class="pt-1">no other participants yet</p>
                         @endforelse
                     </div>
                 </div>
@@ -427,7 +427,7 @@
                 <div class="sticky top-0 border-b-1">
                     <h4 class="text-xl text-orange-500 font-bold ms-3">comments</h4>
                 </div>
-                @foreach($plan->comments as $comment)
+                @forelse($plan->comments as $comment)
                 <div class="flex items-center space-x-3 p-4">
                     <!-- icon -->
                     <a href="{{ route('profile.show', $comment->user->id) }}" class="flex-shrink-0">
@@ -458,7 +458,9 @@
                         </p>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <p class="text-gray-500 p-4">no comment yet</p>
+                @endforelse
 
                 <div class="border-t border-gray-300 p-3 flex gap-2 sticky bottom-0 bg-white">
                     <form action="{{ route('comment.store', $plan->id) }}" method="post" class="w-full flex gap-2">

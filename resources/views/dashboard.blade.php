@@ -6,7 +6,7 @@
         <!-- buttons for each plan -->
         <div class="flex text-lg mb-1 text-gray-500 my-2">
             <button onclick="document.getElementById('requested-plansModal').showModal()" class="px-4 hover:text-gray-800">
-                <i class="fa-solid fa-person-praying text-indigo-500 me-1"></i>requested&nbsp;{{ Auth::user()->requestedPlans()->count() }}
+                <i class="fa-solid fa-person-praying text-indigo-500 me-1"></i>pending&nbsp;{{ Auth::user()->requestedPlans()->count() }}
             </button>
             <button onclick="document.getElementById('travel-plansModal').showModal()" class="px-4 hover:text-gray-800">
                 <i class="fa-solid fa-clipboard-check text-teal-500 me-1"></i>created&nbsp;{{ Auth::user()->travelPlans()->count() }}
