@@ -162,7 +162,6 @@
         <x-title>
             {{ __('How to find others plan') }}
         </x-title>
-        <div class="w-16 h-1 bg-gradient-to-r from-sky-500 to-orange-500 mx-auto mb-12"></div>
         <div class="grid md:grid-cols-3 gap-8">
             <!-- Step 1 -->
             <div
