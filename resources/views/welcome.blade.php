@@ -55,7 +55,8 @@
                 </div>
             </div>
             <div class="swiper-slide">
-                <img src="{{ asset('images/travel2.png') }}" class="w-full h-full object-cover object-[50%_20%]" alt="Travel 2">
+                <img src="{{ asset('images/travel2.png') }}" class="w-full h-full object-cover object-[50%_20%]"
+                    alt="Travel 2">
                 <div class="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-white">
                     <h2 class="text-3xl font-bold mb-2">Same Day, </h2>
                     <p class="text-lg">“Find others traveling the same day — and start your story together.”</p>
@@ -112,92 +113,104 @@
 
     </div>
 
-    <div class="w-full mt-16">
-        <!-- what can website -- title -->
-        <x-title>
-            {{ __('What you can do this website?') }}
-        </x-title>
 
-        <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-16 text-lg font-bold text-gray-700 dark:text-gray-300">
-            <!-- Box 1 -->
-            <div class="flex flex-col items-start">
-                <!-- above the box -->
-                <h3 class="text-2xl font-bold mb-4 flex items-center">
-                    <i class="fa-solid fa-magnifying-glass text-3xl mr-2"></i>
-                    Find the trip you want to go on !
-                </h3>
-                <!-- inside the box -->
-                <div class="border-4 border-sky-700 rounded overflow-hidden p-6 w-full">
-                    <p>
+    <!-- what can website -- title -->
+    <x-title>
+        {{ __('What you can do this website?') }}
+    </x-title>
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <!-- <div class="w-20 h-1 bg-gradient-to-r from-sky-500 via-purple-500 to-orange-500 mx-auto mb-12"></div> -->
+            <!-- Two main features -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Find a trip -->
+                <div
+                    class="bg-gray-50 dark:bg-gray-800 shadow-md rounded-2xl p-8 text-left hover:bg-sky-100 dark:hover:bg-sky-900 hover:shadow-lg transition">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl text-sky-500 mr-3">🔍</span>
+                        <!-- <i class="fa-solid fa-magnifying-glass text-3xl text-sky-500 dark:text-sky-400 mr-3"></i> -->
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Find the trip you want to go on!
+                        </h3>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
                         Don't want to plan? Just hop on a trip that's already ready to go.
-                        Search your travel destinations, dates, or your fun-sharing account!
-                        Discover available trips and request to join the ones you like!
+                        Search by destination or date and discover available trips.
+                        Request to join the ones you like and start your journey!
                     </p>
                 </div>
-            </div>
 
-            <!-- Box 2 -->
-            <div class="flex flex-col items-start">
-                <h3 class="text-2xl font-bold mb-4 flex items-center">
-                    <i class="fa-solid fa-hammer text-3xl mr-2"></i>
-                    Create and Share Your Trip Plan !
-                </h3>
-                <div class="border-4 border-sky-700 rounded overflow-hidden p-6 w-full">
-                    <p>
-                        Got a trip in mind? See who's excited to join you on the road.
-                        Turn your travel idea into a real journey by posting your plan.
-                        Invite others and start your adventure together!
+                <!-- Create & Share -->
+                <div
+                    class="bg-gray-50 dark:bg-gray-800 shadow-md rounded-2xl p-8 text-left hover:bg-orange-100 dark:hover:bg-orange-900 hover:shadow-lg transition">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl text-orange-500 dark:text-orange-400 mr-3">🛠️</span>
+                        <!-- <i class="fa-solid fa-hammer text-3xl text-orange-500 dark:text-orange-400 mr-3"></i> -->
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Create and Share Your Trip Plan!
+                        </h3>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        Got a trip idea in mind? Post your plan and invite others to join.
+                        Turn your travel idea into a real adventure together with other travelers!
                     </p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="w-full mt-16">
+    <section class="py-20 mt-16">
         <!-- how to find -- title -->
         <x-title>
             {{ __('How to find others plan') }}
         </x-title>
-        <section
-            class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700 dark:text-gray-300">
-            <!-- card1 -->
-            <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+        <div class="w-16 h-1 bg-gradient-to-r from-sky-500 to-orange-500 mx-auto mb-12"></div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div
+                class="bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-700 rounded-2xl p-8 hover:shadow-lg transition">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
                     <span
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">1</span>
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 dark:bg-sky-600 text-white mr-2">1</span>
                 </h3>
-                <p class="text-2xl font-bold mb-4">Find the trip you want to go on by CALENDER or
-                    DESTINATION.</p>
                 <img src="/images/1st_find_icon.png" alt="find icon"
                     class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
+                <h3 class="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100">Find trips by CALENDAR or
+                    DESTINATION</h3>
+                <p class="text-gray-600 dark:text-gray-300">Search trips that match your travel schedule or your dream
+                    place!</p>
             </div>
 
-            <!-- card2 -->
-            <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+            <!-- Step 2 -->
+            <div
+                class="bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-700 rounded-2xl p-8 hover:shadow-lg transition">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
                     <span
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">2</span>
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 dark:bg-sky-600 text-white mr-2">2</span>
                 </h3>
-                <p class="text-2xl font-bold mb-4">If you find a trip you LOVE, let's do something action!
-                </p>
                 <img src="/images/2nd_find_icon.png" alt="find icon"
                     class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
+                <h3 class="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100">If you find a trip you LOVE,
+                    take action!</h3>
+                <p class="text-gray-600 dark:text-gray-300">Request to join, save it, or connect with the traveler
+                    directly!</p>
             </div>
 
-            <!-- card3 -->
-            <div class="border-4 border-sky-700 rounded-lg overflow-hidden p-6 flex flex-col items-start">
+            <!-- Step 3 -->
+            <div
+                class="bg-white dark:bg-gray-800 shadow-md dark:shadow-gray-700 rounded-2xl p-8 hover:shadow-lg transition">
                 <h3 class="text-xl font-bold mb-2 flex items-center">
                     <span
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 text-white mr-2">3</span>
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-700 dark:bg-sky-600 text-white mr-2">3</span>
                 </h3>
-                <p class="text-2xl font-bold mb-4">Start chatting with your travel mate about your shared
-                    travel!</p>
                 <img src="/images/3rd_find_icon.png" alt="find icon"
                     class="w-40 h-40 md:w-56 md:h-56 object-contain self-start" />
+                <h3 class="font-semibold text-lg mb-2 text-gray-900 dark:text-gray-100">Start chatting about your shared
+                    travel!</h3>
+                <p class="text-gray-600 dark:text-gray-300">Plan together, share ideas, and enjoy your upcoming trip
+                    with your new mate!</p>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+
 
     {{-- to write Categories --}}
     <div class="w-full mt-16">
@@ -361,7 +374,8 @@
                             /* Hover red */
                         }
                     </style>
-                    <p class="dark:text-white">____ Like→ "Give a like to the travel plans you love and keep them on your personal travel list!"</p>
+                    <p class="dark:text-white">____ Like→ "Give a like to the travel plans you love and keep them on
+                        your personal travel list!"</p>
 
                     <div class="group w-12 p-2 transition relative dark:text-gray-400">
                         <!-- 🚩 -->
@@ -400,7 +414,8 @@
                             /* hover red */
                         }
                     </style>
-                    <p>____Interested → the travel plans that catch your eye and check them out later at your own pace.”</p>
+                    <p>____Interested → the travel plans that catch your eye and check them out later at your own pace.”
+                    </p>
                     <p>・ And when you're ready, you can hit the Join Request button to apply to join the trip.</p>
                 </div>
             </div>
