@@ -400,7 +400,7 @@
                             /* hover red */
                         }
                     </style>
-                    <p>____Bookmark → the travel plans that catch your eye and check them out later at your own pace.”</p>
+                    <p>____Interested → the travel plans that catch your eye and check them out later at your own pace.”</p>
                     <p>・ And when you're ready, you can hit the Join Request button to apply to join the trip.</p>
                 </div>
             </div>
