@@ -116,7 +116,7 @@
 
     <!-- what can website -- title -->
     <x-title>
-        {{ __('What you can do this website?') }}
+        {{ __('What You Can Do Here?') }}
     </x-title>
     <section class="py-20">
         <div class="max-w-6xl mx-auto px-6 text-center">
